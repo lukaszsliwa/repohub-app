@@ -1,0 +1,18 @@
+.pull-right
+  = link_to 'Create a repository', new_repository_path, class: 'btn btn-success'
+
+%h2 Dashboard
+
+%table.table.repositories-table
+  %tbody
+    - @repositories.each do |repository|
+      %tr
+        %td.stats-td
+        %td.name-td
+          = repository.name
+          .description
+            = repository.description
+        %td.actions-td
+          = link_to 'Show', repository_path(repository), class: 'btn btn-success'
+          &nbsp;
+          = link_to 'Edit', edit_repository_path(repository)

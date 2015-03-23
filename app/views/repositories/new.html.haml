@@ -1,0 +1,7 @@
+%h2
+  = link_to 'Dashboard', root_path
+  \/
+  Create a repository
+
+= form_for @repository do |f|
+  = render partial: 'repositories/form', locals: {f: f}

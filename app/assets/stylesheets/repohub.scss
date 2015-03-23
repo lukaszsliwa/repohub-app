@@ -1,0 +1,57 @@
+html, body {
+  color: #222222 !important;
+}
+
+html, body {
+  font: 1em/1.375 "Source Sans Pro",sans-serif !important;
+}
+
+h2 {
+  padding-bottom: 30px;
+}
+
+table {
+  &.repositories-table {
+    td {
+      padding: 25px !important;
+
+      &.name-td {
+        width: 60%;
+
+        font-size: 20px !important;
+
+        .description {
+          font-size: 12px;
+        }
+      }
+
+      &.stats-td {
+        width: 20%;
+      }
+
+      &.actions-td {
+        width: 20%
+      }
+    }
+  }
+}
+
+.btn {
+  font-weight: bold;
+  border-bottom-width: 2px;
+}
+
+.navbar-default {
+  background-color: #4a4a4a;
+  color: #cbcbcb !important;
+
+  a {
+    color: #cbcbcb !important;
+  }
+
+  .container {
+    .navbar-collapse {
+      height: 70px !important;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.pull-right
+  = link_to 'Edit this repository', edit_repository_path(@repository), class: 'btn btn-default'
+
+%h2
+  = link_to 'Dashboard', root_path
+  \/
+  = @repository.name
