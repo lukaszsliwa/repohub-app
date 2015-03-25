@@ -1,0 +1,13 @@
+%h2
+  = link_to 'Dashboard', root_path
+  \/
+  = link_to 'Users', users_path
+  \/
+  = @user.username
+  \/
+  Edit user details
+
+= form_for @user, url: user_path(@user) do |f|
+  = render partial: 'users/form', locals: {f: f}
+%hr
+= link_to 'Delete this user', user_path(@user), method: :delete, data: {confirm: "Do you want to remove this user?"}

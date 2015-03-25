@@ -8,11 +8,14 @@
     - @repositories.each do |repository|
       %tr
         %td.stats-td
+          .stats
+            .stats-changes-count
+              0
+            %span.text-muted
+              Commits
         %td.name-td
           = repository.name
           .description
             = repository.description
         %td.actions-td
           = link_to 'Show', repository_path(repository), class: 'btn btn-success'
-          &nbsp;
-          = link_to 'Edit', edit_repository_path(repository)

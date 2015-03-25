@@ -16,6 +16,10 @@ gem 'devise'
 gem 'haml'
 gem 'puma'
 gem 'twitter-bootstrap-rails'
+gem 'carrierwave'
+gem 'mini_magick'
+
+gem 'settingslogic'
 
 group :development, :test do
   gem 'byebug'

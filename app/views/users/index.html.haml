@@ -1,1 +1,19 @@
+.pull-right
+  = link_to 'Add a user', new_user_path, class: 'btn btn-success'
+
 %h2 Users
+
+%table.table.users-table
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td.avatar-td
+          = image_tag user.avatar.thumb, class: 'img-circle'
+        %td.username-td
+          = user.username
+        %td.name-td
+          = user.full_name
+          .email
+            = user.email
+        %td.actions-td
+          = link_to 'Edit', edit_user_path(user)

@@ -1,0 +1,46 @@
+# config/application.yml
+defaults: &defaults
+  server:
+    group:
+      add:
+        exec: 'sudo /usr/sbin/addgroup %{group}'
+      delete:
+        exec: 'sudo /usr/sbin/delgroup %{group}'
+      user:
+        add:
+          exec: 'sudo /usr/sbin/addgroup %{user} %{group}'
+        delete:
+          exec: 'sudo /usr/sbin/delgroup %{user} %{group}'
+    link:
+      add:
+        exec: 'sudo -u %{login} /bin/ln -s /home/git/%{repository}.git /home/%{login}/%{repository}.git'
+      delete:
+        exec: 'sudo -u %{login} /bin/rm /home/%{login}/%{repository}.git'
+    user:
+      add:
+        exec: 'sudo /usr/sbin/useradd -m -s /bin/bash -b /home/%{login} -c "Repohub account" -d /home/%{login} %{login}'
+      delete:
+        exec: 'sudo /usr/sbin/userdel -r -f %{login}'
+    git:
+      permissions:
+        exec: 'cd /home/git && sudo -u git /bin/setfacl -R --set user::rwx,other::--x,group::rwx,mask::rwx /home/git/%{repository}.git'
+      own:
+        exec: 'cd /home/git && sudo /bin/chown -R git:%{group} /home/git/%{repository}.git'
+      add:
+        exec: 'cd /home/git && sudo -u git /usr/bin/git --bare init --shared=group %{repository}.git'
+      rename:
+        exec: 'cd /home/git && sudo -u git /bin/mv /home/git/%{old_repository}.git /home/git/%{repository}.git'
+      delete:
+        exec: 'cd /home/git && sudo -u git /bin/rm -rf /home/git/%{repository}.git'
+      exec: '/usr/bin/git'
+      user: 'git'
+      dir: '/home/git'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

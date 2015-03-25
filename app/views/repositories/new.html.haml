@@ -3,5 +3,5 @@
   \/
   Create a repository
 
-= form_for @repository do |f|
+= form_for @repository, as: :repository, url: repositories_path do |f|
   = render partial: 'repositories/form', locals: {f: f}

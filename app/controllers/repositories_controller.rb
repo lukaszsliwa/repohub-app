@@ -1,6 +1,6 @@
 class RepositoriesController < ApplicationController
   def index
-    @repositories = Repository.all
+    @repositories = Repository.order('id desc').all
   end
 
   def new
@@ -8,7 +8,7 @@ class RepositoriesController < ApplicationController
   end
 
   def create
-    @repository = Repository.new params_repository
+    @repository = Repository.type(params[:repository][:type]).new params_repository
     @repository.created_by = current_user
 
     respond_to do |format|
@@ -52,6 +52,6 @@ class RepositoriesController < ApplicationController
 
 
   def params_repository
-    params[:repository].permit(:id, :name, :handle, :description)
+    params[:repository].permit(:id, :name, :handle, :description, :type)
   end
 end

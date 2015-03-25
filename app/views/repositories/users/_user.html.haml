@@ -1,0 +1,18 @@
+%tr(id="user-#{user.id}")
+  %td.avatar-td
+    = image_tag user.avatar.thumb, class: 'img-circle'
+  %td.username-td
+    = user.username
+  %td.name-td
+    = user.full_name
+    .email
+      = user.email
+  %td.actions-td
+    = link_to repository_user_path(@repository, user), method: :patch, remote: true, class: 'btn btn-success' do
+      - if @repository.users.include?(user)
+        %i.fa.fa-check
+      Allow
+    = link_to repository_user_path(@repository, user), method: :delete, remote: true, class: 'btn btn-danger' do
+      - unless @repository.users.include?(user)
+        %i.fa.fa-check
+      Deny

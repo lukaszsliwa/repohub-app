@@ -1,5 +1,8 @@
 .pull-right
-  = link_to 'Edit this repository', edit_repository_path(@repository), class: 'btn btn-default'
+  .btn-group
+    = link_to 'Edit this repository', edit_repository_path(@repository), class: 'btn btn-default'
+    = link_to repository_users_path(@repository), class: 'btn btn-default', title: 'Users' do
+      %i.fa.fa-group
 
 %h2
   = link_to 'Dashboard', root_path

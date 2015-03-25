@@ -5,7 +5,7 @@
   \/
   Edit this repository
 
-= form_for @repository, url: repository_path(id: params[:id]) do |f|
+= form_for @repository, as: :repository, url: repository_path(id: params[:id]) do |f|
   = f.hidden_field :id
   = render partial: 'repositories/form', locals: {f: f}
 %hr

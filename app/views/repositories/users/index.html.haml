@@ -1,0 +1,10 @@
+%h2
+  Dashboard
+  \/
+  = link_to @repository.name, repository_path(@repository)
+  \/
+  = link_to 'Users', repository_users_path(@repository)
+
+%table.table.users-table
+  %tbody
+    = render partial: 'repositories/users/user', collection: @users
