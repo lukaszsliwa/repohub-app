@@ -11,7 +11,7 @@ h2 {
 }
 
 table {
-  &.repositories-table {
+  &.repositories-table, &.keys-table {
     td {
       padding: 25px !important;
 
@@ -27,6 +27,12 @@ table {
 
       &.stats-td {
         width: 20%;
+
+        .stats {
+          .stats-changes-count {
+            font-size: 36px;
+          }
+        }
       }
 
       &.actions-td {
@@ -52,6 +58,62 @@ table {
   .container {
     .navbar-collapse {
       height: 70px !important;
+    }
+  }
+}
+
+
+.commits {
+  border-right: 1px solid #eaeaea;
+
+  .commits-heading {
+    font-weight: bold;
+    font-size: 13px;
+
+    color: #333;
+  }
+
+  .commits-list {
+    border-left: 3px solid #eaeaea;
+    margin-left: 5px;
+
+    list-style-type: none;
+
+    padding: 10px;
+
+    .commit {
+      margin-top: 15px;
+
+      .commit-author {
+        font-size: 12px;
+        font-weight: normal;
+        margin-top: 5px;
+      }
+      .commit-message {
+        font-size: 14px;
+        font-weight: bold;
+        color: #4e575b;
+      }
+
+      .btn-commit {
+        width: 80px;
+      }
+    }
+  }
+}
+
+table.tree {
+  td {
+    padding-top: 5px;
+
+    &.icon {
+      width: 26px;
+    }
+    &.name {
+      width: 200px;
+    }
+    &.message {
+      width: 300px;
     }
   }
 }

@@ -1,0 +1,29 @@
+.pull-right
+  = link_to new_user_key_path(@user), class: 'btn btn-success' do
+    %fa.fa.fa-plus
+    Add a key
+
+%h2
+  = link_to 'Users', users_path
+  \/
+  = @user.full_name
+  \/
+  Keys
+
+%table.table.keys-table
+  %tbody
+    - @keys.each do |key|
+      %tr
+        %td.name-td
+          = key.name
+        %td.value-td
+          = key.value
+        %td.actions-td
+          = link_to 'Edit', edit_user_key_path(@user, key)
+
+- if @keys.empty?
+  .jumbotron
+    .container.text-center
+      You have not uploaded any public keys yet.
+      &nbsp;
+      = link_to 'Upload your first public key now', new_user_key_path, class: 'btn btn-success'

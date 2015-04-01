@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   after_create  :server_command_add_user
   after_destroy :server_command_delete_user
 
+  has_many :keys, dependent: :destroy
   has_many :repository_users, dependent: :destroy
   has_many :repositories, through: :repository_users
 

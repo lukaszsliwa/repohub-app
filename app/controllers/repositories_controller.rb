@@ -13,6 +13,7 @@ class RepositoriesController < ApplicationController
 
     respond_to do |format|
       if @repository.save
+        current_user.repository_users.create(repository_id: @repository.id)
         format.html { redirect_to repositories_path, notice: 'Repository was successfully created.' }
       else
         format.html { render action: :new }
@@ -21,7 +22,7 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    @repository = Repository.find_by_handle params[:id]
+    @repository = Repository.find_by_handle(params[:id] || params[:repository_id])
   end
 
   def edit

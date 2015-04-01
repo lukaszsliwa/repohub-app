@@ -20,6 +20,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 
 gem 'settingslogic'
+gem 'git'
 
 group :development, :test do
   gem 'byebug'

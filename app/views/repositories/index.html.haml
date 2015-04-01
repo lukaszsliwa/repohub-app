@@ -1,5 +1,7 @@
 .pull-right
-  = link_to 'Create a repository', new_repository_path, class: 'btn btn-success'
+  = link_to new_repository_path, class: 'btn btn-success' do
+    %fa.fa.fa-plus
+    Create a repository
 
 %h2 Dashboard
 
@@ -8,14 +10,20 @@
     - @repositories.each do |repository|
       %tr
         %td.stats-td
-          .stats
+          .stats.text-center
             .stats-changes-count
-              0
+              = rand(100)
             %span.text-muted
-              Commits
+              updates
         %td.name-td
           = repository.name
           .description
             = repository.description
         %td.actions-td
           = link_to 'Show', repository_path(repository), class: 'btn btn-success'
+- if @repositories.empty?
+  .jumbotron
+    .container.text-center
+      You have not created any repositories yet.
+      &nbsp;
+      = link_to 'Create your first repository now', new_repository_path, class: 'btn btn-success'

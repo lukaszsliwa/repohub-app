@@ -9,7 +9,7 @@
   = f.text_area :description, class: 'form-control'
 .form-group
   = f.label :type, 'Repository Type'
-  = f.select :type, [['GIT', 'Repository::Git']], class: 'form-control'
+  = f.select :type, [['GIT', 'GitRepository']], class: 'form-control'
 .form-group
   = f.submit 'Submit', class: 'btn btn-success'
   &nbsp;

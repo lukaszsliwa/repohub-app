@@ -1,0 +1,15 @@
+- if (full_messages = f.object.errors.full_messages).present?
+  .from-group
+    %ul
+      - full_messages.each do |message|
+        %li= message
+.form-group
+  = f.label :name, 'Name'
+  = f.text_field :name, class: 'form-control'
+.form-group
+  = f.label :value, 'Public key content'
+  = f.text_area :value, class: 'form-control'
+.form-group
+  = f.submit 'Submit', class: 'btn btn-success'
+  &nbsp;
+  = link_to 'Back', :back

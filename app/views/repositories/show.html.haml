@@ -3,8 +3,73 @@
     = link_to 'Edit this repository', edit_repository_path(@repository), class: 'btn btn-default'
     = link_to repository_users_path(@repository), class: 'btn btn-default', title: 'Users' do
       %i.fa.fa-group
-
+    .btn-group
+      %button#branches.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+        Branches
+        %span.caret
+      %ul.dropdown-menu{"aria-labelledby" => "branches", :role => "menu"}
+        - @repository.branches.each do |branch|
+          %li= link_to branch.name, repository_tree_path(@repository, tree_id: branch.name)
+    .btn-group
+      %button#tags.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+        Tags
+        %span.caret
+      %ul.dropdown-menu{"aria-labelledby" => "tags", :role => "menu"}
+        - @repository.tags.each do |tag|
+          %li= link_to tag.name, repository_tree_path(@repository, tree_id: tag.name)
 %h2
   = link_to 'Dashboard', root_path
   \/
   = @repository.name
+  - if @tree_id
+    \/
+    = link_to @tree_id, repository_tree_path(@repository, tree_id: @tree_id)
+
+.row
+  .col-md-5
+    - @repository.commits.group_by {|commit| commit.author_date.to_date }.each do |date, commits|
+      .commits
+        .commits-heading
+          %i.fa.fa-code
+          = pluralize commits.size, 'commit'
+          on
+          = date
+        %ul.commits-list
+          - commits.each do |commit|
+            %li.commit.row(id="commit-#{commit.sha}")
+              .col-md-2.commit-author
+                = image_tag 'avatar.png', class: 'img-rounded', width: '58px'
+              .col-md-10
+                .row
+                  .col-md-8.commit-message
+                    = commit.message
+                  .col-md-3.commit-sha
+                    = link_to '', class: 'btn btn-commit btn-default' do
+                      = truncate commit.sha, length: 8, omission: ''
+                .commit-author
+                  #{mail_to commit.author.email, commit.author.name} on #{l commit.author.date, format: :short}
+  .col-md-7
+    - tree = @repository.tree
+    %table.tree
+      %thead
+        %th
+        %th Name
+        %th Message
+        %th Modified
+      %tbody
+        - tree.dirs.each do |dir|
+          %tr.dir(id="tree-#{dir.sha}")
+            %td.icon
+              %i.fa.fa-folder
+            %td.name
+              %b= link_to dir.name
+            %td.message
+            %td
+        - tree.files.each do |file|
+          %tr.file(id="blob-#{file.sha}")
+            %td.icon
+              %i.fa.fa-file-text-o
+            %td.name
+              = link_to file.name
+            %td.message
+            %td

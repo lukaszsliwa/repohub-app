@@ -11,7 +11,7 @@ class Repository < ActiveRecord::Base
 
   def self.type(name)
     case name
-    when 'Repository::Git' ; Repository::Git
+    when 'GitRepository' ; GitRepository
     else
       Repository
     end
