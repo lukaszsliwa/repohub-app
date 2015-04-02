@@ -8,6 +8,10 @@ class Repository < ActiveRecord::Base
 
   has_many :repository_users, dependent: :destroy
   has_many :users, through: :repository_users
+  has_many :commits, dependent: :destroy
+  has_many :branches, dependent: :destroy
+  has_many :tags, dependent: :destroy
+  has_many :references, dependent: :destroy
 
   def self.type(name)
     case name

@@ -25,31 +25,10 @@ class GitRepository < Repository
   end
 
   def git
-    @git ||= ::Git.bare path
+    @git ||= Rugged::Repository.new path
   end
 
-  def tree(head = 'HEAD', path = nil)
-    head ||= 'HEAD'
-    path ||= ''
-    result = git.ls_tree head
-    dirs = result['tree'].map do |name, values|
-      OpenStruct.new(name: name, mode: values[:mode], sha: values[:sha])
-    end
-    files = result['blob'].map do |name, values|
-      OpenStruct.new(name: name, mode: values[:mode], sha: values[:sha])
-    end
-    OpenStruct.new(dirs: dirs, files: files)
-  end
+  def synchronize
 
-  def commits
-    @commits ||= git.log
-  end
-
-  def branches
-    @branches ||= git.branches
-  end
-
-  def tags
-    @tags ||= git.tags
   end
 end

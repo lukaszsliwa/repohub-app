@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325225517) do
+ActiveRecord::Schema.define(version: 20150402163807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "commits", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "repository_id"
+    t.string   "message"
+    t.string   "sha"
+    t.string   "author"
+    t.string   "email"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "branch_id"
+    t.datetime "issued_at"
+  end
+
+  add_index "commits", ["branch_id"], name: "index_commits_on_branch_id", using: :btree
+  add_index "commits", ["repository_id"], name: "index_commits_on_repository_id", using: :btree
 
   create_table "keys", force: :cascade do |t|
     t.integer  "user_id"
@@ -23,6 +39,17 @@ ActiveRecord::Schema.define(version: 20150325225517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "references", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "repository_id"
+    t.string   "name"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "references", ["type", "repository_id"], name: "index_references_on_type_and_repository_id", using: :btree
+  add_index "references", ["type"], name: "index_references_on_type", using: :btree
 
   create_table "repositories", force: :cascade do |t|
     t.string   "name"

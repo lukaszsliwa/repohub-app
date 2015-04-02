@@ -20,7 +20,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 
 gem 'settingslogic'
-gem 'git'
+gem 'rugged', git: 'git://github.com/libgit2/rugged.git', submodules: true
 
 group :development, :test do
   gem 'byebug'

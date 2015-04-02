@@ -1,0 +1,54 @@
+.pull-right
+  .btn-group
+    = link_to 'Edit this repository', edit_repository_path(@repository), class: 'btn btn-default'
+    = link_to repository_users_path(@repository), class: 'btn btn-default', title: 'Users' do
+      %i.fa.fa-group
+    .btn-group
+      %button#branches.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+        Branches
+        %span.caret
+      %ul.dropdown-menu{"aria-labelledby" => "branches", :role => "menu"}
+        - @repository.branches.each do |branch|
+          %li= link_to branch.name, repository_branch_path(@repository, branch)
+    .btn-group
+      %button#tags.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+        Tags
+        %span.caret
+      %ul.dropdown-menu{"aria-labelledby" => "tags", :role => "menu"}
+        - @repository.tags.each do |tag|
+          %li= link_to tag.name, repository_tag_path(@repository, tag)
+%h2
+  = link_to 'Dashboard', root_path
+  \/
+  = @repository.name
+  - if @reference
+    \/
+    - if @reference.class == Tag
+      = link_to @reference.name, repository_tag_path(@repository, @reference)
+    - else
+      = link_to @reference.name, repository_branch_path(@repository, @reference)
+
+.row
+  .col-md-5
+    - collection = @reference.commits
+    - collection.group_by {|commit| commit.committer[:time].to_date }.each do |date, commits|
+      = render partial: 'repositories/commits', locals: {commits: commits, date: date}
+  .col-md-7
+    %table.tree
+      %thead
+        %th
+        %th Name
+        %th Message
+        %th Modified
+      %tbody
+        - @reference.contents.each do |entry|
+          %tr(id="#{entry.type}-#{entry.id}" class="#{entry.type}")
+            %td.icon
+              - if entry.blob?
+                %i.fa.fa-file-o
+              - else
+                %i.fa.fa-folder
+            %td.name
+              %b= link_to entry.name
+            %td.message
+            %td

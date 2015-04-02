@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/libgit2/rugged.git
+  revision: 6cdd5890aab7827f0b74f90ef50a305eae667ac4
+  submodules: true
+  specs:
+    rugged (0.23.0b1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -66,7 +73,6 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.4.0)
-    git (1.2.9.1)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
     haml (4.0.6)
@@ -185,7 +191,6 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.1.0)
   devise
-  git
   haml
   jbuilder (~> 2.0)
   jquery-rails
@@ -193,6 +198,7 @@ DEPENDENCIES
   pg
   puma
   rails (= 4.2.0)
+  rugged!
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   settingslogic

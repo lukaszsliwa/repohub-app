@@ -23,6 +23,9 @@ class RepositoriesController < ApplicationController
 
   def show
     @repository = Repository.find_by_handle(params[:id] || params[:repository_id])
+    @branch = @repository.branches.first
+
+    redirect_to repository_branch_path(@repository, @branch)
   end
 
   def edit
