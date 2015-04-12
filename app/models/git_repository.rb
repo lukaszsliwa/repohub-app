@@ -27,8 +27,4 @@ class GitRepository < Repository
   def git
     @git ||= Rugged::Repository.new path
   end
-
-  def synchronize
-
-  end
 end

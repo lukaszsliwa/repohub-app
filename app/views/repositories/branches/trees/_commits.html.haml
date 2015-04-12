@@ -1,0 +1,8 @@
+.commits
+  .commits-heading
+    %i.fa.fa-code
+    = pluralize commits.size, 'commit'
+    on
+    = date
+  %ul.commits-list
+    = render partial: 'repositories/branches/trees/commit', collection: commits

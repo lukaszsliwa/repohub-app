@@ -1,0 +1,10 @@
+%tr(id="#{content.type}-#{content.id}" class="#{content.type}")
+  %td.icon
+    - if content.blob?
+      %i.fa.fa-file-o
+    - else
+      %i.fa.fa-folder
+  %td.name
+    %b= link_to content.name, create_content_path_from(@repository, @reference, content, params[:path])
+  %td.message
+  %td

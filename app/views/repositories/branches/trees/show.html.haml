@@ -1,0 +1,24 @@
+= render partial: 'repositories/heading'
+
+.row
+  .col-md-5
+    - collection = @branch.commits
+    - collection.group_by {|commit| commit.committer[:time].to_date }.each do |date, commits|
+      = render partial: 'repositories/branches/trees/commits', locals: {commits: commits, date: date}
+  .col-md-7
+    %table.tree
+      %thead
+        %th
+        %th Name
+        %th Message
+        %th Modified
+      %tbody
+        - if params[:path]
+          %tr
+            %td
+            %td
+              %b= link_to '..', :back
+            %td
+            %td
+        = render partial: 'repositories/branches/trees/tree', collection: @branch.folders(params[:path])
+        = render partial: 'repositories/branches/blobs/blob', collection: @branch.files(params[:path])

@@ -3,18 +3,36 @@ class Reference < ActiveRecord::Base
 
   validates :name, presence: true
 
-  has_many :commits, dependent: :destroy
+  def commits
+    walker = Rugged::Walker.new(repository.git)
+    walker.push ref.target_id
+    walker
+  end
 
-  def tree
-    result = repository.git.ls_tree name
-    puts result.inspect
-    dirs = result['tree'].map do |name, values|
-      Tree.new name, values[:sha], values[:mode]
+  def resolve_object(path)
+    object = ref.target.tree
+    if path
+      hash = object.path path
+      object = git.lookup(hash[:oid])
     end
-    files = result['blob'].map do |name, values|
-      Blob.new name, values[:sha], values[:mode]
+    object
+  end
+
+  def contents(path = nil)
+    tree = resolve_object(path)
+    tree.map do |entry|
+      entry_path = path.nil? ? entry[:name] : "#{path}/#{entry[:name]}"
+      output = `cd #{repository.path} && git log -1 --format="%s%n%cr" #{ref.target_id} -- #{entry_path}`.split("\n")
+      OpenStruct.new(name: entry[:name], type: entry[:type], id: entry[:oid], blob?: entry[:type] == :blob, message: output[0], modified: output[1])
     end
-    OpenStruct.new dirs: dirs, files: files
+  end
+
+  def folders(path = nil)
+    contents(path).select { |content| !content.blob? }
+  end
+
+  def files(path = nil)
+    contents(path).select &:blob?
   end
 
   def to_param

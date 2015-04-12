@@ -3,5 +3,7 @@ class Repositories::Branches::CommitsController < Repositories::Branches::Applic
   end
 
   def show
+    @commit = @branch.git.lookup params[:id]
+    @diff = @commit.parents[0].diff @commit
   end
 end

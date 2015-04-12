@@ -1,0 +1,13 @@
+%li.commit.row(id="commit-#{commit.oid}")
+  .col-md-2.commit-author
+    = image_tag 'avatar.png', class: 'img-rounded', width: '58px'
+  .col-md-10
+    .row
+      .col-md-8.commit-message
+        = commit.message
+      .col-md-3.commit-sha
+        - url = @reference.class == Tag ? repository_tag_commit_path(@repository, @reference, commit.oid) : repository_branch_commit_path(@repository, @reference, commit.oid)
+        = link_to url, class: 'btn btn-commit btn-default' do
+          = truncate commit.oid, length: 8, omission: ''
+    .commit-author
+      #{mail_to commit.committer[:email], commit.committer[:name]} on #{l commit.committer[:time], format: :short}

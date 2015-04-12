@@ -1,0 +1,10 @@
+%tr(id="#{blob.type}-#{blob.id}" class="#{blob.type}")
+  %td.icon
+    %i.fa.fa-file-o
+  %td.name
+    - path = params[:path].present? ? File.join(params[:path], blob.name) : blob.name
+    %b= link_to blob.name, repository_branch_blob_path(@repository, @branch, path)
+  %td.message
+    %small= blob.message
+  %td
+    = blob.modified

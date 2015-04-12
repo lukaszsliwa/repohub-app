@@ -1,1 +1,4 @@
-= render partial: 'repositories/show'
+- if @reference.is_blob? params[:path]
+  Blob
+- else
+  = render partial: 'repositories/show'

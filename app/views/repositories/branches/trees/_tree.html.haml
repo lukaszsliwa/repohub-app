@@ -1,0 +1,10 @@
+%tr(id="#{tree.type}-#{tree.id}" class="#{tree.type}")
+  %td.icon
+    %i.fa.fa-folder
+  %td.name
+    - path = params[:path].present? ? File.join(params[:path], tree.name) : tree.name
+    %b= link_to tree.name, repository_branch_tree_path(@repository, @branch, path)
+  %td.message
+    = tree.message
+  %td
+    = tree.modified

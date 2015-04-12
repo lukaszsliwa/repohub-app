@@ -14,4 +14,11 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
+//= require highlight/highlight.pack
 //= require_tree .
+
+$(document).ready(function() {
+    $('code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+});

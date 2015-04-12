@@ -1,0 +1,26 @@
+= render partial: 'repositories/heading'
+
+%ul
+  - @diff.each_delta do |delta|
+    %li
+      .pull-left
+        - if delta.status == :added
+          %i.fa.fa-plus-square(style='color: green')
+        - if delta.status == :deleted
+          %i.fa.fa-minus-square
+        - if delta.status == :modified
+          %i.fa.fa-pencil-square(style='color: orange')
+      .pull-left
+        = delta.new_file[:path]
+
+- @diff.each_delta do |delta|
+  - object1 = @repository.git.lookup delta.new_file[:oid]
+  - object2 = @repository.git.lookup delta.old_file[:oid] rescue nil
+  %section
+    .heading
+      = delta.new_file[:path]
+    %code
+      - if object2.nil?
+        = StringIO.new(object1.content).string
+      - else
+        = object1.diff(object2)

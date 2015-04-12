@@ -22,10 +22,12 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    @repository = Repository.find_by_handle(params[:id] || params[:repository_id])
-    @branch = @repository.branches.first
-
-    redirect_to repository_branch_path(@repository, @branch)
+    @repository = Repository.find_by_handle!(params[:repository_id] || params[:id])
+    if (@branch = @repository.branches.first).present?
+      redirect_to repository_branch_path(@repository, @branch)
+    else
+      render file: 'repositories/blank'
+    end
   end
 
   def edit
