@@ -6,7 +6,7 @@
       .col-md-8.commit-message
         = commit.message
       .col-md-3.commit-sha
-        - url = @reference.class == Tag ? repository_tag_commit_path(@repository, @reference, commit.oid) : repository_branch_commit_path(@repository, @reference, commit.oid)
+        - repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: commit.oid)
         = link_to url, class: 'btn btn-commit btn-default' do
           = truncate commit.oid, length: 8, omission: ''
     .commit-author

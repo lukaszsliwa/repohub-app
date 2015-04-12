@@ -14,13 +14,13 @@
         = delta.new_file[:path]
 
 - @diff.each_delta do |delta|
-  - object1 = @repository.git.lookup delta.new_file[:oid]
+  - object1 = @repository.git.lookup delta.new_file[:oid] rescue nil
   - object2 = @repository.git.lookup delta.old_file[:oid] rescue nil
   %section
     .heading
       = delta.new_file[:path]
-    %code
+    %pre
       - if object2.nil?
-        = StringIO.new(object1.content).string
-      - else
-        = object1.diff(object2)
+        %code= StringIO.new(object1.content).string
+      - elsif object1.present? && object2.present?
+        %code= object1.diff(object2)

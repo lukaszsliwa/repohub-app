@@ -3,8 +3,8 @@
     %i.fa.fa-folder
   %td.name
     - path = params[:path].present? ? File.join(params[:path], tree.name) : tree.name
-    %b= link_to tree.name, repository_branch_tree_path(@repository, @branch, path)
+    = link_to tree.name, repository_reference_tree_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, path: path)
   %td.message
     = tree.message
-  %td
+  %td.modified
     = tree.modified

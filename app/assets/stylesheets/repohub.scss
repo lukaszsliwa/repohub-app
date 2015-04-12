@@ -10,6 +10,10 @@ h2 {
   padding-bottom: 30px;
 }
 
+pre {
+  padding: unset!important;
+}
+
 table {
   &.repositories-table, &.keys-table {
     td {
@@ -64,25 +68,31 @@ table {
 
 
 .commits {
-  border-right: 1px solid #eaeaea;
+  border-color: #eaeaea;
+  border-image: none;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  padding: 8px 8px 0;
+  margin-top: 10px;
 
   .commits-heading {
     font-weight: bold;
-    font-size: 13px;
+    font-size: 12px;
 
     color: #333;
   }
 
   .commits-list {
-    border-left: 3px solid #eaeaea;
-    margin-left: 5px;
-
     list-style-type: none;
 
-    padding: 10px;
+    padding: 5px;
 
     .commit {
-      margin-top: 15px;
+      border-top: 1px solid #eaeaea;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      padding-top: 10px;
 
       .commit-author {
         font-size: 12px;
@@ -90,30 +100,89 @@ table {
         margin-top: 5px;
       }
       .commit-message {
-        font-size: 14px;
+        font-size: 15px;
         font-weight: bold;
         color: #4e575b;
       }
 
       .btn-commit {
-        width: 80px;
+        width: 95px;
       }
     }
   }
 }
 
-table.tree {
-  td {
-    padding-top: 5px;
+section.tree {
+  .modified {
+    color: #888888;
+  }
+  .tree-heading {
+    background: none repeat scroll 0 0 #e6f1f6;
+    border-color: #b7c7cf #b7c7cf #d8e6ec;
+    border-image: none;
+    border-style: solid;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-width: 1px;
+    padding: 8px 8px 0;
 
-    &.icon {
-      width: 26px;
+    .tree-commit-message {
+      font-size: 12px;
+      font-weight: bold;
     }
-    &.name {
-      width: 200px;
+    .tree-commit-author {
+      font-size: 13px;
+      background: none repeat scroll 0 0 #fff;
+      border-top: 1px solid #d8e6ec;
+      margin-left: -8px;
+      margin-right: -8px;
+      padding: 8px;
+
+      .tree-commit-link {
+        color: #4d4d4c;
+        text-decoration: underline;
+        font-size: 13px;
+      }
     }
-    &.message {
-      width: 300px;
+  }
+  .tree-content {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-color: -moz-use-text-color #ddd #ddd;
+    border-image: none;
+    border-right: 1px solid #ddd;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+    margin-bottom: 10px;
+
+    table {
+      background: none repeat scroll 0 0 #f8f8f8;
+      border-radius: 2px;
+      width: 100%;
+
+      td {
+        border-top: 1px solid #eee;
+        line-height: 20px;
+        padding: 6px 3px;
+        font-size: 14px;
+
+        &.icon {
+          color: #777;
+          padding-left: 10px;
+          padding-right: 2px;
+          width: 20px;
+        }
+        &.name {
+          width: 200px;
+        }
+        &.message {
+          width: 300px;
+        }
+      }
     }
   }
 }

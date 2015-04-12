@@ -9,14 +9,14 @@
         %span.caret
       %ul.dropdown-menu{"aria-labelledby" => "branches", :role => "menu"}
         - @repository.branches.each do |branch|
-          %li= link_to branch.name, repository_branch_tree_path(@repository, branch)
+          %li= link_to branch.name, repository_reference_tree_path(@repository, reference_type: 'branches', reference_id: branch.name)
     .btn-group
       %button#tags.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
         = @tag.try(:name) || 'Tags'
         %span.caret
       %ul.dropdown-menu{"aria-labelledby" => "tags", :role => "menu"}
         - @repository.tags.each do |tag|
-          %li= link_to tag.name, repository_tag_path(@repository, tag)
+          %li= link_to tag.name, repository_reference_tree_path(@repository, reference_type: 'tags', reference_id: tag.name)
 
 %h2
   = link_to 'Dashboard', root_path

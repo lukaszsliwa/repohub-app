@@ -1,0 +1,4 @@
+= render partial: 'repositories/heading'
+
+%pre
+  %code= @blob.content.lines.map {|line| line }.join

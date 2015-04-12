@@ -1,0 +1,13 @@
+%li.commit.row(id="commit-#{commit.sha}")
+  .col-md-1.commit-author
+    = image_tag commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
+  .col-md-11
+    .row
+      .col-md-8.commit-message
+        = commit.message
+        .commit-author
+          #{mail_to commit.email, commit.author} on #{l commit.issued_at, format: :short}
+      .col-md-3.commit-sha
+        = link_to repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: commit.sha), class: 'btn btn-commit btn-default' do
+          %i.fa.fa-code-fork
+          = truncate commit.sha, length: 8, omission: ''

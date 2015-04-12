@@ -2,8 +2,7 @@
 
 .row
   .col-md-5
-    - collection = @reference.commits
-    - collection.group_by {|commit| commit.committer[:time].to_date }.each do |date, commits|
+    - @commits.group_by {|commit| commit.issued_at.to_date }.each do |date, commits|
       = render partial: 'repositories/commits', locals: {commits: commits, date: date}
   .col-md-7
     %table.tree
