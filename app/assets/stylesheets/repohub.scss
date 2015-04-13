@@ -77,32 +77,36 @@ table {
   margin-top: 10px;
 
   .commits-heading {
-    font-weight: bold;
-    font-size: 12px;
+    margin-bottom: 5px;
+    font-size: 13px;
 
-    color: #333;
+    color: #888;
   }
 
   .commits-list {
     list-style-type: none;
 
-    padding: 5px;
+    padding-left: 5px;
 
     .commit {
       border-top: 1px solid #eaeaea;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      padding-top: 10px;
+      padding: 10px;
+      margin-left: -14px;
+      margin-right: -9px;
 
+      .commit-avatar {
+        margin-left: 15px;
+      }
       .commit-author {
         font-size: 12px;
         font-weight: normal;
-        margin-top: 5px;
       }
       .commit-message {
-        font-size: 15px;
+        font-size: 13px;
         font-weight: bold;
-        color: #4e575b;
+        a { color: #4e575b; }
+        width: 210px;
+        margin-left: 10px;
       }
 
       .btn-commit {
@@ -113,6 +117,8 @@ table {
 }
 
 section.tree {
+  margin-top: 10px;
+
   .modified {
     color: #888888;
   }
@@ -125,6 +131,14 @@ section.tree {
     border-top-right-radius: 3px;
     border-width: 1px;
     padding: 8px 8px 0;
+
+    a {
+      text-decoration: none;
+      color: #4d4d4c;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
 
     .tree-commit-message {
       font-size: 12px;
@@ -180,7 +194,14 @@ section.tree {
           width: 200px;
         }
         &.message {
-          width: 300px;
+          width: 530px;
+          a {
+            text-decoration: none;
+            color: #4d4d4c;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
       }
     }

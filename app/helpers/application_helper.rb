@@ -1,10 +1,12 @@
+require 'github/markup'
+
 module ApplicationHelper
-  def create_content_path_from(repository, reference, content, current_path = nil)
-    path = current_path.nil? ? content.name : File.join(current_path, content.name)
-    if reference.type == 'Branch'
-      repository_branch_browser_path(repository, reference, path: path)
-    else
-      repository_tag_browser_path(repository, reference, path: path)
+  def render_readme(reference, path)
+    readme = reference.files(path).map(&:name).find {|file| file =~ /\AREADME\./}
+    if readme.present?
+      readme_path = path.present? ? "#{path}/#{readme}" : readme
+      content = reference.resolve_object(readme_path).content.lines.join
+      GitHub::Markup.render(readme, content).html_safe
     end
   end
 end

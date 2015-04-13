@@ -5,6 +5,7 @@
     - path = params[:path].present? ? File.join(params[:path], blob.name) : blob.name
     = link_to blob.name, repository_reference_blob_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, path: path)
   %td.message
-    = blob.message
+    = link_to repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: blob.sha), title: blob.message do
+      = truncate blob.message, length: 48
   %td.modified
     = blob.modified

@@ -38,17 +38,17 @@ class Reference < ActiveRecord::Base
     tree = resolve_object(path)
     tree.map do |entry|
       entry_path = path.nil? ? entry[:name] : "#{path}/#{entry[:name]}"
-      output = `cd #{repository.path} && git log -1 --format="%s%n%cr" #{ref.target_id} -- #{entry_path}`.split("\n")
-      OpenStruct.new(name: entry[:name], type: entry[:type], id: entry[:oid], blob?: entry[:type] == :blob, message: output[0], modified: output[1])
+      output = `cd #{repository.path} && git log -1 --format="%s%n%cr%n%H" #{ref.target_id} -- #{entry_path}`.split("\n")
+      OpenStruct.new(name: entry[:name], type: entry[:type], id: entry[:oid], blob?: entry[:type] == :blob, message: output[0], modified: output[1], sha: output[2])
     end
   end
 
   def folders(path = nil)
-    contents(path).select { |content| !content.blob? }
+    @folders ||= contents(path).select { |content| !content.blob? }
   end
 
   def files(path = nil)
-    contents(path).select &:blob?
+    @files ||= contents(path).select &:blob?
   end
 
   def to_param

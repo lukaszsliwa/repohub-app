@@ -21,6 +21,7 @@ gem 'mini_magick'
 
 gem 'settingslogic'
 gem 'rugged', git: 'git://github.com/libgit2/rugged.git', submodules: true
+gem 'github-markup'
 
 group :development, :test do
   gem 'byebug'

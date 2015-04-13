@@ -1,14 +1,15 @@
 = render partial: 'repositories/heading'
 
 .row
-  .col-md-5
+  .col-md-3
     - @commits.group_by {|commit| commit.issued_at.to_date }.each do |date, commits|
       = render partial: 'repositories/references/trees/commits', locals: {commits: commits, date: date}
-  .col-md-7
+  .col-md-9
     %section.tree
       .tree-heading
         %p.tree-commit-message
-          = @commits.first.message
+          %i.fa.fa-code-fork
+          = link_to @commits.first.message, repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: @commits.first.sha), title: @commits.first.message
         .tree-commit-author
           .pull-left
             = image_tag @commits.first.user.avatar.thumb, width: '22px', class: 'img-rounded'
@@ -30,3 +31,7 @@
                 %td
             = render partial: 'repositories/references/trees/tree', collection: @reference.folders(params[:path])
             = render partial: 'repositories/references/blobs/blob', collection: @reference.files(params[:path])
+
+    %section.readme
+      .content
+        = render_readme @reference, params[:path]

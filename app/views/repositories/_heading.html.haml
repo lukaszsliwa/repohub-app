@@ -1,24 +1,26 @@
-.pull-right
-  .btn-group
-    = link_to 'Edit this repository', edit_repository_path(@repository), class: 'btn btn-default'
-    = link_to repository_users_path(@repository), class: 'btn btn-default', title: 'Users' do
-      %i.fa.fa-group
+.row
+  .col-md-3
     .btn-group
-      %button#branches.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
-        = @branch.try(:name) || 'Branches'
-        %span.caret
-      %ul.dropdown-menu{"aria-labelledby" => "branches", :role => "menu"}
-        - @repository.branches.each do |branch|
-          %li= link_to branch.name, repository_reference_tree_path(@repository, reference_type: 'branches', reference_id: branch.name)
-    .btn-group
-      %button#tags.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
-        = @tag.try(:name) || 'Tags'
-        %span.caret
-      %ul.dropdown-menu{"aria-labelledby" => "tags", :role => "menu"}
-        - @repository.tags.each do |tag|
-          %li= link_to tag.name, repository_reference_tree_path(@repository, reference_type: 'tags', reference_id: tag.name)
-
-%h2
-  = link_to 'Dashboard', root_path
-  \/
-  = link_to @repository.name, repository_path(@repository)
+      = link_to 'Dashboard', root_path, class: 'btn btn-default'
+      = link_to @repository.name, repository_path(@repository), class: 'btn btn-default'
+  .col-md-9
+    .pull-left.btn-group
+      = link_to 'Edit this repository', edit_repository_path(@repository), class: 'btn btn-default'
+      = link_to repository_users_path(@repository), class: 'btn btn-default', title: 'Users' do
+        %i.fa.fa-group
+    .pull-right.btn-group
+      .btn-group
+        %button#branches.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+          = @branch.try(:name) || 'Branches'
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "branches", :role => "menu"}
+          - @repository.branches.each do |branch|
+            %li= link_to branch.name, repository_reference_tree_path(@repository, reference_type: 'branches', reference_id: branch.name)
+      .btn-group
+        %button#tags.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+          = @tag.try(:name) || 'Tags'
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "tags", :role => "menu"}
+          - @repository.tags.each do |tag|
+            %li= link_to tag.name, repository_reference_tree_path(@repository, reference_type: 'tags', reference_id: tag.name)
+  .clearfix
