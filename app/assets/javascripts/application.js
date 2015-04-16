@@ -15,6 +15,8 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require highlight/highlight.pack
+//= require d3.min
+//= require moment-with-locales.min
 //= require_tree .
 
 $(document).ready(function() {

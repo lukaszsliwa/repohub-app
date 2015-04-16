@@ -25,6 +25,18 @@ class Reference < ActiveRecord::Base
     Commit.where(sha: walker.each(limit: limit, offset: offset).map(&:oid))
   end
 
+  def commits_by_user(from, to)
+    since_attr = from.nil? ? '' : "--since='#{from.to_date} 00:00:00 +0000'"
+    until_attr = to.nil? ? '' : "--until='#{to.to_date} 23:59:59 +0000'"
+    output = `cd #{repository.path} && git shortlog -s -n #{since_attr} #{until_attr} #{name}`
+    output.lines.map do |line|
+      puts line.strip
+      matcher = /\A([0-9]+)\t(.+)\z/.match line.strip
+      puts matcher.inspect
+      OpenStruct.new(count: matcher[1].to_i, author: matcher[2])
+    end
+  end
+
   def resolve_object(path)
     object = ref.target.tree
     if path

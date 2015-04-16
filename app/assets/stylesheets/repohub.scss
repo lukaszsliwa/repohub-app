@@ -116,6 +116,14 @@ table {
   }
 }
 
+.contributors {
+  margin-top: 10px;
+  .contributor {
+    margin: 3px;
+    float: left;
+  }
+}
+
 section.tree {
   margin-top: 10px;
 
@@ -206,4 +214,23 @@ section.tree {
       }
     }
   }
+}
+
+#commits-calendar {
+  background-color: #fff;
+  .cell:hover {
+    border: 1px solid #4d4d4c;
+  }
+}
+
+div.tooltip {
+  position: absolute;
+  width: 220px;
+  padding: 10px;
+  font: 12px sans-serif;
+  background-color: #4d4d4c;
+  color: #fff;
+  opacity: .9;
+  border-radius: 2px;
+  pointer-events: none;
 }

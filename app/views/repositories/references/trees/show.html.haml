@@ -2,8 +2,16 @@
 
 .row
   .col-md-3
+    %svg#commits-calendar{data: {url: repository_reference_commits_count_path(reference_type: @reference.type.tableize, reference_id: @reference.name, from: 111.days.ago.to_date, to: Date.today, format: :json)}}
+
     - @commits.group_by {|commit| commit.issued_at.to_date }.each do |date, commits|
       = render partial: 'repositories/references/trees/commits', locals: {commits: commits, date: date}
+
+    .contributors
+      - @repository.users.each do |user|
+        .contributor
+          = image_tag user.avatar.thumb, width: '32px', class: 'img-rounded', title: user.username
+    .clearfix
   .col-md-9
     %section.tree
       .tree-heading
