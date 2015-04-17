@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require turbolinks
 //= require highlight/highlight.pack
 //= require d3.min
 //= require moment-with-locales.min

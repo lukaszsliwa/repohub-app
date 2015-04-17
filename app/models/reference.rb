@@ -22,7 +22,7 @@ class Reference < ActiveRecord::Base
     walker.push ref.target_id
     walker
 
-    Commit.where(sha: walker.each(limit: limit, offset: offset).map(&:oid))
+    Commit.where(sha: walker.each(limit: limit, offset: offset).map(&:oid)).order('id desc')
   end
 
   def commits_by_user(from, to)
@@ -30,9 +30,7 @@ class Reference < ActiveRecord::Base
     until_attr = to.nil? ? '' : "--until='#{to.to_date} 23:59:59 +0000'"
     output = `cd #{repository.path} && git shortlog -s -n #{since_attr} #{until_attr} #{name}`
     output.lines.map do |line|
-      puts line.strip
       matcher = /\A([0-9]+)\t(.+)\z/.match line.strip
-      puts matcher.inspect
       OpenStruct.new(count: matcher[1].to_i, author: matcher[2])
     end
   end

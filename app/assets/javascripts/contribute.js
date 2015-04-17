@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var margin = {top: 0, right: 0, bottom: 0, left: 0},
         width = 265,
-        height = 170;
+        height = 265;
 
     var per_row = 15;
 
@@ -9,7 +9,7 @@ $(document).ready(function() {
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-    $.getJSON($("#commits-calendar").data('url'), function(days) {
+    $.getJSON($("#commits-calendar").data('path'), function(days) {
 
         var svg = d3.select("#commits-calendar")
             .attr("width", width)
