@@ -1,9 +1,6 @@
-.pull-right
-  .btn-group
-    = link_to 'Edit this repository', edit_repository_path(@repository), class: 'btn btn-default'
-    = link_to repository_users_path(@repository), class: 'btn btn-default', title: 'Users' do
-      %i.fa.fa-group
-.clearfix
+= content_for :nav do
+  = render partial: 'repositories/nav'
+
 %br
 .jumbotron
   .container.text-center

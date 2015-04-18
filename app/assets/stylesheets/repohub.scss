@@ -14,6 +14,19 @@ pre {
   padding: unset!important;
 }
 
+.navbar {
+  margin-bottom: 0 !important;
+}
+
+.dropdown-header {
+  font-weight: bold;
+}
+
+#heading {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 table {
   &.repositories-table, &.keys-table {
     td {
@@ -42,6 +55,18 @@ table {
       &.actions-td {
         width: 20%
       }
+    }
+  }
+}
+
+.keys-table {
+  .name-td {
+    width: 20%!important;
+  }
+  .value-td {
+    width: 60%;
+    code {
+      padding: 10px;
     }
   }
 }
@@ -134,6 +159,7 @@ section.tree {
   margin-top: 10px;
 
   .modified {
+    width: 130px;
     color: #888888;
   }
   .tree-heading {

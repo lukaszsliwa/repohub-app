@@ -1,4 +1,6 @@
 class Repository < ActiveRecord::Base
+  attr_readonly :handle
+
   belongs_to :created_by, class_name: 'User'
 
   validates :name, :handle, presence: true

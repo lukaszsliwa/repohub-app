@@ -1,9 +1,9 @@
-.pull-right
-  = link_to new_repository_path, class: 'btn btn-success' do
-    %fa.fa.fa-plus
-    Create a repository
-
-%h2 Dashboard
+= content_for :nav do
+  = content_for :actions do
+    = link_to new_repository_path, class: 'btn btn-success' do
+      %fa.fa.fa-plus
+      Create a repository
+  = render partial: 'shared/nav'
 
 %table.table.repositories-table
   %tbody

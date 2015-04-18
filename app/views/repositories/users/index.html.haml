@@ -1,10 +1,8 @@
-%h2
-  Dashboard
-  \/
-  = link_to @repository.name, repository_path(@repository)
-  \/
-  = link_to 'Users', repository_users_path(@repository)
+= content_for :nav do
+  = render partial: 'repositories/nav'
 
-%table.table.users-table
-  %tbody
-    = render partial: 'repositories/users/user', collection: @users
+.row
+  .col-md-12
+    %table.table.users-table
+      %tbody
+        = render partial: 'repositories/users/user', collection: @users

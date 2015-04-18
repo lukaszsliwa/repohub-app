@@ -28,17 +28,10 @@
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
     = javascript_include_tag "application"
   %body
-    .navbar.navbar-default.navbar-static-top
+    .navbar.navbar-static-top
       .container
-        %button.navbar-toggle{"data-target" => ".navbar-responsive-collapse", "data-toggle" => "collapse", :type => "button"}
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        = link_to 'Repohub', root_path, class: 'navbar-brand'
         .navbar-collapse.collapse.navbar-responsive-collapse
-          %ul.nav.navbar-nav.pull-right
-            %li= link_to 'Users', users_path
-            %li= link_to 'Logout', destroy_user_session_path
+          = yield :nav
     .container
       .row
         .col-lg-12

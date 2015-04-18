@@ -6,6 +6,6 @@
     = link_to blob.name, repository_reference_blob_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, path: path)
   %td.message
     = link_to repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: blob.sha), title: blob.message do
-      = truncate blob.message, length: 48
+      = truncate blob.message, length: 72
   %td.modified
     = blob.modified

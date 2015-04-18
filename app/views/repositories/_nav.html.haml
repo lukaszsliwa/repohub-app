@@ -1,0 +1,44 @@
+= content_for :settings do
+  %li.dropdown-header= @repository.name
+  %li= link_to 'Edit the repository', edit_repository_path(@repository)
+  %li
+    = link_to repository_users_path(@repository) do
+      Contributors
+      %span.label.label-default= @repository.users.count
+  %li.divider
+
+#heading.row
+  .col-md-3
+    .btn-group
+      = link_to 'Dashboard', root_path, class: 'btn btn-default'
+      = link_to @repository.name, repository_path(@repository), class: 'btn btn-default'
+      = render partial: 'shared/nav/repositories'
+  .col-md-9
+    .pull-left
+      = link_to @reference.name, repository_reference_tree_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name), class: 'btn btn-default' if @reference
+    .pull-right
+      .btn-group
+        .btn-group
+          %button#branches.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+            = @branch.try(:name) || 'Branches'
+            %span.caret
+          %ul.dropdown-menu{"aria-labelledby" => "branches", :role => "menu"}
+            - @repository.branches.each do |branch|
+              %li= link_to branch.name, repository_reference_tree_path(@repository, reference_type: 'branches', reference_id: branch.name)
+        .btn-group
+          %button#tags.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+            = @tag.try(:name) || 'Tags'
+            %span.caret
+          %ul.dropdown-menu{"aria-labelledby" => "tags", :role => "menu"}
+            - @repository.tags.each do |tag|
+              %li= link_to tag.name, repository_reference_tree_path(@repository, reference_type: 'tags', reference_id: tag.name)
+      .btn-group
+        %button#settings.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+          %i.fa.fa-cog
+        %ul.dropdown-menu{"aria-labelledby" => "settings", :role => "menu"}
+          = yield :settings
+          %li.dropdown-header= current_user.full_name
+          %li= link_to 'Keys', keys_path
+          %li.divider
+          %li= link_to 'Logout', destroy_user_session_path, method: :delete
+  .clearfix

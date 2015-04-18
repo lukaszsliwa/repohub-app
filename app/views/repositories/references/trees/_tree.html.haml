@@ -6,6 +6,6 @@
     = link_to tree.name, repository_reference_tree_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, path: path)
   %td.message
     = link_to repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: tree.sha), title: tree.message do
-      = truncate tree.message, length: 48
+      = truncate tree.message, length: 72
   %td.modified
     = tree.modified

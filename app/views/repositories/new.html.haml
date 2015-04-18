@@ -1,7 +1,7 @@
-%h2
-  = link_to 'Dashboard', root_path
-  \/
-  Create a repository
+= content_for :nav do
+  = content_for :current do
+    = link_to 'New repository', new_repository_path, class: 'btn btn-default'
+  = render partial: 'shared/nav'
 
 = form_for @repository, as: :repository, url: repositories_path do |f|
   = render partial: 'repositories/form', locals: {f: f}

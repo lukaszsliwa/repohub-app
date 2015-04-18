@@ -1,12 +1,10 @@
-%h2
-  = link_to 'Dashboard', root_path
-  \/
-  = link_to (@repository.name.present? ? @repository.name : '(No name)'), repository_path(id: params[:id])
-  \/
-  Edit this repository
+= content_for :nav do
+  = render partial: 'repositories/nav'
 
-= form_for @repository, as: :repository, url: repository_path(id: params[:id]) do |f|
-  = f.hidden_field :id
-  = render partial: 'repositories/form', locals: {f: f}
-%hr
-= link_to 'Delete this repository', repository_path(id: params[:id]), method: :delete, data: {confirm: "Do you want to remove a repository?"}
+.row
+  .col-md-12
+    = form_for @repository, as: :repository, url: repository_path(id: params[:id]) do |f|
+      = f.hidden_field :id
+      = render partial: 'repositories/form', locals: {f: f}
+    %hr
+    = link_to 'Delete this repository', repository_path(id: params[:id]), method: :delete, data: {confirm: "Do you want to remove a repository?"}

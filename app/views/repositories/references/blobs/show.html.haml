@@ -1,4 +1,5 @@
-= render partial: 'repositories/heading'
+= content_for :nav do
+  = render partial: 'repositories/nav'
 
 %pre
   %code= @blob.content.lines.map {|line| line }.join

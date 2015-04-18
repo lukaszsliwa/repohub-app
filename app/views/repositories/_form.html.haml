@@ -1,9 +1,10 @@
 .form-group
   = f.label :name, 'Repository Name'
   = f.text_field :name, class: 'form-control'
-.form-group
-  = f.label :handle, 'Handle'
-  = f.text_field :handle, class: 'form-control'
+- if f.object.new_record?
+  .form-group
+    = f.label :handle, 'Handle'
+    = f.text_field :handle, class: 'form-control'
 .form-group
   = f.label :description, 'Repository Description'
   = f.text_area :description, class: 'form-control'

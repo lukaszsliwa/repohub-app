@@ -1,0 +1,21 @@
+= content_for :nav do
+  = render partial: 'keys/nav'
+
+%table.table.keys-table
+  %tbody
+    - @keys.each do |key|
+      %tr
+        %td.name-td
+          = key.name
+        %td.value-td
+          %code
+            #{truncate key.value, length: 32, omission: "..."}#{key.value.last 42}
+        %td.actions-td
+          = link_to 'Edit', edit_key_path(key), class: 'btn btn-warning'
+
+- if @keys.empty?
+  .jumbotron
+    .container.text-center
+      You have not uploaded any public keys yet.
+      &nbsp;
+      = link_to 'Upload your first public key now', new_key_path, class: 'btn btn-success'

@@ -1,9 +1,4 @@
-.pull-right
-  = link_to new_user_path, class: 'btn btn-success' do
-    %fa.fa.fa-plus
-    Add a user
-
-%h2 Users
+= render partial: 'shared/heading'
 
 %table.table.users-table
   %tbody

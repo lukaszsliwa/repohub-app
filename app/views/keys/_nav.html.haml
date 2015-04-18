@@ -1,0 +1,11 @@
+= content_for :nav do
+  = content_for :current do
+    = link_to 'Keys', keys_path, class: 'btn btn-default'
+  = content_for :actions do
+    .btn-group
+      = link_to new_key_path, class: 'btn btn-success' do
+        %fa.fa.fa-plus
+        Add a key
+      - if @key.present?
+        = link_to 'Delete this key', key_path(@key), method: :delete, data: {confirm: "Do you want to remove this key?"}, class: 'btn btn-danger'
+  = render partial: 'shared/nav'

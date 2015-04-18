@@ -1,0 +1,21 @@
+#heading.row
+  .col-md-3
+    .btn-group
+      = link_to 'Dashboard', root_path, class: 'btn btn-default'
+      = yield :current
+      = render partial: 'shared/nav/repositories'
+  .col-md-9
+    .pull-left
+      = yield :actions
+    .pull-right
+      .btn-group
+        %button#settings.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+          %i.fa.fa-cog
+        %ul.dropdown-menu{"aria-labelledby" => "settings", :role => "menu"}
+          = yield :settings
+          %li.dropdown-header
+            = current_user.full_name
+          %li= link_to 'Keys', keys_path
+          %li.divider
+          %li= link_to 'Logout', destroy_user_session_path, method: :delete
+  .clearfix

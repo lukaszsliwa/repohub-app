@@ -17,25 +17,8 @@ Rails.application.routes.draw do
 
     post '/:reference_type/:reference_id/callback' => 'repositories/references/callbacks#create', constraints: {reference_id: /.+/}
     delete '/:reference_type/:reference_id/callback' => 'repositories/references/callbacks#destroy', constraints: {reference_id: /.+/}
-
-    #get '/branches/:id' => redirect('/repositories/%{repository_id}/branches/%{id}/tree')
-    #resources :branches, controller: 'repositories/branches', constraints: {branch_id: /.+/} do
-    #  get '/tree(/*path)' => 'repositories/branches/trees#show', as: :tree, constraints: {path: /.+/}
-    #  get '/blob(/*path)' => 'repositories/branches/blobs#show', as: :blob, constraints: {path: /.+/}
-    #  resources :commits, only: [:index, :show], controller: 'repositories/branches/commits'
-    #  resource :callback, only: [:create, :destroy], controller: 'repositories/branches/callbacks'
-    #end
-    #
-    #resources :tags, controller: 'repositories/tags', constraints: {tag_id: /.+/} do
-    #  get '/tree(/*path)' => 'repositories/tags/trees#show', as: :tree, constraints: {path: /.+/}
-    #  get '/blob(/*path)' => 'repositories/tags/blobs#show', as: :blob, constraints: {path: /.+/}
-    #  resources :commits, only: [:index, :show], controller: 'repositories/tags/commits'
-    #  resource :callback, only: [:create, :destroy], controller: 'repositories/tags/callbacks'
-    #end
   end
-  resources :users do
-    resources :keys, controller: 'users/keys'
-  end
+  resources :keys
 
   root 'repositories#index'
 end

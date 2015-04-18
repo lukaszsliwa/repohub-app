@@ -1,0 +1,5 @@
+= content_for :nav do
+  = render partial: 'keys/nav'
+
+= form_for @key, url: key_path(@key) do |f|
+  = render partial: 'keys/form', locals: {f: f}
