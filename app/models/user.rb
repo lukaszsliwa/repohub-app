@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  attr_readonly :username
+
+  before_validation :validate_server_user, on: :create
   before_validation :generate_password, on: :create
   after_create  :server_command_add_user
   after_destroy :server_command_delete_user
@@ -18,11 +21,17 @@ class User < ActiveRecord::Base
     self.password = Devise.friendly_token.first 32
   end
 
+  def validate_server_user
+    unless `getent passwd #{username}`.blank?
+      self.errors[:username] << 'is incorrect or limited by the system'
+    end
+  end
+
   def server_command_add_user
-    `#{Settings.server.user.add.exec % {login: username}}`
+    Rails.logger.info `#{Rails.root}/bin/application/user/create.sh #{username}`
   end
 
   def server_command_delete_user
-    `#{Settings.server.user.delete.exec % {login: username}}`
+    Rails.logger.info `#{Rails.root}/bin/application/user/destroy.sh #{username}`
   end
 end

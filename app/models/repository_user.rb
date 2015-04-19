@@ -6,12 +6,10 @@ class RepositoryUser < ActiveRecord::Base
   after_destroy :server_command_after_destroy
 
   def server_command_after_create
-    `#{Settings.server.link.add.exec % {login: user.username, repository: repository.handle}}`
-    `#{Settings.server.group.user.add.exec % {user: user.username, group: "repository_#{repository.id}"}}`
+    Rails.logger.info `#{Rails.root}/bin/application/repository_user/create.sh #{user.username} #{repository.handle} #{repository.id}`
   end
 
   def server_command_after_destroy
-    `#{Settings.server.link.delete.exec % {login: user.username, repository: repository.handle}}`
-    `#{Settings.server.group.user.delete.exec % {user: user.username, group: "repository_#{repository.id}"}}`
+    Rails.logger.info `#{Rails.root}/bin/application/repository_user/destroy.sh #{user.username} #{repository.handle} #{repository.id}`
   end
 end
