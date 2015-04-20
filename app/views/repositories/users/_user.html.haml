@@ -8,11 +8,14 @@
     .email
       = user.email
   %td.actions-td
-    = link_to repository_user_path(@repository, user), method: :patch, remote: true, class: 'btn btn-success' do
-      - if @repository.users.include?(user)
-        %i.fa.fa-check
-      Allow
-    = link_to repository_user_path(@repository, user), method: :delete, remote: true, class: 'btn btn-danger' do
-      - unless @repository.users.include?(user)
-        %i.fa.fa-check
-      Deny
+    .btn-group
+      = link_to repository_user_path(@repository, user), method: :patch, remote: true, class: 'btn btn-success btn-on' do
+        - if @repository.users.include?(user)
+          %i.fa.fa-check
+        Allow
+      = link_to repository_user_path(@repository, user), method: :delete, remote: true, class: 'btn btn-danger btn-off' do
+        Deny
+        - unless @repository.users.include?(user)
+          %i.fa.fa-check
+    = link_to user_path(id: user.username), method: :delete, remote: true, class: 'btn btn-default', title: 'Close an account', data: {confirm: 'Do you want to close this account?'} do
+      %i.fa.fa-times

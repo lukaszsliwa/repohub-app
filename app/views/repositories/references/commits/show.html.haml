@@ -2,7 +2,7 @@
   = render partial: 'repositories/nav'
 
 %ul
-  - @diff.each_delta do |delta|
+  - @diff.deltas.each_with_index do |delta, index|
     %li
       .pull-left
         - if delta.status == :added
@@ -12,16 +12,40 @@
         - if delta.status == :modified
           %i.fa.fa-pencil-square(style='color: orange')
       .pull-left
-        = delta.new_file[:path]
+        %span.file-path(data-number="#{index}")
+          = delta.new_file[:path]
 
-- @diff.each_delta do |delta|
-  - object1 = @repository.git.lookup delta.new_file[:oid] rescue nil
-  - object2 = @repository.git.lookup delta.old_file[:oid] rescue nil
-  %section
-    .heading
-      = delta.new_file[:path]
-    %pre
-      - if object2.nil?
-        %code= StringIO.new(object1.content).string
-      - elsif object1.present? && object2.present?
-        %code= object1.diff(object2)
+- @diff.patches.each_with_index do |patch, index|
+  - patch.hunks.each do |hunk|
+    .file(data-number="#{index}")
+      .file-header
+        .pull-left.file-header-info
+          - additions = hunk.lines.count(&:addition?)
+          - deletions = hunk.lines.count(&:deletion?)
+          - changes = additions + deletions
+          .pull-left.file-header-info-squares(data-additions="#{additions}" data-deletions="#{deletions}")
+            - (additions * 7 / changes).round.times do
+              .pull-left.file-header-info-square-addition
+            - (7 - (additions * 7 / changes).round).times do
+              .pull-left.file-header-info-square-deletion
+          .pull-left.file-header-info-changes= pluralize changes, 'change'
+        .pull-right.file-header-path
+          :javascript
+            document.write($(".file-path[data-number='#{index}']").html());
+        .clearfix
+      .diff-wrapper
+        %table.diff-table(id="diff-#{hunk.object_id}")
+          %tbody
+          %tbody
+            %tr
+              %td.line.line-hunk
+              %td.line.line-hunk
+              %td.line.line-hunk
+              %td.line.line-hunk
+                = hunk.header
+            - hunk.lines.select {|line| line.context? || line.addition? || line.deletion? }.each do |line|
+              %tr
+                %td(class="line line-#{line.line_origin} line-number")= line.old_lineno unless line.addition?
+                %td(class="line line-#{line.line_origin} line-number")= line.new_lineno unless line.deletion?
+                %td(class="line line-#{line.line_origin} line-pointer")= line.addition? ? '+' : (line.deletion? ? '-': '')
+                %td(class="line line-#{line.line_origin} line-code")= line.content

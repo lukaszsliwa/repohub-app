@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  resources :users, only: [:create, :destroy]
+
   resources :repositories do
     resources :users, only: [:index, :update, :destroy], controller: 'repositories/users'
 

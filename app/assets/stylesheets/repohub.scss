@@ -27,7 +27,28 @@ pre {
   margin-bottom: 10px;
 }
 
+.col-md-3, .col-md-9 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.repositories-references-trees {
+  .col-md-3, .col-md-9 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
 table {
+  &.users-table {
+    td {
+      &.actions-td {
+        text-align: right;
+        padding-right: 0;
+        width: 220px;
+      }
+    }
+  }
   &.repositories-table, &.keys-table {
     td {
       padding: 25px !important;
@@ -74,6 +95,10 @@ table {
 .btn {
   font-weight: bold;
   border-bottom-width: 2px;
+}
+
+.btn-on, .btn-off {
+  width: 80px;
 }
 
 .navbar-default {
@@ -243,6 +268,121 @@ section.tree {
             }
           }
         }
+      }
+    }
+  }
+}
+
+.file {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 15px;
+  margin-top: 20px;
+  position: relative;
+
+  .file-header {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d8d8d8;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #4d4d4c;
+
+    .file-header-info-changes {
+      margin-left: 5px;
+    }
+    .file-header-info-squares {
+      background-color: #ddd;
+      letter-spacing: 0;
+      text-align: left;
+
+      margin-top: 4px;
+
+      div {
+        width: 10px;
+        height: 10px;
+        border-left: 1px solid #f7f7f7;
+      }
+
+      .file-header-info-square-addition {
+        background-color: #55a532;
+        float: left;
+      }
+
+      .file-header-info-square-deletion {
+        background-color: #bd2c00;
+        float: left;
+      }
+    }
+
+    .file-header-path {
+
+    }
+  }
+
+  .diff-wrapper {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    table.diff-table {
+      border-collapse: separate;
+      width: 100%;
+      .line-number {
+        width: 1%;
+        min-width: 20px;
+      }
+      .line-pointer {
+        width: 5px;
+        border-right-width: 0!important;
+      }
+      .line-deletion {
+        background-color: #ffdddd;
+        border-color: #f1c0c0;
+      }
+      .line-addition {
+        background-color: #dbffdb;
+        border-color: #c1e9c1;
+      }
+      .line {
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        -moz-user-select: none;
+        border-color: #eee;
+        border-image: none;
+        border-style: solid;
+        border-width: 0 1px 0 0;
+        color: rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        font-size: 12px;
+        line-height: 18px;
+        padding-left: 10px;
+        padding-right: 10px;
+        vertical-align: top;
+      }
+      .line-code {
+        color: #333;
+        font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
+        font-size: 12px;
+        overflow: visible;
+        padding-left: 10px;
+        padding-right: 10px;
+        position: relative;
+        vertical-align: top;
+        white-space: pre;
+        word-wrap: normal;
+      }
+      .line-hunk {
+        background-color: #f8fafd;
+        border-width: 1px 0;
+        padding-bottom: 4px;
+        padding-top: 4px;
       }
     }
   }

@@ -27,16 +27,15 @@
     / Size should be 32 x 32 pixels
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
     = javascript_include_tag "application"
-  %body
+  %body(class="#{params[:controller].parameterize}")
     .navbar.navbar-static-top
       .container
         .navbar-collapse.collapse.navbar-responsive-collapse
           = yield :nav
     .container
       .row
-        .col-lg-12
-          = bootstrap_flash
-          = yield
+        = bootstrap_flash
+        = yield
       / /.well
       / /span
       / /row
