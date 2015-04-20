@@ -18,4 +18,3 @@ config/application.yml
 config/database.yml
 
 public/uploads
-public/authorized_keys/*
