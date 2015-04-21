@@ -17,4 +17,13 @@ class GitRepository < Repository
   def git
     @git ||= Rugged::Repository.new path
   end
+
+  def synchronize_commits_between(rev, current_rev, by)
+    walker = Rugged::Walker.new(git)
+    walker.push(current_rev)
+    walker.hide(rev) if rev != '0000000000000000000000000000000000000000'
+    walker.to_a.reverse.each do |walker_commit|
+      commits.create_with(user: by).find_or_create_by(sha: walker_commit.oid)
+    end
+  end
 end

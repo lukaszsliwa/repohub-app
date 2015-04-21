@@ -3,24 +3,17 @@ class Repositories::References::CallbacksController < Repositories::References::
   skip_before_filter :authenticate_user!
   skip_before_filter :find_reference
 
-  before_filter :find_or_create_reference
-
   def create
-    @reference.synchronize_commits_between(params[:old], params[:new], server_user)
+    @repository.references.find_or_create_by(type: params[:reference_type].classify, name: params[:reference_id])
     render nothing: true
   end
 
   def destroy
-    @reference.destroy
-
+    @repository.references.find_by_name!(params[:reference_id]).destroy
     render nothing: true
   end
 
   private
-
-  def find_or_create_reference
-    @reference = @repository.references.find_or_create_by(type: params[:reference_type].classify, name: params[:reference_id])
-  end
 
   def server_user
     @user = User.find_by_username! params[:username]

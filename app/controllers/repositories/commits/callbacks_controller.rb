@@ -3,7 +3,7 @@ class Repositories::Commits::CallbacksController < Repositories::Commits::Applic
   skip_before_filter :authenticate_user!
 
   def create
-    @repository.commits.create sha: params[:commit_id], user: server_user
+    @repository.synchronize_commits_between params[:old], params[:new], server_user
     render nothing: true
   end
 

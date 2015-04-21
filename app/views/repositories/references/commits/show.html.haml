@@ -1,7 +1,7 @@
 = content_for :nav do
   = render partial: 'repositories/nav'
 
-.commit
+.full-commit
   %p.commit-title
     = image_tag @commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
     = @commit.message

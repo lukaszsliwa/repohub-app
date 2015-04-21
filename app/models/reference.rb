@@ -5,24 +5,13 @@ class Reference < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def synchronize_commits_between(rev, current_rev, by)
-    walker = Rugged::Walker.new(repository.git)
-    walker.push(current_rev)
-    walker.hide(rev) if rev != '0000000000000000000000000000000000000000'
-    commits = walker.to_a
-    walker.reset
-
-    commits.reverse.each do |commit|
-      repository.commits.create_with(user: by).find_or_create_by(sha: commit.oid)
-    end
-  end
-
-  def commits(limit = 6, offset = 0)
+  def commits
     walker = Rugged::Walker.new(repository.git)
     walker.push ref.target_id
-    walker
 
-    Commit.where(sha: walker.each(limit: limit, offset: offset).map(&:oid)).order('id desc')
+    shas = walker.to_a.map(&:oid)
+
+    repository.commits.where(sha: shas).order('id desc')
   end
 
   def commits_by_user(from, to)

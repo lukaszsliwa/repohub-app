@@ -37,27 +37,28 @@ case "$refname","$newrev_type" in
 	refs/tags/*,commit)
 		# un-annotated tag
 		short_refname=${refname##refs/tags/}
-		exec curl -X POST $repository/tags/$short_refname/callback -d username=$USER -d tag=unannotated
+		curl --silent -X POST $repository/tags/$short_refname/callback -d username=$USER -d tag=unannotated &
 		;;
 	refs/tags/*,delete)
 		# delete tag
 		tag=$(git rev-parse --symbolic --abbrev-ref $refname)
-		exec curl -X DELETE $repository/tags/$tag/callback -d username=$USER -d tag=delete
+		curl --silent -X DELETE $repository/tags/$tag/callback -d username=$USER -d tag=delete &
 		;;
 	refs/tags/*,tag)
 		# annotated tag
 		short_refname=${refname##refs/tags/}
-		exec curl -X POST $repository/tags/$short_refname/callback -d username=$USER -d tag=annotated
+		curl --silent -X POST $repository/tags/$short_refname/callback -d username=$USER -d tag=annotated &
 		;;
 	refs/heads/*,commit)
 		# branch
 		short_refname=${refname##refs/heads/}
-		exec curl -X POST $repository/branches/$short_refname/callback -d username=$USER -d branch=commit -d old=$oldrev -d new=$newrev
+		curl --silent -X POST $repository/branches/$short_refname/callback -d username=$USER -d branch=commit -d old=$oldrev -d new=$newrev
+		curl --silent -X POST $repository/commits/$short_refname/callback -d username=$USER -d branch=commit -d old=$oldrev -d new=$newrev
 		;;
 	refs/heads/*,delete)
 		# delete branch
 		branch=$(git rev-parse --symbolic --abbrev-ref $refname)
-		exec curl -X DELETE $repository/branches/$branch/callback -d username=$USER -d branch=delete
+		curl --silent -X DELETE $repository/branches/$branch/callback -d username=$USER -d branch=delete &
 		;;
 	*)
 		# Anything else (is there anything else?)
