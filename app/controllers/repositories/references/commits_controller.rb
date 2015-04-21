@@ -3,8 +3,9 @@ class Repositories::References::CommitsController < Repositories::References::Ap
   end
 
   def show
-    @commit = @reference.git.lookup params[:id]
-    @diff = @commit.parents[0].diff @commit
+    @commit = @repository.commits.find_by_sha params[:id]
+    @commit_rugged = @reference.git.lookup params[:id]
+    @diff = @commit_rugged.parents[0].diff @commit_rugged
   end
 
   def count

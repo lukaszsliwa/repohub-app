@@ -1,39 +1,63 @@
 = content_for :nav do
   = render partial: 'repositories/nav'
 
-%ul
-  - @diff.deltas.each_with_index do |delta, index|
-    %li
-      .pull-left
-        - if delta.status == :added
-          %i.fa.fa-plus-square(style='color: green')
-        - if delta.status == :deleted
-          %i.fa.fa-minus-square
-        - if delta.status == :modified
-          %i.fa.fa-pencil-square(style='color: orange')
-      .pull-left
-        %span.file-path(data-number="#{index}")
-          = delta.new_file[:path]
+.commit
+  %p.commit-title
+    = image_tag @commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
+    = @commit.message
+  .commit-meta
+    .pull-left
+      #{l @commit.issued_at, format: :long}
+    .pull-right
+      #{pluralize @commit_rugged.parents.size, 'parent'}
+      - @commit_rugged.parents.each do |parent|
+        = link_to truncate(parent.oid, length: 8, omission: ''), repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: parent.oid)
+      &nbsp;
+      commit
+      = link_to @commit.sha, repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: @commit.sha)
+    .clearfix
+  %ul.commit-files
+    - @diff.deltas.each_with_index do |delta, index|
+      %li.commit-file(data-number="#{index}" id="commit-file-#{index}")
+        .pull-left.commit-file-pointer
+          - if delta.status == :added
+            %i.fa.fa-plus-square(style='color: green')
+          - if delta.status == :deleted
+            %i.fa.fa-minus-square
+          - if delta.status == :modified
+            %i.fa.fa-pencil-square(style='color: orange')
+        .pull-left.commit-file-path
+          = link_to delta.new_file[:path], repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: @commit.sha, anchor: "file-#{index}"), class: 'file-path', data: {number: index}, title: delta.new_file[:path]
+        %div(class="pull-right commit-file-info commit-info-#{index}")
+        .clearfix
 
 - @diff.patches.each_with_index do |patch, index|
-  - patch.hunks.each do |hunk|
-    .file(data-number="#{index}")
-      .file-header
-        .pull-left.file-header-info
-          - additions = hunk.lines.count(&:addition?)
-          - deletions = hunk.lines.count(&:deletion?)
-          - changes = additions + deletions
-          .pull-left.file-header-info-squares(data-additions="#{additions}" data-deletions="#{deletions}")
+  .file(data-number="#{index}" id="file-#{index}")
+    .file-header
+      %div(class="pull-left file-header-info")
+        - additions = patch.hunks.sum {|hunk| hunk.lines.count(&:addition?) }
+        - deletions = patch.hunks.sum {|hunk| hunk.lines.count(&:deletion?) }
+        - changes = additions + deletions
+        .pull-left.file-header-info-squares(data-additions="#{additions}" data-deletions="#{deletions}" class="file-header-info-squares-#{index}")
+          - if changes > 0
             - (additions * 7 / changes).round.times do
               .pull-left.file-header-info-square-addition
             - (7 - (additions * 7 / changes).round).times do
               .pull-left.file-header-info-square-deletion
-          .pull-left.file-header-info-changes= pluralize changes, 'change'
-        .pull-right.file-header-path
-          :javascript
-            document.write($(".file-path[data-number='#{index}']").html());
-        .clearfix
-      .diff-wrapper
+          - else
+            - 7.times do
+              .pull-left.file-header-info-square-context
+        .pull-left.file-header-info-changes= pluralize changes, 'change'
+      .pull-left.file-header-path
+        :javascript
+          var path = $(".file-path[data-number='#{index}']").html();
+          document.write('<a href="#{repository_reference_tree_path(reference_type: 'references', reference_id: @commit.sha)}/' + path + '" title="' + path + '">' + path + '</a>');
+          $(function() {
+            $('.file-header-info-squares-#{index}').clone().appendTo('.commit-info-#{index}');
+          });
+      .clearfix
+    .diff-wrapper
+      - patch.hunks.each do |hunk|
         %table.diff-table(id="diff-#{hunk.object_id}")
           %tbody
           %tbody
