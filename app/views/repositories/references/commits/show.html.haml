@@ -3,46 +3,44 @@
 
 .full-commit
   %p.commit-title
-    = image_tag @commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
+    =# image_tag @commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
+    = image_tag 'avatar.png', class: 'img-rounded', width: '32px'
     = @commit.message
   .commit-meta
     .pull-left
-      #{l @commit.issued_at, format: :long}
+      #{l @commit.created_at, format: :long}
     .pull-right
-      #{pluralize @commit_rugged.parents.size, 'parent'}
-      - @commit_rugged.parents.each do |parent|
-        = link_to truncate(parent.oid, length: 8, omission: ''), repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: parent.oid)
+      #{pluralize @commit.parents.size, 'parent'}
+      - @commit.parents.each do |parent|
+        = link_to truncate(parent, length: 8, omission: ''), repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: parent)
       &nbsp;
       commit
       = link_to @commit.sha, repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: @commit.sha)
     .clearfix
   %ul.commit-files
-    - @diff.deltas.each_with_index do |delta, index|
+    - @commit.files.each_with_index do |file, index|
       %li.commit-file(data-number="#{index}" id="commit-file-#{index}")
         .pull-left.commit-file-pointer
-          - if delta.status == :added
+          - if file.status == :added
             %i.fa.fa-plus-square(style='color: green')
-          - if delta.status == :deleted
+          - if file.status == :deleted
             %i.fa.fa-minus-square
-          - if delta.status == :modified
+          - if file.status == :modified
             %i.fa.fa-pencil-square(style='color: orange')
         .pull-left.commit-file-path
-          = link_to delta.new_file[:path], repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: @commit.sha, anchor: "file-#{index}"), class: 'file-path', data: {number: index}, title: delta.new_file[:path]
+          = link_to file.path, repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: @commit.sha, anchor: "file-#{index}"), class: 'file-path', data: {number: index}, title: file.path
         %div(class="pull-right commit-file-info commit-info-#{index}")
         .clearfix
 
-- @diff.patches.each_with_index do |patch, index|
+- @commit.files.each_with_index do |file, index|
   .file(data-number="#{index}" id="file-#{index}")
     .file-header
       %div(class="pull-left file-header-info")
-        - additions = patch.hunks.sum {|hunk| hunk.lines.count(&:addition?) }
-        - deletions = patch.hunks.sum {|hunk| hunk.lines.count(&:deletion?) }
-        - changes = additions + deletions
-        .pull-left.file-header-info-squares(data-additions="#{additions}" data-deletions="#{deletions}" class="file-header-info-squares-#{index}")
-          - if changes > 0
-            - (additions * 7 / changes).round.times do
+        .pull-left.file-header-info-squares(data-additions="#{file.additions}" data-deletions="#{file.deletions}" class="file-header-info-squares-#{index}")
+          - if (changes = file.additions + file.deletions) > 0
+            - (file.additions * 7 / changes).round.times do
               .pull-left.file-header-info-square-addition
-            - (7 - (additions * 7 / changes).round).times do
+            - (7 - (file.additions * 7 / changes).round).times do
               .pull-left.file-header-info-square-deletion
           - else
             - 7.times do
@@ -57,8 +55,8 @@
           });
       .clearfix
     .diff-wrapper
-      - patch.hunks.each do |hunk|
-        %table.diff-table(id="diff-#{hunk.object_id}")
+      - file.lines.group_by(&:hunk_id).each do |hunk_id, lines|
+        %table.diff-table(id="diff-#{hunk_id}")
           %tbody
           %tbody
             %tr
@@ -66,10 +64,9 @@
               %td.line.line-hunk
               %td.line.line-hunk
               %td.line.line-hunk
-                = hunk.header
-            - hunk.lines.select {|line| line.context? || line.addition? || line.deletion? }.each do |line|
+            - lines.each do |line|
               %tr
-                %td(class="line line-#{line.line_origin} line-number")= line.old_lineno unless line.addition?
-                %td(class="line line-#{line.line_origin} line-number")= line.new_lineno unless line.deletion?
-                %td(class="line line-#{line.line_origin} line-pointer")= line.addition? ? '+' : (line.deletion? ? '-': '')
-                %td(class="line line-#{line.line_origin} line-code")= line.content
+                %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'addition'
+                %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'deletion'
+                %td(class="line line-#{line.status} line-pointer")= line.status == 'addition' ? '+' : (line.status == 'deletion' ? '-': '')
+                %td(class="line line-#{line.status} line-code")= line.content

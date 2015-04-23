@@ -2,10 +2,9 @@
   %td.icon
     %i.fa.fa-folder
   %td.name
-    - path = params[:path].present? ? File.join(params[:path], tree.name) : tree.name
-    = link_to tree.name, repository_reference_tree_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, path: path)
+    = link_to tree.path, repository_reference_tree_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, path: tree.path)
   %td.message
-    = link_to repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: tree.sha), title: tree.message do
+    = link_to repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: tree.commit_id), title: tree.message do
       = truncate tree.message, length: 72
   %td.modified
-    = tree.modified
+    = time_ago_in_words tree.updated_at

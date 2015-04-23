@@ -9,22 +9,10 @@ class Commit < ActiveRecord::Base
   end
 
   def initialize_attributes
-    commit = repository.git.lookup sha
-    self.message = commit.message
-    self.author = commit.author[:name]
-    self.email = commit.author[:email]
-    self.issued_at = commit.time
-
-    if commit.parents.empty?
-      diff = commit.diff
-    else
-      diff = commit.parents[0].diff(commit)
-    end
-
-    diff.each_patch do |patch|
-      self.additions += patch.stat[0]
-      self.deletions += patch.stat[1]
-      self.total_changes += patch.changes
-    end
+    git_commit = Git::Commit.find sha
+    self.message = git_commit.message
+    self.author = git_commit.author_name
+    self.email = git_commit.author_email
+    self.issued_at = git_commit.created_at
   end
 end
