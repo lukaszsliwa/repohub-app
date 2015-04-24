@@ -1,6 +1,6 @@
 class RepositoriesController < ApplicationController
   def index
-    @repositories = Repository.order('id desc').all
+    @repositories = Git::Repository.all.to_a
   end
 
   def new
@@ -24,7 +24,7 @@ class RepositoriesController < ApplicationController
   def show
     @repository = Repository.find_by_handle!(params[:repository_id] || params[:id])
     if (@branch = @repository.branches.first).present?
-      redirect_to repository_reference_tree_path(@repository, reference_type: 'branches', reference_id: @branch.name)
+      redirect_to repository_branch_path(@repository, @branch)
     else
       render file: 'repositories/blank'
     end

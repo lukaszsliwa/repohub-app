@@ -400,6 +400,7 @@ section.tree {
       min-width: 20px;
     }
     .line-pointer {
+      color: #777777 !important;
       width: 5px;
       border-right-width: 0!important;
     }
@@ -442,7 +443,8 @@ section.tree {
       white-space: pre;
       word-wrap: normal;
     }
-    .line-hunk {
+    .line-header {
+      color: #888888;
       background-color: #f8fafd;
       border-width: 1px 0;
       padding-bottom: 4px;
@@ -451,6 +453,9 @@ section.tree {
   }
 }
 
+span.commit-sha {
+  color: #4d4d4c;
+}
 
 #commits-calendar {
   margin-top: 10px;

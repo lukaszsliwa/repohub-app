@@ -15,36 +15,17 @@
       = render partial: 'shared/nav/repositories'
   .col-md-9
     .pull-left
-      = link_to @reference.name, repository_reference_tree_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name), class: 'btn btn-default' if @reference
+      - if @tree
+        .btn-group
+          = link_to '', class: 'btn btn-success' do
+            %i.fa.fa-code-fork
+            = current_reference
+          = link_to repository_tree_contents_path(@repository, @tree.sha), class: 'btn btn-success' do
+            %i.fa.fa-folder
     .pull-right
       .btn-group
-        .btn-group
-          %button#branches.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
-            Branches
-            %span.caret
-          %ul.dropdown-menu{"aria-labelledby" => "branches", :role => "menu"}
-            - if (branches = @repository.branches).present?
-              - branches.each do |branch|
-                %li= link_to branch.name, repository_reference_tree_path(@repository, reference_type: 'branches', reference_id: branch.name)
-            - else
-              %li.dropdown-header No branch
-        .btn-group
-          %button#tags.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
-            Tags
-            %span.caret
-          %ul.dropdown-menu{"aria-labelledby" => "tags", :role => "menu"}
-            - if (tags = @repository.tags).present?
-              - tags.each do |tag|
-                %li= link_to tag.name, repository_reference_tree_path(@repository, reference_type: 'tags', reference_id: tag.name)
-            - else
-              %li.dropdown-header No tag
+        = render partial: 'repositories/nav/branches'
+        = render partial: 'repositories/nav/tags'
       .btn-group
-        %button#settings.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
-          %i.fa.fa-cog
-        %ul.dropdown-menu{"aria-labelledby" => "settings", :role => "menu"}
-          = yield :settings
-          %li.dropdown-header= current_user.full_name
-          %li= link_to 'Keys', keys_path
-          %li.divider
-          %li= link_to 'Logout', destroy_user_session_path, method: :delete
+        = render partial: 'repositories/nav/settings'
   .clearfix

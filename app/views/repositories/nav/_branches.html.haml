@@ -1,0 +1,10 @@
+.btn-group
+  %button#branches.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+    Branches
+    %span.caret
+  %ul.dropdown-menu{"aria-labelledby" => "branches", :role => "menu"}
+    - if (branches = @repository.branches).size > 0
+      - branches.each do |branch|
+        %li= link_to branch.name, repository_branch_path(@repository, id: branch.name)
+    - else
+      %li.dropdown-header No branch

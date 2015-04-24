@@ -4,12 +4,12 @@
       =# image_tag commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
       = image_tag 'avatar.png', class: 'img-rounded', width: '32px'
     .commit-message.pull-left
-      = link_to repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: commit.sha), title: commit.message do
+      = link_to repository_commit_path(@repository, id: commit.sha), title: commit.message do
         = truncate commit.message, length: 35
       .commit-author
         #{mail_to commit.author_email, commit.author_name} on #{l commit.created_at, format: :short}
         &nbsp;&middot;&nbsp;
-        = link_to repository_reference_commit_path(@repository, reference_type: @reference.type.tableize, reference_id: @reference.name, id: commit.sha) do
+        = link_to repository_commit_path(@repository, id: commit.sha) do
           = truncate commit.sha, length: 8, omission: ''
       .commit-stats
         %span.additions= pluralize commit.additions, 'addition'

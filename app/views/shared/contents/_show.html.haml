@@ -1,0 +1,38 @@
+= content_for :nav do
+  = render partial: 'repositories/nav'
+
+//%svg#commits-calendar{data: {path: count_repository_commits_path(@repository, from: 195.days.ago.to_date, to: Date.today, format: :json)}}
+.contributors
+  - @repository.users.each do |user|
+    .contributor
+      = image_tag user.avatar.thumb, width: '32px', class: 'img-rounded', title: user.username
+.clearfix
+%section.tree
+  .tree-heading
+    %p.tree-commit-message
+      %i.fa.fa-code-fork
+      = link_to @commits.first.message, repository_commit_path(@repository, id: @commits.first.sha), title: @commits.first.message
+    .tree-commit-author
+      .pull-left
+        =# image_tag @commits.first.user.avatar.thumb, width: '22px', class: 'img-rounded'
+        = image_tag 'avatar.png', width: '22px', class: 'img-rounded'
+        = @commits.first.author_name
+        %span.modified updated #{time_ago_in_words @commits.first.created_at} ago
+      .pull-right
+        = link_to repository_commit_path(@repository, id: @commits.first.sha) do
+          = @commits.first.sha
+      .clearfix
+  .tree-content
+    %table
+      %tbody
+        - if params[:id]
+          %tr
+            %td
+            %td
+              %b= link_to '..', '../'
+            %td
+            %td
+        = render partial: 'shared/contents/tree', collection: @contents.select(&:tree?)
+        = render partial: 'shared/blobs/blob', collection: @contents.select(&:blob?)
+%section.readme
+  .content

@@ -1,0 +1,10 @@
+%tr(id="#{tree.type}-#{tree.id}" class="#{tree.type}")
+  %td.icon
+    %i.fa.fa-folder
+  %td.name
+    = link_to tree.path, repository_tree_content_path(@repository, tree_id: tree.commit_id, id: tree.path)
+  %td.message
+    = link_to repository_commit_path(@repository, id: tree.commit_id), title: tree.message do
+      = truncate tree.message, length: 72
+  %td.modified
+    #{time_ago_in_words tree.updated_at} ago

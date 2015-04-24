@@ -4,6 +4,6 @@
   %ul.dropdown-menu{"aria-labelledby" => "repository", :role => "menu"}
     %li.dropdown-header Repositories
     - Repository.all.each do |repository|
-      %li= link_to repository.name, repository_reference_tree_path(repository, reference_type: 'branches', reference_id: 'master')
+      %li= link_to repository.name, repository_branch_path(repository, id: 'master')
     %li.divider
       %li= link_to 'New repository', new_repository_path

@@ -12,10 +12,10 @@
     .pull-right
       #{pluralize @commit.parents.size, 'parent'}
       - @commit.parents.each do |parent|
-        = link_to truncate(parent, length: 8, omission: ''), repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: parent)
+        = link_to truncate(parent, length: 8, omission: ''), repository_commit_path(@repository, id: parent)
       &nbsp;
       commit
-      = link_to @commit.sha, repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: @commit.sha)
+      %span.commit-sha= @commit.sha
     .clearfix
   %ul.commit-files
     - @commit.files.each_with_index do |file, index|
@@ -28,7 +28,7 @@
           - if file.status == :modified
             %i.fa.fa-pencil-square(style='color: orange')
         .pull-left.commit-file-path
-          = link_to file.path, repository_reference_commit_path(reference_type: @reference.type.tableize, reference_id: @reference.name, id: @commit.sha, anchor: "file-#{index}"), class: 'file-path', data: {number: index}, title: file.path
+          = link_to file.path, repository_commit_path(@repository, id: @commit.sha, anchor: "file-#{index}"), class: 'file-path', data: {number: index}, title: file.path
         %div(class="pull-right commit-file-info commit-info-#{index}")
         .clearfix
 
@@ -49,7 +49,7 @@
       .pull-left.file-header-path
         :javascript
           var path = $(".file-path[data-number='#{index}']").html();
-          document.write('<a href="#{repository_reference_tree_path(reference_type: 'references', reference_id: @commit.sha)}/' + path + '" title="' + path + '">' + path + '</a>');
+          document.write('<a href="#{repository_tree_blobs_path(@repository, tree_id: @commit.sha)}/' + path + '" title="' + path + '">' + path + '</a>');
           $(function() {
             $('.file-header-info-squares-#{index}').clone().appendTo('.commit-info-#{index}');
           });
@@ -58,12 +58,6 @@
       - file.lines.group_by(&:hunk_id).each do |hunk_id, lines|
         %table.diff-table(id="diff-#{hunk_id}")
           %tbody
-          %tbody
-            %tr
-              %td.line.line-hunk
-              %td.line.line-hunk
-              %td.line.line-hunk
-              %td.line.line-hunk
             - lines.each do |line|
               %tr
                 %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'addition'

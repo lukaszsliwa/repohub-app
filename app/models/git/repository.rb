@@ -1,5 +1,13 @@
 class Git::Repository < ActiveResource::Base
-  self.site = "http://git.repohub.dev/repositories"
+  self.site = Settings.git.url
 
-  has_many :commits
+  has_many :commits, class_name: 'Git::Repository::Commit'
+  has_many :branches, class_name: 'Git::Repository::Branch'
+  has_many :tags, class_name: 'Git::Repository::Tag'
+
+  delegate :users, :name, :description, :commits_count, to: :local
+
+  def local
+    @local ||= ::Repository.find_by_handle(id)
+  end
 end

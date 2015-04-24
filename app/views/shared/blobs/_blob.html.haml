@@ -1,0 +1,10 @@
+%tr(id="#{blob.type}-#{blob.id}" class="#{blob.type}")
+  %td.icon
+    %i.fa.fa-1.fa-file-text-o
+  %td.name
+    = link_to blob.name, repository_tree_blob_path(@repository, tree_id: @tree.sha, id: blob.path)
+  %td.message
+    = link_to repository_commit_path(@repository, id: blob.commit_id), title: blob.message do
+      = truncate blob.message, length: 72
+  %td.modified
+    #{time_ago_in_words blob.updated_at} ago

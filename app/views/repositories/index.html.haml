@@ -12,15 +12,13 @@
         %td.stats-td
           .stats.text-center
             .stats-changes-count
-              = repository.commits_count
-            %span.text-muted
-              updates
+              = number_to_human_size repository.size
         %td.name-td
           = repository.name
           .description
             = repository.description
         %td.actions-td
-          = link_to 'Show', repository_path(repository), class: 'btn btn-success'
+          = link_to 'Show', repository_branch_path(repository, 'master'), class: 'btn btn-success'
 - if @repositories.empty?
   .jumbotron
     .container.text-center
