@@ -1,0 +1,11 @@
+.file-header
+  .pull-left.file-header-info
+    %span.file-header-info-path
+      = @blob.path
+    %span.file-header-info-size
+      = number_to_human_size @blob.size
+    %span.file-header-info-lines
+      #{@blob.lines.size} LOC
+  .pull-right.file-header-actions
+    = link_to 'Raw', repository_tree_raw_path(@repository, @tree, id: @blob.path), class: 'btn btn-default'
+  .clearfix

@@ -1,0 +1,8 @@
+%table.diff-table(id="diff-#{hunk.id}")
+  %tbody
+    %tr
+      %td.line.line-header
+      %td.line.line-header
+      %td.line.line-header
+      %td.line.line-header= hunk.header
+    = render partial: 'repositories/commits/line', collection: hunk.lines, locals: {file: file}

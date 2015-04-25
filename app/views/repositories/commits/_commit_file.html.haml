@@ -1,0 +1,17 @@
+%li.commit-file(data-path="#{commit_file.path}" id="commit-file-#{commit_file.id}")
+  .pull-left.commit-file-pointer
+    - if commit_file.status == 'added'
+      %i.fa.fa-plus-square(style='color: green')
+    - if commit_file.status == 'deleted'
+      %i.fa.fa-minus-square
+    - if commit_file.status == 'modified'
+      %i.fa.fa-pencil-square(style='color: orange')
+  .pull-left.commit-file-path
+    = link_to repository_commit_path(@repository, id: @commit.sha, anchor: "file-#{commit_file.id}"), class: 'file-path', title: commit_file.path do
+      - if commit_file.status == 'deleted'
+        %del= commit_file.path
+      - else
+        = commit_file.path
+  .pull-right.commit-file-info
+    = render partial: 'repositories/commits/file_header_info_squares', locals: {file: commit_file}
+  .clearfix

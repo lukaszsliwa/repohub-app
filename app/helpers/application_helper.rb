@@ -6,4 +6,15 @@ module ApplicationHelper
     end
     name
   end
+
+  def language_css_class_for(filename)
+    case File.extname(filename)
+    when '.rb' ; 'ruby'
+    when '.haml' ; 'haml'
+    when '.scss' ; 'scss'
+    when '.css' ; 'css'
+    when '.html' ; 'html'
+    else 'not-recognized-file'
+    end
+  end
 end

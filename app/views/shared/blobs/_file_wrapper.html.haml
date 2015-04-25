@@ -1,0 +1,6 @@
+.file-wrapper
+  %table.file-table
+    - @blob.lines.each do |line|
+      %tr
+        %td.line.line-number= line.number
+        %td.line.line-code= line.content

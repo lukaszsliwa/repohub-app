@@ -22,4 +22,13 @@ $(document).ready(function() {
     $('.line-code').each(function(i, block) {
         hljs.highlightBlock(block);
     });
+
+    $('a.btn-diff').click(function() {
+        $('#file-' + $(this).data('file-id') + ' .diff-wrapper').show();
+        $('#file-' + $(this).data('file-id') + ' .file-wrapper').hide();
+        $('#file-' + $(this).data('file-id') + ' .file-header-actions a.btn-view').removeClass('active');
+
+        $(this).addClass('active');
+        return false;
+    });
 });

@@ -1,0 +1,14 @@
+if ($('#file-<%= params[:file_id] %> .file-wrapper').length <= 0) {
+    $('#file-<%= params[:file_id] %>').append("<div class='file-wrapper'></div>");
+}
+
+$('#file-<%= params[:file_id] %> .file-wrapper').replaceWith("<%= escape_javascript(render partial: 'shared/blobs/file_wrapper') %>");
+
+$('#file-<%= params[:file_id] %> .file-header-actions a.btn-diff').removeClass('active');
+$('#file-<%= params[:file_id] %> .file-header-actions a.btn-view').addClass('active');
+$('#file-<%= params[:file_id] %> .diff-wrapper').hide();
+$('#file-<%= params[:file_id] %> .file-wrapper').show();
+
+$('#file-<%= params[:file_id] %> .line-code').each(function(i, block) {
+    hljs.highlightBlock(block);
+});

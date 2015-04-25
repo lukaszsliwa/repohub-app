@@ -1,0 +1,5 @@
+%tr
+  %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'addition'
+  %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'deletion'
+  %td(class="line line-#{line.status} line-pointer")= line.status == 'addition' ? '+' : (line.status == 'deletion' ? '-': '')
+  %td(class="line line-#{line.status} line-code #{language_css_class_for file.path}")= line.content.blank? ? raw('&nbsp;') : line.content
