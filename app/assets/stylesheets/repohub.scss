@@ -341,12 +341,38 @@ section.tree {
   font-size: 13px;
   font-weight: bold;
   color: #4d4d4c;
+
+  .file-header-info {
+    font-size: 14px;
+    font-weight: normal;
+
+    span.file-header-info-path {
+      padding-right: 6px;
+    }
+
+    span.file-header-info-size {
+      border-left: 1px solid #d8d8d8;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    span.file-header-info-lines {
+      border-left: 1px solid #d8d8d8;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  .file-header-actions {
+    margin-right: 5px;
+  }
 }
 
 .file-header-info-changes {
   margin-left: 5px;
 }
-.file-header-info-squares {
+
+.squares {
   background-color: #ddd;
   letter-spacing: 0;
   text-align: left;
@@ -359,25 +385,31 @@ section.tree {
     border-left: 1px solid #f7f7f7;
   }
 
-  .file-header-info-square-addition {
+  .square-addition {
     background-color: #55a532;
     float: left;
   }
 
-  .file-header-info-square-deletion {
+  .square-context {
+    background-color: #d8d8d8;
+    float: left;
+  }
+
+  .square-deletion {
     background-color: #bd2c00;
     float: left;
   }
 }
 
-.file-header-info, .file-header-path {
+.file-header-info {
   margin: 8px;
 }
 
-.file-header-path {
+.file-header-info-path {
+  padding-left: 8px;
   font-weight: normal;
   a {
-    color: #444;
+    color: #213f4d;
 
     &:hover {
       color: #ff0000;
@@ -386,13 +418,13 @@ section.tree {
   }
 }
 
-.diff-wrapper {
+.diff-wrapper, .file-wrapper {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   overflow-x: auto;
   overflow-y: hidden;
 
-  table.diff-table {
+  table.diff-table, table.file-table {
     border-collapse: separate;
     width: 100%;
     .line-number {
@@ -449,6 +481,19 @@ section.tree {
       border-width: 1px 0;
       padding-bottom: 4px;
       padding-top: 4px;
+      span {
+        color: #888888 !important;
+      }
+    }
+    .line-eof_newline_removed, .line-eof_newline_added, .line-eof_no_newline {
+      white-space: normal;
+      color: #aaa !important;
+      font-weight: normal !important;
+
+      span {
+        color: #aaa !important;
+        font-weight: normal !important;
+      }
     }
   }
 }

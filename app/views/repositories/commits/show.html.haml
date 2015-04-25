@@ -19,40 +19,47 @@
     .clearfix
   %ul.commit-files
     - @commit.files.each_with_index do |file, index|
-      %li.commit-file(data-number="#{index}" id="commit-file-#{index}")
+      %li.commit-file(data-number="#{index}" data-path="#{file.path}" id="commit-file-#{index}")
         .pull-left.commit-file-pointer
-          - if file.status == :added
+          - if file.status == 'added'
             %i.fa.fa-plus-square(style='color: green')
-          - if file.status == :deleted
+          - if file.status == 'deleted'
             %i.fa.fa-minus-square
-          - if file.status == :modified
+          - if file.status == 'modified'
             %i.fa.fa-pencil-square(style='color: orange')
         .pull-left.commit-file-path
-          = link_to file.path, repository_commit_path(@repository, id: @commit.sha, anchor: "file-#{index}"), class: 'file-path', data: {number: index}, title: file.path
-        %div(class="pull-right commit-file-info commit-info-#{index}")
+          = link_to repository_commit_path(@repository, id: @commit.sha, anchor: "file-#{index}"), class: 'file-path', data: {number: index}, title: file.path do
+            - if file.status == 'deleted'
+              %del= file.path
+            - else
+              = file.path
+        .pull-right.commit-file-info
+          = render partial: 'repositories/commits/file_header_info_squares', locals: {file: file}
         .clearfix
 
 - @commit.files.each_with_index do |file, index|
   .file(data-number="#{index}" id="file-#{index}")
     .file-header
-      %div(class="pull-left file-header-info")
-        .pull-left.file-header-info-squares(data-additions="#{file.additions}" data-deletions="#{file.deletions}" class="file-header-info-squares-#{index}")
-          - if (changes = file.additions + file.deletions) > 0
-            - (file.additions * 7 / changes).round.times do
-              .pull-left.file-header-info-square-addition
-            - (7 - (file.additions * 7 / changes).round).times do
-              .pull-left.file-header-info-square-deletion
-          - else
-            - 7.times do
-              .pull-left.file-header-info-square-context
-        .pull-left.file-header-info-changes= pluralize changes, 'change'
-      .pull-left.file-header-path
-        :javascript
-          var path = $(".file-path[data-number='#{index}']").html();
-          document.write('<a href="#{repository_tree_blobs_path(@repository, tree_id: @commit.sha)}/' + path + '" title="' + path + '">' + path + '</a>');
-          $(function() {
-            $('.file-header-info-squares-#{index}').clone().appendTo('.commit-info-#{index}');
-          });
+      .pull-left.file-header-info
+        .pull-left.file-header-info-squares
+          = render partial: 'repositories/commits/file_header_info_squares', locals: {file: file}
+        .pull-left.file-header-info-changes
+          = pluralize (file.additions + file.deletions), 'line'
+          changed
+        .pull-left
+          %span.file-header-info-path
+            - if file.status == 'deleted'
+              %del= file.path
+            - else
+              = link_to file.path, repository_tree_blob_path(@repository, tree_id: @commit.sha, id: file.path), title: file.path
+          %span.file-header-info-lines
+            = pluralize file.total_number_of_lines_before, 'line'
+            before
+          %span.file-header-info-lines
+            = pluralize file.total_number_of_lines_after, 'line'
+            now
+      .pull-right.file-header-actions
+        = link_to 'Display', repository_tree_blob_path(@repository, tree_id: @commit.sha, id: file.path), title: file.path, class: 'btn btn-default'
       .clearfix
     .diff-wrapper
       - file.lines.group_by(&:hunk_id).each do |hunk_id, lines|
@@ -63,4 +70,4 @@
                 %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'addition'
                 %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'deletion'
                 %td(class="line line-#{line.status} line-pointer")= line.status == 'addition' ? '+' : (line.status == 'deletion' ? '-': '')
-                %td(class="line line-#{line.status} line-code")= line.content
+                %td(class="line line-#{line.status} line-code")= line.content.blank? ? raw('&nbsp;') : line.content

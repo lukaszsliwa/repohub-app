@@ -19,11 +19,7 @@
 //= require_tree .
 
 $(document).ready(function() {
-    hljs.configure({tabReplace: '<span class="indent">\t</span>'});
-
-    hljs.initHighlightingOnLoad();
-
-    $('code').each(function(i, block) {
-
+    $('.line-code').each(function(i, block) {
+        hljs.highlightBlock(block);
     });
 });

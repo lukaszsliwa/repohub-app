@@ -1,5 +1,21 @@
 = content_for :nav do
   = render partial: 'repositories/nav'
 
-%pre
-  %code= @blob.content.lines.map {|line| line }.join
+.file
+  .file-header
+    .pull-left.file-header-info
+      %span.file-header-info-path
+        = @blob.path
+      %span.file-header-info-size
+        = number_to_human_size @blob.size
+      %span.file-header-info-lines
+        #{@blob.lines.size} LOC
+    .pull-right.file-header-actions
+      = link_to 'Raw', repository_tree_raw_path(@repository, @tree, id: @blob.path), class: 'btn btn-default'
+    .clearfix
+  .file-wrapper
+    %table.file-table
+      - @blob.lines.each do |line|
+        %tr
+          %td.line.line-number= line.number
+          %td.line.line-code= line.content

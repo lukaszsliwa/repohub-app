@@ -1,0 +1,20 @@
+.squares
+  - if file.status == 'added'
+    - 7.times do
+      .pull-left.square-addition
+  - elsif file.status == 'deleted'
+    - 7.times do
+      .pull-left.square-deletion
+  - else
+    - total_number_of_lines = [file.total_number_of_lines_before, file.total_number_of_lines_after].max
+    - square_addition = (7 * (file.additions * 100 / total_number_of_lines) / 100)
+    - square_addition = 1 if file.additions > 0 && square_addition < 1
+    - square_addition.times do
+      .pull-left.square-addition
+    - square_deletion = (7 * (file.deletions * 100 / total_number_of_lines) / 100)
+    - square_deletion = 1 if file.deletions > 0 && square_deletion < 1
+    - square_deletion.times do
+      .pull-left.square-deletion
+    - (7 - square_addition - square_deletion).times do
+      .pull-left.square-context
+.clearfix

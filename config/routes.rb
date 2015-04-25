@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :trees, only: [] do
       resources :blobs, controller: 'repositories/trees/blobs', constraints: {id: /.*/}
       resources :contents, controller: 'repositories/trees/contents', constraints: {id: /.*/}
+      resources :raws, controller: 'repositories/trees/raws', constraints: {id: /.+/}
     end
 
     #get '/:reference_type/:reference_id' => redirect('/repositories/%{repository_id}/%{reference_type}/%{reference_id}/tree')
