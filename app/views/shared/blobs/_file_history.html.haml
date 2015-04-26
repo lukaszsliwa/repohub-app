@@ -8,6 +8,7 @@
       #{l @blob.commit.created_at, format: :long}
     .pull-right
       commit
-      %span.commit-sha= @blob.commit.sha
+      = link_to repository_commit_path(@repository, id: @blob.commit_id), title: @blob.commit.sha do
+        %span.commit-sha= @blob.commit.sha
     .clearfix
 
