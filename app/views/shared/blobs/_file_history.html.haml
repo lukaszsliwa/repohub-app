@@ -1,0 +1,13 @@
+.full-commit
+  %p.commit-title
+    =# image_tag @commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
+    = image_tag 'avatar.png', class: 'img-rounded', width: '32px'
+    = @blob.commit.message
+  .commit-meta
+    .pull-left
+      #{l @blob.commit.created_at, format: :long}
+    .pull-right
+      commit
+      %span.commit-sha= @blob.commit.sha
+    .clearfix
+
