@@ -20,6 +20,10 @@ pre {
   padding: unset!important;
 }
 
+.btn {
+  font-weight: bold!important;
+}
+
 .navbar {
   margin-bottom: 0 !important;
 }
@@ -309,9 +313,14 @@ section.tree {
 
   .commit-files {
     list-style-type: none;
-    padding-left: 0;
+    padding: 0;
+    margin: 0;
 
     .commit-file {
+      padding: 1px 8px;
+
+      border-top: 1px solid #eaeaea;
+
       .commit-file-pointer {
         width: 20px;
       }

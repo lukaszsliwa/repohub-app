@@ -4,7 +4,8 @@ gem 'rails', '4.2.0'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'bootstrap-sass', '~> 3.3.4'
+gem 'font-awesome-sass', '~> 4.3.0'
 gem 'therubyracer', platforms: :ruby
 
 gem 'jquery-rails'
@@ -14,7 +15,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'devise'
 gem 'haml'
 gem 'puma'
-gem 'twitter-bootstrap-rails'
 gem 'carrierwave'
 gem 'mini_magick'
 

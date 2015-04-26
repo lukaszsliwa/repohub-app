@@ -20,9 +20,9 @@
     .pull-right.file-header-actions
       - unless file.status == 'deleted'
         .btn-group
-          = link_to 'Diff', repository_tree_blob_path(@repository, tree_id: @commit.sha, id: file.path, file_id: file.id), title: file.path, class: 'btn btn-default btn-diff active', data: { file_id: file.id }
-          = link_to 'View', repository_tree_blobs_path(@repository, tree_id: @commit.sha, id: file.path, file_id: file.id, format: 'js'), title: file.path, class: 'btn btn-view btn-default', remote: true
-          = link_to 'Raw', repository_tree_raw_path(@repository, tree_id: @commit.sha, id: file.path), title: file.path, class: 'btn btn-default'
+          = link_to 'Diff', repository_tree_blob_path(@repository, tree_id: @commit.sha, id: file.path, file_id: file.id), title: "Diff", class: 'btn btn-default btn-diff active', data: { file_id: file.id }
+          = link_to 'View', repository_tree_blobs_path(@repository, tree_id: @commit.sha, id: file.path, file_id: file.id, format: 'js'), title: "View", class: 'btn btn-view btn-default', remote: true
+          = link_to 'Raw', repository_tree_raw_path(@repository, tree_id: @commit.sha, id: file.path), title: "Raw", class: 'btn btn-default'
     .clearfix
   .diff-wrapper
     = render partial: 'repositories/commits/hunk', collection: file.hunks, locals: {file: file}
