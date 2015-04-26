@@ -1,0 +1,41 @@
+.btn-group
+  %button#select-revision.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+    - if (branch_name = @branch.try(:name)).present?
+      %i.fa.fa-code-fork
+      %span.revision-type branch:
+      = branch_name
+    - elsif (tag_name = @tag.try(:name)).present?
+      %i.fa.fa-tag
+      %span.revision-type tag:
+      = tag_name
+    - elsif (commit_sha = (@commit.try(:sha) || @tree.try(:sha))).present?
+      %i.fa.fa-code-fork
+      %span.revision-type tree:
+      = truncate commit_sha, length: 8, omission: ''
+    - else
+      %i.fa.fa-code-fork
+      Revisions
+    %span.caret
+  %ul#select-revision-menu.dropdown-menu{"aria-labelledby" => "select-revision", :role => "menu"}
+    - if (branches = @repository.branches).size > 0
+      %li.dropdown-header
+        %i.fa.fa-code-fork
+        Branches
+      - branches.each do |branch|
+        %li= link_to branch.name, repository_branch_path(@repository, id: branch.name)
+    - else
+      %li.dropdown-header
+        %i.fa.fa-code-fork
+        No branch
+    - if (tags = @repository.tags).size > 0
+      %li.divider
+      %li.dropdown-header
+        %i.fa.fa-tag
+        Tags
+      - tags.each do |tag|
+        %li= link_to tag.name, repository_tag_path(@repository, id: tag.name)
+    - else
+      %li.divider
+      %li.dropdown-header
+        %i.fa.fa-tag
+        No tag

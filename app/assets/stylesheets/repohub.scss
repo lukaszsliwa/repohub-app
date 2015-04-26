@@ -32,9 +32,26 @@ pre {
   font-weight: bold;
 }
 
+#select-revision {
+  span.revision-type {
+    font-size: 13px;
+    font-weight: normal;
+    color: #4d4d4c;
+  }
+}
+
+#select-revision-menu {
+  .divider {
+    margin: 0 !important;
+  }
+}
+
 #heading {
   margin-top: 10px;
   margin-bottom: 10px;
+  .btn-group {
+    //margin-right: 5px;
+  }
 }
 
 .col-md-3, .col-md-9 {

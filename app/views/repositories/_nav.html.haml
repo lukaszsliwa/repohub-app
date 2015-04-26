@@ -8,24 +8,16 @@
   %li.divider
 
 #heading.row
-  .col-md-3
+  .pull-left
     .btn-group
-      = link_to 'Dashboard', root_path, class: 'btn btn-default'
-      = link_to @repository.name, repository_path(@repository), class: 'btn btn-default'
+      = link_to root_path, class: 'btn btn-default' do
+        %i.fa.fa-home
+    .btn-group
+      = link_to 'Dashboard', repository_path(@repository), class: 'btn btn-default'
       = render partial: 'shared/nav/repositories'
-  .col-md-9
-    .pull-left
-      - if @tree
-        .btn-group
-          = link_to '', class: 'btn btn-success' do
-            %i.fa.fa-code-fork
-            = current_reference
-          = link_to repository_tree_contents_path(@repository, @tree.sha), class: 'btn btn-success' do
-            %i.fa.fa-folder
-    .pull-right
-      .btn-group
-        = render partial: 'repositories/nav/branches'
-        = render partial: 'repositories/nav/tags'
-      .btn-group
-        = render partial: 'repositories/nav/settings'
+    .btn-group
+      = render partial: 'repositories/nav/select'
+  .pull-right
+    .btn-group
+      = render partial: 'repositories/nav/settings'
   .clearfix

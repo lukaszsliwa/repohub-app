@@ -1,7 +1,10 @@
 #heading.row
   .pull-left
     .btn-group
-      = link_to 'Dashboard', root_path, class: 'btn btn-default'
+      = link_to root_path, class: 'btn btn-default' do
+        %i.fa.fa-home
+    .btn-group
+      = link_to 'Dashboard', repository_path(@repository), class: 'btn btn-default' if @repository
       = yield :current
       = render partial: 'shared/nav/repositories'
 

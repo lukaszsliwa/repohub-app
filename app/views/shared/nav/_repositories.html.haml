@@ -1,5 +1,6 @@
 .btn-group
   %button#repository.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+    = @repository.try(:name) || 'Repositories'
     %span.caret
   %ul.dropdown-menu{"aria-labelledby" => "repository", :role => "menu"}
     %li.dropdown-header Repositories
