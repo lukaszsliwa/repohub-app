@@ -1,7 +1,10 @@
 = content_for :nav do
   = render partial: 'repositories/nav'
 
-
-%table.table.users-table
-  %tbody
-    = render partial: 'repositories/users/user', collection: @users
+.users
+  .users-header
+    Users
+  .users-wrapper
+    %table.table.users-table
+      %tbody
+        = render partial: 'repositories/users/user', collection: @users

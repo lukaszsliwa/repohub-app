@@ -1,17 +1,13 @@
 = content_for :nav do
   = render partial: 'keys/nav'
 
-%table.table.keys-table
-  %tbody
-    - @keys.each do |key|
-      %tr
-        %td.name-td
-          = key.name
-        %td.value-td
-          %code
-            #{truncate key.value, length: 32, omission: "..."}#{key.value.last 42}
-        %td.actions-td
-          = link_to 'Edit', edit_key_path(key), class: 'btn btn-warning'
+.keys
+  .keys-header
+    Keys
+  .keys-wrapper
+    %table.table.keys-table
+      %tbody
+        = render partial: 'keys/key', collection: @keys
 
 - if @keys.empty?
   .jumbotron

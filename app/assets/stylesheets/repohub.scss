@@ -67,15 +67,8 @@ pre {
 }
 
 table {
-  &.users-table {
-    td {
-      &.actions-td {
-        text-align: right;
-        padding-right: 0;
-        width: 220px;
-      }
-    }
-  }
+  margin-bottom: 0 !important;
+
   &.repositories-table, &.keys-table {
     td {
       padding: 25px !important;
@@ -552,4 +545,34 @@ div.tooltip {
   opacity: .9;
   border-radius: 2px;
   pointer-events: none;
+}
+
+.users, div.keys {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 15px;
+  margin-top: 20px;
+  position: relative;
+
+  .users-header, .keys-header {
+    background: none repeat scroll 0 0 #f7f7f7;
+    border-bottom: 1px solid #d8d8d8;
+    color: #213f4d;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+  }
+
+  .users-wrapper, .keys-wrapper {
+    .users-table, .keys-table {
+      td {
+        &.actions-td {
+          text-align: right;
+          padding-right: 10px;
+          width: 230px;
+        }
+      }
+    }
+  }
 }

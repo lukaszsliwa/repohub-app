@@ -1,12 +1,12 @@
 %tr(id="user-#{user.id}")
   %td.avatar-td
-    = image_tag user.avatar.thumb, class: 'img-circle', width: '48px'
+    = image_tag user.avatar.thumb, class: 'img-circle', width: '32px'
   %td.username-td
     = user.username
   %td.name-td
     = user.full_name
-    .email
-      = user.email
+  %td.email-td
+    = user.email
   %td.actions-td
     .btn-group
       = link_to repository_user_path(@repository, user), method: :patch, remote: true, class: 'btn btn-success btn-on' do
@@ -17,5 +17,3 @@
         Deny
         - unless @repository.users.include?(user)
           %i.fa.fa-check
-    = link_to user_path(id: user.username), method: :delete, remote: true, class: 'btn btn-default', title: 'Close an account', data: {confirm: 'Do you want to close this account?'} do
-      %i.fa.fa-times

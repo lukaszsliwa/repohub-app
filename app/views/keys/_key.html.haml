@@ -1,0 +1,8 @@
+%tr
+  %td.name-td
+    = key.name
+  %td.value-td
+    %code
+      #{truncate key.value, length: 32, omission: "..."}#{key.value.last 32}
+  %td.actions-td
+    = link_to 'Edit', edit_key_path(key), class: 'btn btn-warning'
