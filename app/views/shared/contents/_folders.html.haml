@@ -1,0 +1,13 @@
+.btn-group
+  = link_to repository_tree_contents_path(@repository, tree_id: @tree.sha), class: 'btn btn-default', title: 'Browse files' do
+    %i.fa.fa-folder
+  - folders.first(3).each do |folder|
+    = link_to folder.name, repository_tree_content_path(@repository, tree_id: @tree.sha, id: folder.path), class: 'btn btn-default', title: folder.path
+  - if folders.size > 4
+    %button#select-paths.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
+      \...
+    %ul.dropdown-menu{"aria-labelledby" => "select-paths", :role => "menu"}
+      - folders.drop(3).each do |folder|
+        %li= link_to folder.path, repository_tree_content_path(@repository, tree_id: @tree.sha, id: folder.path)
+  - if folders.size >= 4
+    = link_to folders.last.name, repository_tree_content_path(@repository, tree_id: @tree.sha, id: folders.last.path), class: 'btn btn-default', title: folders.last.path

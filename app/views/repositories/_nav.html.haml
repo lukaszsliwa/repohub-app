@@ -17,6 +17,7 @@
       = render partial: 'shared/nav/repositories'
     .btn-group
       = render partial: 'repositories/nav/select'
+    = yield :path
   .pull-right
     .btn-group
       = render partial: 'repositories/nav/settings'

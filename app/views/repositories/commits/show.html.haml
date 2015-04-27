@@ -1,3 +1,7 @@
+= content_for :path do
+  = link_to repository_tree_contents_path(@repository, tree_id: @commit.sha), class: 'btn btn-default', title: 'Browse files' do
+    %i.fa.fa-folder
+
 = content_for :nav do
   = render partial: 'repositories/nav'
 

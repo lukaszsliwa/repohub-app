@@ -1,3 +1,6 @@
+= content_for :path do
+  = render partial: 'shared/contents/folders', object: @tree.folders
+
 = content_for :nav do
   = render partial: 'repositories/nav'
 
@@ -25,11 +28,11 @@
   .tree-content
     %table
       %tbody
-        - if params[:id]
+        - unless @tree.folders.empty?
           %tr
             %td
             %td
-              %b= link_to '..', '../'
+              %b= link_to '..', repository_tree_content_path(@repository, tree_id: @tree.id, id: params[:id] + '/../')
             %td
             %td
         = render partial: 'shared/contents/tree', collection: @contents.select(&:tree?)

@@ -1,0 +1,4 @@
+.btn-group
+  = render partial: 'shared/contents/folders', object: folders
+  .btn-group
+    = link_to @blob.name, repository_tree_blob_path(@repository, @tree, id: @blob.path), class: 'btn btn-default', title: @blob.path

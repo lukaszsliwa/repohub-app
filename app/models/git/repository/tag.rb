@@ -5,4 +5,8 @@ class Git::Repository::Tag < ActiveResource::Base
 
   has_many :commits, class_name: 'Git::Repository::Tag::Commit'
   has_many :contents, class_name: 'Git::Repository::Tag::Content'
+
+  def folders
+    []
+  end
 end

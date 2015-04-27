@@ -1,3 +1,6 @@
+= content_for :path do
+  = render partial: 'shared/blobs/folders', object: @blob.folders
+
 = content_for :nav do
   = render partial: 'repositories/nav'
 

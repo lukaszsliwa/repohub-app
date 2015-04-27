@@ -5,4 +5,8 @@ class Git::Repository::Branch < ActiveResource::Base
 
   has_many :commits, class_name: 'Git::Repository::Branch::Commit'
   has_many :contents, class_name: 'Git::Repository::Branch::Content'
+
+  def folders
+    []
+  end
 end
