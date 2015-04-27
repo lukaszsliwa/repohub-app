@@ -6,11 +6,11 @@ class Repositories::UsersController < Repositories::ApplicationController
   end
 
   def update
-    @user.repository_users.find_or_create_by(repository_id: @repository.to_param)
+    @user.repository_users.find_or_create_by(repository_id: @repository.app.id)
   end
 
   def destroy
-    @user.repository_users.find_by_repository_id(@repository.to_param).destroy
+    @user.repository_users.find_by_repository_id(@repository.app.id).destroy
   end
 
   private
