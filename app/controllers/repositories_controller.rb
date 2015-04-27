@@ -1,6 +1,6 @@
 class RepositoriesController < ApplicationController
   def index
-    @repositories = Git::Repository.all.to_a
+    @repositories = Repository.all
   end
 
   def new
