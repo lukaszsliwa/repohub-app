@@ -25,4 +25,5 @@
           = link_to 'Raw', repository_tree_raw_path(@repository, tree_id: @commit.sha, id: file.path), title: "Raw", class: 'btn btn-default'
     .clearfix
   .diff-wrapper
-    = render partial: 'repositories/commits/hunk', collection: file.hunks, locals: {file: file}
+    %table.diff-table
+      = render partial: 'repositories/commits/hunk', collection: file.hunks, locals: {file: file}
