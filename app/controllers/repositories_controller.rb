@@ -13,7 +13,6 @@ class RepositoriesController < ApplicationController
 
     respond_to do |format|
       if @repository.save
-        current_user.repository_users.create(repository_id: @repository.id)
         format.html { redirect_to repositories_path, notice: 'Repository was successfully created.' }
       else
         format.html { render action: :new }
@@ -22,12 +21,7 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    @repository = Repository.find_by_handle!(params[:repository_id] || params[:id])
-    if (@branch = @repository.branches.first).present?
-      redirect_to repository_branch_path(@repository, @branch)
-    else
-      render file: 'repositories/blank'
-    end
+    @repository = Git::Repository.find params[:id]
   end
 
   def edit

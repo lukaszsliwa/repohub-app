@@ -1,0 +1,53 @@
+= content_for :nav do
+  = render partial: 'repositories/nav'
+
+.file
+  .file-header
+    .file-header-info
+      %i.fa.fa-info-circle
+      Let's get it started
+  .file-wrapper
+    %table.file-table
+      %tbody
+        %tr
+          %td.line.line-number 1
+          %td.line-code.bash # Clone empty branch and push initial commit
+        %tr
+          %td.line.line-number 2
+          %td.line-code.bash
+        %tr
+          %td.line.line-number 3
+          %td.line-code.bash $ git clone #{current_user.username}@git.repohub.dev:#{@repository.handle}.git
+        %tr
+          %td.line.line-number 4
+          %td.line-code.bash $ touch README.md
+        %tr
+          %td.line.line-number 5
+          %td.line-code.bash $ git add README.md
+        %tr
+          %td.line.line-number 6
+          %td.line-code.bash $ git commit -m "Initial commit"
+        %tr
+          %td.line.line-number 7
+          %td.line-code.bash $ git push origin master
+        %tr
+          %td.line.line-number 8
+          %td.line-code.bash
+        %tr
+          %td.line.line-number 9
+          %td.line-code.bash # or add remote uri and push your existing branches
+        %tr
+          %td.line.line-number 10
+          %td.line-code.bash
+        %tr
+          %td.line.line-number 11
+          %td.line-code.bash $ git remote add origin #{current_user.username}@git.repohub.dev:#{@repository.handle}.git
+        %tr
+          %td.line.line-number 12
+          %td.line-code.bash $ git push --all origin
+        %tr
+          %td.line.line-number 13
+          %td.line-code.bash
+        %tr
+          %td.line.line-number 14
+          %td.line-code.bash

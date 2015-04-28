@@ -44,5 +44,5 @@ Rails.application.routes.draw do
   end
   resources :keys
 
-  root 'repositories#index'
+  root 'dashboards#show'
 end

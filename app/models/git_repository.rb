@@ -1,8 +1,18 @@
+require_dependency 'exec/group/user'
+require_dependency 'exec/repository/group/user'
+
 class GitRepository < Repository
-  before_create :git_repository_create
-  after_destroy :git_repository_destroy
+  after_commit :execute_remote_callbacks_on_create,  on: :create
+  after_commit :execute_remote_callbacks_on_destroy, on: :destroy
 
   delegate :size, to: :git, allow_nil: true
+
+  def execute_remote_callbacks_on_create
+    git_repository_create
+    exec_group_create
+    exec_group_user_create
+    exec_repository_owner_create
+  end
 
   def git_repository_create
     git_repository = Git::Repository.new(name: self.handle)
@@ -13,12 +23,30 @@ class GitRepository < Repository
     git_result
   end
 
-  def server_command_add_repository
-    Rails.logger.info `#{Rails.root}/bin/application/repository/create.sh #{handle} #{id}`
+  def exec_group_create
+    Exec::Group.new(id: id).save
   end
 
-  def server_command_delete_repository
-    Rails.logger.info `#{Rails.root}/bin/application/repository/destroy.sh #{handle} #{id}`
+  def exec_group_user_create
+    Exec::Group::User.find('git', params: {group_id: id}).post :link
+  end
+
+  def exec_repository_owner_create
+    Exec::Repository::Group::User.find('git', params: {repository_id: handle, group_id: id}).post :owner
+  end
+
+  def execute_remote_callbacks_on_destroy
+    exec_repository_destroy
+    exec_group_destroy
+    exec_repository_owner_destroy
+  end
+
+  def exec_repository_destroy
+    Exec::Repository.delete(self.handle)
+  end
+
+  def exec_group_destroy
+    Exec::Group.delete id
   end
 
   def path
