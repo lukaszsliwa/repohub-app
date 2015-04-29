@@ -1,0 +1,9 @@
+= content_for :nav do
+  = render partial: 'shared/nav'
+
+= form_for @space, as: :space, url: space_path(@space), html: {method: :post} do |f|
+  = render partial: 'spaces/form', locals: {f: f}
+  .form-group
+    = f.submit 'Submit', class: 'btn btn-success'
+    &nbsp;
+    = link_to 'Back', :back

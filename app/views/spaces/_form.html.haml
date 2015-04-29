@@ -1,0 +1,10 @@
+- if (full_messages = f.object.errors.full_messages).present?
+  %ul.errors
+    - full_messages.each do |error|
+      %li= error
+.form-group
+  = f.label :name
+  = f.text_field :name, class: 'form-control'
+.form-group
+  = f.label :handle
+  = f.text_field :handle, class: 'form-control'

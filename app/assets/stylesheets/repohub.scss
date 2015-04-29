@@ -547,14 +547,14 @@ div.tooltip {
   pointer-events: none;
 }
 
-.users, div.keys {
+div.users, div.keys, div.spaces {
   border: 1px solid #ddd;
   border-radius: 3px;
   margin-bottom: 15px;
   margin-top: 20px;
   position: relative;
 
-  .users-header, .keys-header {
+  .users-header, .keys-header, .spaces-header {
     background: none repeat scroll 0 0 #f7f7f7;
     border-bottom: 1px solid #d8d8d8;
     color: #213f4d;
@@ -564,8 +564,8 @@ div.tooltip {
     text-shadow: 0 1px rgba(255, 255, 255, 0.5);
   }
 
-  .users-wrapper, .keys-wrapper {
-    .users-table, .keys-table {
+  .users-wrapper, .keys-wrapper, .spaces-wrapper {
+    .users-table, .keys-table, .spaces-table {
       td {
         &.actions-td {
           text-align: right;

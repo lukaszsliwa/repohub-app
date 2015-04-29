@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417172119) do
+ActiveRecord::Schema.define(version: 20150429151822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,12 +61,12 @@ ActiveRecord::Schema.define(version: 20150417172119) do
     t.integer  "created_by_id"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.string   "type"
     t.integer  "commits_count", default: 0
+    t.integer  "space_id"
   end
 
   add_index "repositories", ["handle"], name: "index_repositories_on_handle", unique: true, using: :btree
-  add_index "repositories", ["type", "id"], name: "index_repositories_on_type_and_id", unique: true, using: :btree
+  add_index "repositories", ["space_id"], name: "index_repositories_on_space_id", using: :btree
 
   create_table "repository_users", force: :cascade do |t|
     t.integer  "repository_id"
@@ -76,6 +76,15 @@ ActiveRecord::Schema.define(version: 20150417172119) do
   end
 
   add_index "repository_users", ["repository_id", "user_id"], name: "index_repository_users_on_repository_id_and_user_id", unique: true, using: :btree
+
+  create_table "spaces", force: :cascade do |t|
+    t.string   "name"
+    t.string   "handle"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "spaces", ["handle"], name: "index_spaces_on_handle", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",               default: "", null: false

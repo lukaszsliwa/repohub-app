@@ -6,8 +6,9 @@
       Repositories
     %span.caret
   %ul.dropdown-menu{"aria-labelledby" => "repository", :role => "menu"}
-    %li.dropdown-header Repositories
-    - Repository.all.each do |repository|
-      %li= link_to repository.name, repository_branch_path(repository, id: 'master')
+    - Repository.all.group_by { |repository| repository.space }.each do |space, repositories|
+      %li.dropdown-header= space.try(:name)
+      - repositories.each do |repository|
+        %li= link_to repository.name, [repository.space, repository]
     %li.divider
       %li= link_to 'New repository', new_repository_path

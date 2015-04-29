@@ -5,6 +5,9 @@
 .form-group
   = f.label :name, 'Repository Name'
   = f.text_field :name, class: 'form-control'
+.form-group
+  = f.label :space_id, 'Space'
+  = f.select :space_id, Space.all.map {|space| [space.name, space.id]}, class: 'form-control', include_blank: true
 - if f.object.new_record?
   .form-group
     = f.label :handle, 'Handle'
@@ -12,9 +15,6 @@
 .form-group
   = f.label :description, 'Repository Description'
   = f.text_area :description, class: 'form-control'
-.form-group
-  = f.label :type, 'Repository Type'
-  = f.select :type, [['GIT', 'GitRepository']], class: 'form-control'
 .form-group
   = f.submit 'Submit', class: 'btn btn-success'
   &nbsp;

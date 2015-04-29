@@ -8,7 +8,7 @@ class RepositoriesController < ApplicationController
   end
 
   def create
-    @repository = Repository.type(params[:repository][:type]).new params_repository
+    @repository = Repository.new params_repository
     @repository.created_by = current_user
 
     respond_to do |format|
@@ -21,11 +21,11 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    @repository = Git::Repository.find params[:id]
+    @repository = Repository.space(@space).find_by_handle! params[:id]
   end
 
   def edit
-    @repository = Repository.find_by_handle params[:id]
+    @repository = Repository.space(@space).find_by_handle! params[:id]
   end
 
   def update
@@ -41,7 +41,7 @@ class RepositoriesController < ApplicationController
   end
 
   def destroy
-    @repository = Repository.find_by_handle params[:id]
+    @repository = Repository.space(@space).find_by_handle params[:id]
 
     @repository.destroy
 
@@ -52,6 +52,6 @@ class RepositoriesController < ApplicationController
 
 
   def params_repository
-    params[:repository].permit(:id, :name, :handle, :description, :type)
+    params[:repository].permit(:id, :name, :handle, :description, :type, :space_id)
   end
 end

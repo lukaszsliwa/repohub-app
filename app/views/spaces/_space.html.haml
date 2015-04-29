@@ -1,0 +1,6 @@
+%tr
+  %td= space.name
+  %td= space.handle
+  %td.actions-td
+    = link_to 'Go', space_path(space), class: 'btn btn-success'
+    = link_to 'Edit', edit_space_path(space), class: 'btn btn-warning'

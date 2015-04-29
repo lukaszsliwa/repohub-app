@@ -2,6 +2,6 @@ class Repositories::ApplicationController < ApplicationController
   before_filter :find_repository
 
   def find_repository
-    @repository = Git::Repository.find params[:repository_id]
+    @repository = (@space.try(:repositories) || Repository).find_by_handle! params[:repository_id]
   end
 end
