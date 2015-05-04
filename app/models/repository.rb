@@ -17,8 +17,12 @@ class Repository < ActiveRecord::Base
   has_many :branches, dependent: :destroy
   has_many :tags, dependent: :destroy
   has_many :references, dependent: :destroy
+  has_many :notifications, dependent: :nullify
 
   after_commit  :execute_remote_callbacks_on_create,  on: :create
+  after_commit  :on_create_notification, on: :create
+  after_commit  :on_destroy_notification, on: :destroy
+
   before_destroy :execute_remote_callbacks_on_destroy, on: :destroy
 
   delegate :size, to: :git, allow_nil: true
@@ -71,5 +75,17 @@ class Repository < ActiveRecord::Base
 
   def to_param
     handle
+  end
+
+  def on_create_notification
+    self.notifications.create(resource_name: 'repository:create', message: 'New repository was created.')
+    space.notifications.create(resource_name: 'repository:create', message: "New repository ^#{handle_with_space} was created.")
+  end
+
+  def on_destroy_notification
+    users.each do |user|
+      user.notifications.create(resource_name: 'repository:destroy', message: "Repository #{name} was deleted.")
+    end
+    space.notifications.create(resource_name: 'repository:destroy', message: "Repository #{name} was deleted.")
   end
 end

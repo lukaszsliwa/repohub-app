@@ -21,6 +21,8 @@ gem 'mini_magick'
 gem 'settingslogic'
 gem 'rugged', git: 'git://github.com/libgit2/rugged.git', submodules: true
 
+gem 'kaminari'
+
 gem 'activeresource', require: 'active_resource'
 
 group :development, :test do

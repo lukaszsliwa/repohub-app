@@ -21,6 +21,7 @@ class SpacesController < ApplicationController
 
   def show
     @space = Space.find_by_handle! params[:id]
+    @notifications = @space.notifications.page(params[:page])
   end
 
   def edit

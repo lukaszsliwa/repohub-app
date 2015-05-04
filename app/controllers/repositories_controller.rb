@@ -24,6 +24,7 @@ class RepositoriesController < ApplicationController
   end
 
   def show
+    @notifications = @repository.notifications.page params[:page]
   end
 
   def edit

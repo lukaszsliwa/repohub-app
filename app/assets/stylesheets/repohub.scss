@@ -576,3 +576,19 @@ div.users, div.keys, div.spaces {
     }
   }
 }
+
+.notifications {
+  .notification {
+    margin-bottom: 10px !important;
+    .image {
+      margin-right: 20px;
+    }
+    .message {
+      font-size: 22px;
+    }
+    .created-at {
+      text-align: right;
+      font-size: 13px;
+    }
+  }
+}

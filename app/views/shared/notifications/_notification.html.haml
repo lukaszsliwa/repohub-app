@@ -1,0 +1,9 @@
+.panel.panel-default.notification(id="notification-#{notification.id}")
+  .panel-body
+    .image.pull-left
+      = notification_image_tag notification.resource_name
+    .message.pull-left
+      = notification.message
+    .created-at.pull-right
+      = time_ago_in_words notification.created_at
+    .clearfix

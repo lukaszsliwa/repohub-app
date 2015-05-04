@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :keys, dependent: :destroy
   has_many :repository_users, dependent: :destroy
   has_many :repositories, through: :repository_users
+  has_many :notifications, dependent: :nullify
 
   mount_uploader :avatar, AvatarUploader
 

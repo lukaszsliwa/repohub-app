@@ -3,6 +3,7 @@ class Space < ActiveRecord::Base
   validates :handle, uniqueness: true
 
   has_many :repositories, dependent: :destroy
+  has_many :notifications, dependent: :nullify
 
   after_validation :generate_handle
 

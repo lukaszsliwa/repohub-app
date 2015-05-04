@@ -17,4 +17,14 @@ module ApplicationHelper
     else 'not-recognized-file'
     end
   end
+
+  def notification_image_tag(annotation)
+    case annotation
+    when 'repository:create' ; image_tag('circles/rocket.png', width: '32px')
+    when 'repository:destroy' ; image_tag('circles/denied.png', width: '32px')
+    when 'repository_user:create' ; image_tag('circles/profle.png', width: '32px')
+    when 'repository_user:destroy' ; image_tag('circles/denied.png', width: '32px')
+    else nil
+    end
+  end
 end
