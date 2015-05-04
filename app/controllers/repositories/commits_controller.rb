@@ -3,6 +3,6 @@ class Repositories::CommitsController < Repositories::ApplicationController
   end
 
   def show
-    @tree = @commit = Git::Repository::Commit.find params[:id], params: { repository_id: params[:repository_id] }
+    @tree = @commit = Git::Repository::Commit.find params[:id], params: { repository_id: @repository.id }
   end
 end

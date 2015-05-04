@@ -1,4 +1,3 @@
-require_dependency 'exec/group/user'
 require_dependency 'exec/repository/user'
 
 class RepositoryUser < ActiveRecord::Base
@@ -8,13 +7,19 @@ class RepositoryUser < ActiveRecord::Base
   after_commit  :exec_repository_user_create, on: :create
   after_commit :exec_repository_user_destroy, on: :destroy
 
+  def path
+
+  end
+
+  def default_params
+    @default_params ||= {params: {repository_id: repository.id}}
+  end
+
   def exec_repository_user_create
-    Exec::Group::User.find(user.username, params: {group_id: repository.id}).post :link
-    Exec::Repository::User.find(user.username, params: {repository_id: repository.handle}).post :link
+    Exec::Repository::User.find(user.username, default_params).post(:link, space: repository.space.try(:handle), handle: repository.handle)
   end
 
   def exec_repository_user_destroy
-    Exec::Group::User.find(user.username, params: {group_id: repository.id}).delete :link
-    Exec::Repository::User.find(user.username, params: {repository_id: repository.handle}).delete :link
+    Exec::Repository::User.find(user.username, default_params).delete(:link, space: repository.space.try(:handle), handle: repository.handle)
   end
 end

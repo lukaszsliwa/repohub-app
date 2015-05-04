@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150429151822) do
+ActiveRecord::Schema.define(version: 20150504105003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150429151822) do
     t.integer  "space_id"
   end
 
-  add_index "repositories", ["handle"], name: "index_repositories_on_handle", unique: true, using: :btree
+  add_index "repositories", ["space_id", "handle"], name: "index_repositories_on_space_id_and_handle", unique: true, using: :btree
   add_index "repositories", ["space_id"], name: "index_repositories_on_space_id", using: :btree
 
   create_table "repository_users", force: :cascade do |t|

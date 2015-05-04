@@ -1,5 +1,4 @@
-require_dependency 'exec/group/user'
-require_dependency 'exec/repository/group/user'
+require_dependency 'exec/repository/user'
 
 class Repository < ActiveRecord::Base
   attr_readonly :handle
@@ -8,7 +7,7 @@ class Repository < ActiveRecord::Base
   belongs_to :space
 
   validates :name, :handle, presence: true
-  validates :handle, uniqueness: true
+  validates :handle, uniqueness: {scope: :space_id}
 
   before_create :initialize_handle
 
@@ -19,22 +18,26 @@ class Repository < ActiveRecord::Base
   has_many :tags, dependent: :destroy
   has_many :references, dependent: :destroy
 
-  after_commit :execute_remote_callbacks_on_create,  on: :create
-  after_commit :execute_remote_callbacks_on_destroy, on: :destroy
+  after_commit  :execute_remote_callbacks_on_create,  on: :create
+  before_destroy :execute_remote_callbacks_on_destroy, on: :destroy
 
   delegate :size, to: :git, allow_nil: true
 
   scope :space, ->(space) { where(space_id: space.try(:id)) }
 
+  def handle_with_space
+    space.present? ? [space.handle, handle].join('/') : handle
+  end
+
   def execute_remote_callbacks_on_create
     git_repository_create
-    exec_group_create
-    exec_group_user_create
-    exec_repository_owner_create
+    exec_repository_create
+    exec_repository_owner
   end
 
   def git_repository_create
-    git_repository = Git::Repository.new(name: self.handle)
+    git_repository = Git::Repository.new(name: id)
+    git_repository.prefix_options[:space_id] = space_id
     git_result = git_repository.save
     git_repository.errors.full_messages.each do |message|
       errors.add :base, message
@@ -42,30 +45,20 @@ class Repository < ActiveRecord::Base
     git_result
   end
 
-  def exec_group_create
-    Exec::Group.new(id: id).save
+  def exec_repository_create
+    Exec::Repository.new(db_id: id).save
   end
 
-  def exec_group_user_create
-    Exec::Group::User.find('git', params: {group_id: id}).post :link
-  end
-
-  def exec_repository_owner_create
-    Exec::Repository::Group::User.find('git', params: {repository_id: handle, group_id: id}).post :owner
+  def exec_repository_owner
+    Exec::Repository::User.find('git', params: {repository_id: id}).post :owner
   end
 
   def execute_remote_callbacks_on_destroy
     exec_repository_destroy
-    exec_group_destroy
-    exec_repository_owner_destroy
   end
 
   def exec_repository_destroy
-    Exec::Repository.delete(self.handle)
-  end
-
-  def exec_group_destroy
-    Exec::Group.delete id
+    Exec::Repository.delete id
   end
 
   def path
@@ -82,7 +75,7 @@ class Repository < ActiveRecord::Base
   end
 
   def git
-    @git ||= Git::Repository.find(handle) rescue nil
+    @git ||= Git::Repository.find(id) rescue nil
   end
 
   def initialize_handle

@@ -41,7 +41,7 @@ class RepositoriesController < ApplicationController
   end
 
   def destroy
-    @repository = Repository.space(@space).find_by_handle params[:id]
+    @repository = Repository.space(@space).find_by_handle! params[:id]
 
     @repository.destroy
 

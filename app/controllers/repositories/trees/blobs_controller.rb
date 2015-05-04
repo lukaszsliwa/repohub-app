@@ -4,6 +4,6 @@ class Repositories::Trees::BlobsController < Repositories::Trees::ApplicationCon
   end
 
   def show
-    @blob = Git::Repository::Tree::Blob.find params[:id], params: { repository_id: params[:repository_id], tree_id: params[:tree_id] }
+    @blob = Git::Repository::Tree::Blob.find params[:id], params: { repository_id: @repository.id, tree_id: params[:tree_id] }
   end
 end
