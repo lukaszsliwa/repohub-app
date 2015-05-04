@@ -17,23 +17,23 @@
       Revisions
     %span.caret
   %ul#select-revision-menu.dropdown-menu{"aria-labelledby" => "select-revision", :role => "menu"}
-    - if (branches = @repository.git.branches).size > 0
+    - if (branches = @repository.branches).size > 0
       %li.dropdown-header
         %i.fa.fa-code-fork
         Branches
       - branches.each do |branch|
-        %li= link_to branch.name, repository_branch_path(@repository, id: branch.name)
+        %li= link_to branch.name, [@space, @repository, branch]
     - else
       %li.dropdown-header
         %i.fa.fa-code-fork
         No branch
-    - if (tags = @repository.git.tags).size > 0
+    - if (tags = @repository.tags).size > 0
       %li.divider
       %li.dropdown-header
         %i.fa.fa-tag
         Tags
       - tags.each do |tag|
-        %li= link_to tag.name, repository_tag_path(@repository, id: tag.name)
+        %li= link_to tag.name, [@space, @repository, tag]
     - else
       %li.divider
       %li.dropdown-header

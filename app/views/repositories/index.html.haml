@@ -18,7 +18,7 @@
           .description
             = repository.description
         %td.actions-td
-          = link_to 'Show', repository_path(repository), class: 'btn btn-success'
+          = link_to 'Show', [repository.space, repository], class: 'btn btn-success'
 - if @repositories.empty?
   .jumbotron
     .container.text-center

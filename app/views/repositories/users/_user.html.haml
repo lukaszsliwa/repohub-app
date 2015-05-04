@@ -9,11 +9,11 @@
     = user.email
   %td.actions-td
     .btn-group
-      = link_to repository_user_path(@repository, user), method: :patch, remote: true, class: 'btn btn-success btn-on' do
+      = link_to [@repository.space, @repository, user], method: :patch, remote: true, class: 'btn btn-success btn-on' do
         - if @repository.users.include?(user)
           %i.fa.fa-check
         Allow
-      = link_to repository_user_path(@repository, user), method: :delete, remote: true, class: 'btn btn-danger btn-off' do
+      = link_to [@repository.space, @repository, user], method: :delete, remote: true, class: 'btn btn-danger btn-off' do
         Deny
         - unless @repository.users.include?(user)
           %i.fa.fa-check

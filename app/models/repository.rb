@@ -23,7 +23,7 @@ class Repository < ActiveRecord::Base
 
   delegate :size, to: :git, allow_nil: true
 
-  scope :space, ->(space) { where(space_id: space.try(:id)) }
+  scope :space, ->(space) { where("repositories.space_id = ?", space.try(:id)) }
 
   def handle_with_space
     space.present? ? [space.handle, handle].join('/') : handle

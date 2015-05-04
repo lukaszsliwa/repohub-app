@@ -1,4 +1,6 @@
 class RepositoriesController < ApplicationController
+  before_filter :find_repository, only: [:show, :edit, :destroy]
+
   def index
     @repositories = current_user.repositories.all
   end
@@ -13,6 +15,7 @@ class RepositoriesController < ApplicationController
 
     respond_to do |format|
       if @repository.save
+        @repository.users << current_user
         format.html { redirect_to repositories_path, notice: 'Repository was successfully created.' }
       else
         format.html { render action: :new }
@@ -21,11 +24,9 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    @repository = Repository.space(@space).find_by_handle! params[:id]
   end
 
   def edit
-    @repository = Repository.space(@space).find_by_handle! params[:id]
   end
 
   def update
@@ -41,8 +42,6 @@ class RepositoriesController < ApplicationController
   end
 
   def destroy
-    @repository = Repository.space(@space).find_by_handle! params[:id]
-
     @repository.destroy
 
     redirect_to repositories_path
@@ -50,8 +49,11 @@ class RepositoriesController < ApplicationController
 
   private
 
-
   def params_repository
     params[:repository].permit(:id, :name, :handle, :description, :type, :space_id)
+  end
+
+  def find_repository
+    @repository = current_user.repositories.space(@space).find_by_handle! params[:id]
   end
 end

@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   before_filter :find_space
 
   def find_space
-    @space = Space.find_by_handle params[:space_id] if params[:space_id]
+    @space ||= Space.find_by_handle! params[:space_id] if params[:space_id]
   end
 end

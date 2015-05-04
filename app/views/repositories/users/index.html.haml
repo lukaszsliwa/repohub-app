@@ -8,3 +8,20 @@
     %table.table.users-table
       %tbody
         = render partial: 'repositories/users/user', collection: @users
+
+.users
+  .users-header
+    Created by
+  .users-wrapper
+    %table.table.users-table
+      %tbody
+        %tr
+          %td.avatar-td
+            = image_tag @repository.created_by.avatar.thumb, class: 'img-circle', width: '32px'
+          %td.username-td
+            = @repository.created_by.username
+          %td.name-td
+            = @repository.created_by.full_name
+          %td.email-td
+            = @repository.created_by.email
+          %td.actions-td

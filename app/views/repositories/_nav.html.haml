@@ -1,8 +1,8 @@
 = content_for :settings do
   %li.dropdown-header= @repository.name
-  %li= link_to 'Edit the repository', [:edit, @space, @repository]
+  %li= link_to 'Edit the repository', [:edit, @repository.space, @repository]
   %li
-    = link_to [@space, @repository, :users] do
+    = link_to [@repository.space, @repository, :users] do
       Contributors
       %span.label.label-default= @repository.users.count
   %li.divider
@@ -13,7 +13,7 @@
       = link_to root_path, class: 'btn btn-default' do
         %i.fa.fa-home
     .btn-group
-      = link_to 'Dashboard', [@space, @repository], class: 'btn btn-default'
+      = link_to 'Dashboard', [@repository.space, @repository], class: 'btn btn-default'
       = render partial: 'shared/nav/repositories'
     .btn-group
       = render partial: 'repositories/nav/select'
