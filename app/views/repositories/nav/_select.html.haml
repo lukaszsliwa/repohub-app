@@ -17,7 +17,7 @@
       Revisions
     %span.caret
   %ul#select-revision-menu.dropdown-menu{"aria-labelledby" => "select-revision", :role => "menu"}
-    - if (branches = @repository.branches).size > 0
+    - if (branches = @repository.git.branches).size > 0
       %li.dropdown-header
         %i.fa.fa-code-fork
         Branches
@@ -27,7 +27,7 @@
       %li.dropdown-header
         %i.fa.fa-code-fork
         No branch
-    - if (tags = @repository.tags).size > 0
+    - if (tags = @repository.git.tags).size > 0
       %li.divider
       %li.dropdown-header
         %i.fa.fa-tag
