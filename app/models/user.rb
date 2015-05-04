@@ -20,18 +20,4 @@ class User < ActiveRecord::Base
   def generate_password
     self.password = Devise.friendly_token.first 32
   end
-
-  def validate_server_user
-    unless `getent passwd #{username}`.blank?
-      self.errors[:username] << 'is incorrect or limited by the system'
-    end
-  end
-
-  def server_command_add_user
-    Rails.logger.info `#{Rails.root}/bin/application/user/create.sh #{username}`
-  end
-
-  def server_command_delete_user
-    Rails.logger.info `#{Rails.root}/bin/application/user/destroy.sh #{username}`
-  end
 end
