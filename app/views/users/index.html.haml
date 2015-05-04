@@ -1,0 +1,10 @@
+= content_for :nav do
+  = render partial: 'shared/nav'
+
+.users
+  .users-header
+    Users
+  .users-wrapper
+    %table.table.users-table
+      %tbody
+        = render partial: 'users/user', collection: @users

@@ -1,0 +1,10 @@
+%tr(id="user-#{user.id}")
+  %td.avatar-td
+    = image_tag user.avatar.thumb, class: 'img-circle', width: '32px'
+  %td.username-td
+    = user.username
+  %td.name-td
+    = user.full_name
+  %td.email-td
+    = user.email
+  %td.actions-td

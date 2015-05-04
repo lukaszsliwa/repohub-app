@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :keys
-  resources :users, only: [:create, :destroy]
+  resources :users, only: [:index, :create, :destroy]
 
   concern :nested_repositories do
     resources :repositories do

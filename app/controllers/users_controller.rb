@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_filter :find_user, only: :destroy
 
+  def index
+    @users = User.all
+  end
+
   def create
   end
 

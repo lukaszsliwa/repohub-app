@@ -1,6 +1,6 @@
 class RepositoriesController < ApplicationController
   def index
-    @repositories = Repository.all
+    @repositories = current_user.repositories.all
   end
 
   def new

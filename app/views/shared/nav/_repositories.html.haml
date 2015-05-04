@@ -6,7 +6,7 @@
       Repositories
     %span.caret
   %ul.dropdown-menu{"aria-labelledby" => "repository", :role => "menu"}
-    - Repository.all.group_by { |repository| repository.space }.each do |space, repositories|
+    - current_user.repositories.all.group_by { |repository| repository.space }.each do |space, repositories|
       %li.dropdown-header= space.try(:name)
       - repositories.each do |repository|
         %li= link_to repository.name, [repository.space, repository]
