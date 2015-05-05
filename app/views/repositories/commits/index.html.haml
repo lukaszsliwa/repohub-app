@@ -1,0 +1,8 @@
+= content_for :nav do
+  = render partial: 'repositories/nav'
+
+- @commits.group_by { |commit| commit.created_at.to_date }.each do |date, commits|
+  .full-commit-date-separator
+    %i.fa.fa-calendar
+    #{date} &middot; #{time_ago_in_words commits.first.created_at} ago
+  = render partial: 'repositories/commits/commit', collection: commits

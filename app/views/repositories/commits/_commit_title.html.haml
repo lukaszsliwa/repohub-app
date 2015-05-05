@@ -1,0 +1,7 @@
+%p.commit-title
+  =# image_tag @commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
+  = image_tag 'avatar.png', class: 'img-rounded', width: '32px'
+  - if local_assigns[:link]
+    = link_to commit.message, url_for(space_id: @repository.space, repository_id: @repository, id: commit.sha, controller: '/repositories/commits', action: 'show'), title: commit.message
+  - else
+    = commit.message

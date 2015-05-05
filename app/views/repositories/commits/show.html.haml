@@ -6,21 +6,7 @@
   = render partial: 'repositories/nav'
 
 .full-commit
-  %p.commit-title
-    =# image_tag @commit.user.avatar.thumb, class: 'img-rounded', width: '32px'
-    = image_tag 'avatar.png', class: 'img-rounded', width: '32px'
-    = @commit.message
-  .commit-meta
-    .pull-left
-      #{l @commit.created_at, format: :long}
-    .pull-right
-      #{pluralize @commit.parents.size, 'parent'}
-      - @commit.parents.each do |parent|
-        = link_to truncate(parent, length: 8, omission: ''), url_for(space_id: @repository.space, repository_id: @repository, id: parent, controller: '/repositories/commits', action: 'show')
-      &nbsp;
-      commit
-      %span.commit-sha= @commit.sha
-    .clearfix
-  %ul.commit-files
-    = render partial: 'repositories/commits/commit_file', collection: @commit.files
+  = render partial: 'repositories/commits/commit_title', locals: {commit: @commit}
+  = render partial: 'repositories/commits/commit_meta', locals: {commit: @commit}
+  = render partial: 'repositories/commits/commit_files', locals: {commit: @commit}
 = render partial: 'repositories/commits/file', collection: @commit.files

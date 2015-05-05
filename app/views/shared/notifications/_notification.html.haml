@@ -5,5 +5,5 @@
     .message.pull-left
       = notification.message
     .created-at.pull-right
-      = time_ago_in_words notification.created_at
+      #{time_ago_in_words notification.created_at} ago
     .clearfix

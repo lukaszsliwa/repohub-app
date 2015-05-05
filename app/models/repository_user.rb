@@ -32,7 +32,11 @@ class RepositoryUser < ActiveRecord::Base
   end
 
   def on_destroy_notification
-    repository.notifications.create(resource_name: 'repository_user:destroy', message: "@#{user.username} was removed.")
+    begin
+      repository.notifications.create(resource_name: 'repository_user:destroy', message: "@#{user.username} was removed.")
+    rescue ActiveRecord::RecordNotSaved
+      nil
+    end
     repository.space.notifications.create(resource_name: 'repository_user:destroy', message: "@#{user.username} was removed from the repository ^#{repository.handle_with_space}.")
     repository.users.each do |member|
       next if member.id == self.user_id

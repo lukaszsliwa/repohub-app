@@ -1,0 +1,11 @@
+.commit-meta
+  .pull-left
+    #{l commit.created_at, format: :long}
+  .pull-right
+    #{pluralize commit.parents.size, 'parent'}
+    - commit.parents.each do |parent|
+      = link_to truncate(parent, length: 8, omission: ''), url_for(space_id: @repository.space, repository_id: @repository, id: parent, controller: '/repositories/commits', action: 'show')
+    &nbsp;
+    commit
+    %span.commit-sha= commit.sha
+  .clearfix

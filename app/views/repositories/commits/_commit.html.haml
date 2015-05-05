@@ -1,0 +1,3 @@
+.full-commit.commit(id="commit-#{commit.sha}")
+  = render partial: 'repositories/commits/commit_title', locals: {commit: commit, link: true}
+  = render partial: 'repositories/commits/commit_meta', locals: {commit: commit}

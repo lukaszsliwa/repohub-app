@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       resources :commits, controller: 'repositories/commits'
 
       resources :trees, only: [] do
+        resources :commits, controller: 'repositories/trees/commits'
+
         get '/blobs/*id', to: 'repositories/trees/blobs#show', as: :blob, format: false
         resources :blobs, only: :index, controller: 'repositories/trees/blobs'
         get '/contents/*id', to: 'repositories/trees/contents#show', as: :content, format: false

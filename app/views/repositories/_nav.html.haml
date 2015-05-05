@@ -17,6 +17,14 @@
       = render partial: 'shared/nav/repositories'
     .btn-group
       = render partial: 'repositories/nav/select'
+    - if @branch
+      = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, branch_id: @branch, controller: '/repositories/branches/commits', action: 'index'), class: 'btn btn-default'
+    - elsif @tag
+      = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, tag_id: @tag, controller: '/repositories/tags/commits', action: 'index'), class: 'btn btn-default'
+    - elsif @tree
+      = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, tree_id: @tree.sha, controller: '/repositories/trees/commits', action: 'index'), class: 'btn btn-default'
+    - else
+      = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, controller: '/repositories/commits', action: 'index'), class: 'btn btn-default'
     = yield :path
   .pull-right
     = render partial: 'shared/nav/settings'

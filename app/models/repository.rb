@@ -19,11 +19,10 @@ class Repository < ActiveRecord::Base
   has_many :references, dependent: :destroy
   has_many :notifications, dependent: :nullify
 
-  after_commit  :execute_remote_callbacks_on_create,  on: :create
-  after_commit  :on_create_notification, on: :create
-  after_commit  :on_destroy_notification, on: :destroy
-
-  before_destroy :execute_remote_callbacks_on_destroy, on: :destroy
+  after_commit :execute_remote_callbacks_on_create,  on: :create
+  after_commit :on_create_notification, on: :create
+  after_commit :on_destroy_notification, on: :destroy
+  after_commit :execute_remote_callbacks_on_destroy, on: :destroy
 
   delegate :size, to: :git, allow_nil: true
 

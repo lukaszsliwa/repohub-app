@@ -1,5 +1,6 @@
 class Repositories::CommitsController < Repositories::ApplicationController
   def index
+    @commits = Git::Repository::Commit.all params: { repository_id: @repository.id }
   end
 
   def show
