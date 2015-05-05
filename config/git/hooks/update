@@ -4,7 +4,7 @@
 # Called by "git receive-pack" with arguments: refname sha1-old sha1-new
 #
 
-repository="http://app.repohub.dev/repositories/%{repository}"
+repository="http://app.repohub.dev/callbacks/%{id}"
 
 # --- Command line
 refname="$1"
@@ -37,28 +37,28 @@ case "$refname","$newrev_type" in
 	refs/tags/*,commit)
 		# un-annotated tag
 		short_refname=${refname##refs/tags/}
-		curl --silent -X POST $repository/tags/$short_refname/callback -d username=$USER -d tag=unannotated &
+		curl --silent -X POST $repository/resources/$short_refname/tag -d username=$USER -d tag=unannotated &
 		;;
 	refs/tags/*,delete)
 		# delete tag
 		tag=$(git rev-parse --symbolic --abbrev-ref $refname)
-		curl --silent -X DELETE $repository/tags/$tag/callback -d username=$USER -d tag=delete &
+		curl --silent -X DELETE $repository/resources/$tag/tag -d username=$USER -d tag=delete &
 		;;
 	refs/tags/*,tag)
 		# annotated tag
 		short_refname=${refname##refs/tags/}
-		curl --silent -X POST $repository/tags/$short_refname/callback -d username=$USER -d tag=annotated &
+		curl --silent -X POST $repository/resources/$short_refname/tag -d username=$USER -d tag=annotated &
 		;;
 	refs/heads/*,commit)
 		# branch
 		short_refname=${refname##refs/heads/}
-		curl --silent -X POST $repository/branches/$short_refname/callback -d username=$USER -d branch=commit -d old=$oldrev -d new=$newrev
-		curl --silent -X POST $repository/commits/$short_refname/callback -d username=$USER -d branch=commit -d old=$oldrev -d new=$newrev
+		curl --silent -X POST $repository/resources/$short_refname/branch -d username=$USER -d old=$oldrev -d new=$newrev
+		curl --silent -X POST $repository/resources/$short_refname/commit -d username=$USER -d old=$oldrev -d new=$newrev
 		;;
 	refs/heads/*,delete)
 		# delete branch
 		branch=$(git rev-parse --symbolic --abbrev-ref $refname)
-		curl --silent -X DELETE $repository/branches/$branch/callback -d username=$USER -d branch=delete &
+		curl --silent -X DELETE $repository/resources/$branch/branch -d username=$USER -d branch=delete &
 		;;
 	*)
 		# Anything else (is there anything else?)

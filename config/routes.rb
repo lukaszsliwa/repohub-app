@@ -6,6 +6,14 @@ Rails.application.routes.draw do
   resources :keys
   resources :users, only: [:index, :create, :destroy]
 
+  resources :callbacks, only: [] do
+    resources :resources, only: [] do
+      resource :branch, only: [:create, :destroy], controller: 'callbacks/resources/branches', constraints: {resource_id: /.+/}
+      resource :tag, only: [:create, :destroy], controller: 'callbacks/resources/tags', constraints: {resource_id: /.+/}
+      resource :commit, only: [:create, :destroy], controller: 'callbacks/resources/commits'
+    end
+  end
+
   concern :nested_repositories do
     resources :repositories do
       resources :users, only: [:index, :update, :destroy], controller: 'repositories/users'
@@ -24,7 +32,6 @@ Rails.application.routes.draw do
 
       resources :commits, controller: 'repositories/commits' do
         collection { get :count }
-        resource :callback, only: :create, controller: 'repositories/commits/callbacks'
       end
 
       resources :trees, only: [] do
