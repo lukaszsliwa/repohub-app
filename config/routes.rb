@@ -30,9 +30,7 @@ Rails.application.routes.draw do
         resources :contents, controller: 'repositories/tags/contents', constraints: {id: /.+/}
       end
 
-      resources :commits, controller: 'repositories/commits' do
-        collection { get :count }
-      end
+      resources :commits, controller: 'repositories/commits'
 
       resources :trees, only: [] do
         get '/blobs/*id', to: 'repositories/trees/blobs#show', as: :blob, format: false

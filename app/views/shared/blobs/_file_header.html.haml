@@ -7,5 +7,5 @@
     %span.file-header-info-lines
       #{@blob.lines.size} LOC
   .pull-right.file-header-actions
-    = link_to 'Raw', repository_tree_raw_path(@repository, @tree, id: @blob.path), class: 'btn btn-default'
+    = link_to 'Raw', url_for(space_id: @repository.space, repository_id: @repository, tree_id: @tree, id: @blob.path, controller: '/repositories/trees/raws', action: 'show'), class: 'btn btn-default'
   .clearfix

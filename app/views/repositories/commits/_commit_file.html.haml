@@ -7,7 +7,7 @@
     - if commit_file.status == 'modified'
       %i.fa.fa-pencil-square(style='color: orange')
   .pull-left.commit-file-path
-    = link_to repository_commit_path(@repository, id: @commit.sha, anchor: "file-#{commit_file.id}"), class: 'file-path', title: commit_file.path do
+    = link_to url_for(space_id: @repository.space, repository_id: @repository, id: @commit.sha, anchor: "file-#{commit_file.id}", controller: '/repositories/commits', action: 'show'), class: 'file-path', title: commit_file.path do
       - if commit_file.status == 'deleted'
         %del= commit_file.path
       - else

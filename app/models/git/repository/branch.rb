@@ -9,4 +9,8 @@ class Git::Repository::Branch < ActiveResource::Base
   def folders
     []
   end
+
+  def self.use_relative_model_naming?
+    true
+  end
 end

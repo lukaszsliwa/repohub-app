@@ -10,4 +10,8 @@ class Git::Repository::Tree::Content < ActiveResource::Base
   def tree?
     self.type == 'tree'
   end
+
+  def self.use_relative_model_naming?
+    true
+  end
 end

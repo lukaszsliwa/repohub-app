@@ -14,7 +14,7 @@
   .tree-heading
     %p.tree-commit-message
       %i.fa.fa-code-fork
-      = link_to @commits.first.message, repository_commit_path(@repository, id: @commits.first.sha), title: @commits.first.message
+      = link_to @commits.first.message, url_for(space_id: @repository.space, repository_id: @repository, id: @commits.first.sha, controller: '/repositories/commits', action: 'show'), title: @commits.first.message
     .tree-commit-author
       .pull-left
         =# image_tag @commits.first.user.avatar.thumb, width: '22px', class: 'img-rounded'
@@ -22,7 +22,7 @@
         = @commits.first.author_name
         %span.modified updated #{time_ago_in_words @commits.first.created_at} ago
       .pull-right
-        = link_to repository_commit_path(@repository, id: @commits.first.sha) do
+        = link_to url_for(space_id: @repository.space, repository_id: @repository, id: @commits.first.sha, controller: '/repositories/commits', action: 'show') do
           = @commits.first.sha
       .clearfix
   .tree-content
@@ -32,7 +32,7 @@
           %tr
             %td
             %td
-              %b= link_to '..', repository_tree_content_path(@repository, tree_id: @tree.id, id: params[:id] + '/../')
+              %b= link_to '..', url_for(space_id: @repository.space, repository_id: @repository, tree_id: @tree.id, id: params[:id] + '/../', controller: '/repositories/trees/contents', action: 'show')
             %td
             %td
         = render partial: 'shared/contents/tree', collection: @contents.select(&:tree?)

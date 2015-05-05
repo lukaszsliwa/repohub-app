@@ -1,5 +1,5 @@
 = content_for :path do
-  = link_to repository_tree_contents_path(@repository, tree_id: @commit.sha), class: 'btn btn-default', title: 'Browse files' do
+  = link_to url_for(space_id: @repository.space, repository_id: @repository, tree_id: @commit.sha, controller: '/repositories/trees/contents', action: 'index'), class: 'btn btn-default', title: 'Browse files' do
     %i.fa.fa-folder
 
 = content_for :nav do
@@ -16,7 +16,7 @@
     .pull-right
       #{pluralize @commit.parents.size, 'parent'}
       - @commit.parents.each do |parent|
-        = link_to truncate(parent, length: 8, omission: ''), repository_commit_path(@repository, id: parent)
+        = link_to truncate(parent, length: 8, omission: ''), url_for(space_id: @repository.space, repository_id: @repository, id: parent, controller: '/repositories/commits', action: 'show')
       &nbsp;
       commit
       %span.commit-sha= @commit.sha

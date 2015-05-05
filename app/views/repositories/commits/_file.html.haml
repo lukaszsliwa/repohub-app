@@ -10,7 +10,7 @@
           - if file.status == 'deleted'
             %del= file.path
           - else
-            = link_to file.path, repository_tree_blob_path(@repository, tree_id: @commit.sha, id: file.path), title: file.path
+            = link_to file.path, url_for(space_id: @repository.space, repository_id: @repository, tree_id: @commit.sha, id: file.path, controller: '/repositories/trees/blobs', action: 'show'), title: file.path
         %span.file-header-info-lines
           = pluralize file.total_number_of_lines_before, 'line'
           before
@@ -20,9 +20,9 @@
     .pull-right.file-header-actions
       - unless file.status == 'deleted'
         .btn-group
-          = link_to 'Diff', repository_tree_blob_path(@repository, tree_id: @commit.sha, id: file.path, file_id: file.id), title: "Diff", class: 'btn btn-default btn-diff active', data: { file_id: file.id }
-          = link_to 'View', repository_tree_blobs_path(@repository, tree_id: @commit.sha, id: file.path, file_id: file.id, format: 'js'), title: "View", class: 'btn btn-view btn-default', remote: true
-          = link_to 'Raw', repository_tree_raw_path(@repository, tree_id: @commit.sha, id: file.path), title: "Raw", class: 'btn btn-default'
+          = link_to 'Diff', url_for(space_id: @repository.space, repository_id: @repository, tree_id: @commit.sha, id: file.path, file_id: file.id, controller: '/repositories/trees/blobs', action: 'show'), title: "Diff", class: 'btn btn-default btn-diff active', data: { file_id: file.id }
+          = link_to 'View', url_for(space_id: @repository.space, repository_id: @repository, tree_id: @commit.sha, id: file.path, file_id: file.id, controller: '/repositories/trees/blobs', action: 'index', format: 'js'), title: "View", class: 'btn btn-view btn-default', remote: true
+          = link_to 'Raw', url_for(space_id: @repository.space, repository_id: @repository, tree_id: @commit.sha, id: file.path, controller: '/repositories/trees/raws', action: 'show'), title: "Raw", class: 'btn btn-default'
     .clearfix
   .diff-wrapper
     %table.diff-table

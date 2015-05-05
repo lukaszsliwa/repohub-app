@@ -21,4 +21,8 @@ class Git::Repository::Tree::Blob < ActiveResource::Base
       OpenStruct.new(number: number + 1, content: content)
     end
   end
+
+  def self.use_relative_model_naming?
+    true
+  end
 end

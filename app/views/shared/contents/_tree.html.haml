@@ -2,9 +2,9 @@
   %td.icon
     %i.fa.fa-folder
   %td.name
-    = link_to tree.path, repository_tree_content_path(@repository, tree_id: tree.commit_id, id: tree.path)
+    = link_to tree.path, url_for(space_id: @repository.space, repository_id: @repository, tree_id: tree.commit_id, id: tree.path, controller: '/repositories/trees/contents', action: 'show')
   %td.message
-    = link_to repository_commit_path(@repository, id: tree.commit_id), title: tree.message do
+    = link_to url_for(space_id: @repository.space, repository_id: @repository, id: tree.commit_id, controller: '/repositories/commits', action: 'show'), title: tree.message do
       = truncate tree.message, length: 72
   %td.modified
     #{time_ago_in_words tree.updated_at} ago

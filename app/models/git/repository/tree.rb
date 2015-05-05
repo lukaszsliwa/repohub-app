@@ -17,4 +17,8 @@ class Git::Repository::Tree < ActiveResource::Base
     end
     @folders
   end
+
+  def self.use_relative_model_naming?
+    true
+  end
 end

@@ -2,9 +2,9 @@
   %td.icon
     %i.fa.fa-1.fa-file-text-o
   %td.name
-    = link_to blob.name, repository_tree_blob_path(@repository, tree_id: @tree.sha, id: blob.path)
+    = link_to blob.name, url_for(space_id: @repository.space, repository_id: @repository, tree_id: @tree.sha, id: blob.path, controller: '/repositories/trees/blobs', action: 'show')
   %td.message
-    = link_to repository_commit_path(@repository, id: blob.commit_id), title: blob.message do
+    = link_to url_for(space_id: @repository.space, repository_id: @repository, id: blob.commit_id, controller: '/repositories/commits', action: 'show'), title: blob.message do
       = truncate blob.message, length: 72
   %td.modified
     #{time_ago_in_words blob.updated_at} ago

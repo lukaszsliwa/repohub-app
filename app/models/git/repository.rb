@@ -10,4 +10,8 @@ class Git::Repository < ActiveResource::Base
   def app
     @app ||= ::Repository.find_by_handle(id)
   end
+
+  def self.use_relative_model_naming?
+    true
+  end
 end
