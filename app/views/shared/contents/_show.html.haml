@@ -14,16 +14,16 @@
   .tree-heading
     %p.tree-commit-message
       %i.fa.fa-code-fork
-      = link_to @commits.first.message, url_for(space_id: @repository.space, repository_id: @repository, id: @commits.first.sha, controller: '/repositories/commits', action: 'show'), title: @commits.first.message
+      = link_to @commit.message, url_for(space_id: @repository.space, repository_id: @repository, id: @commit.sha, controller: '/repositories/commits', action: 'show'), title: @commit.message
     .tree-commit-author
       .pull-left
-        =# image_tag @commits.first.user.avatar.thumb, width: '22px', class: 'img-rounded'
+        =# image_tag @commit.user.avatar.thumb, width: '22px', class: 'img-rounded'
         = image_tag 'avatar.png', width: '22px', class: 'img-rounded'
-        = @commits.first.author_name
-        %span.modified updated #{time_ago_in_words @commits.first.created_at} ago
+        = @commit.author_name
+        %span.modified updated #{time_ago_in_words @commit.created_at} ago
       .pull-right
-        = link_to url_for(space_id: @repository.space, repository_id: @repository, id: @commits.first.sha, controller: '/repositories/commits', action: 'show') do
-          = @commits.first.sha
+        = link_to url_for(space_id: @repository.space, repository_id: @repository, id: @commit.sha, controller: '/repositories/commits', action: 'show') do
+          = @commit.sha
       .clearfix
   .tree-content
     %table

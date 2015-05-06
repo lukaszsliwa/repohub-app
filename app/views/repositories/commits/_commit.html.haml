@@ -1,3 +1,21 @@
-.full-commit.commit(id="commit-#{commit.sha}")
-  = render partial: 'repositories/commits/commit_title', locals: {commit: commit, link: true}
-  = render partial: 'repositories/commits/commit_meta', locals: {commit: commit}
+.commit(id="commit-#{commit.sha}")
+  .commit-avatar.pull-left
+    = image_tag 'avatar.png', class: 'img-rounded', width: '38px'
+  .commit-title.pull-left
+    .commit-message
+      = link_to commit.message, url_for(space_id: @repository.space, repository_id: @repository, id: commit.sha, controller: '/repositories/commits', action: 'show'), title: commit.message
+    .commit-meta
+      Committed by #{mail_to commit.committer_email, commit.committer_name} #{time_ago_in_words commit.created_at} ago
+      - if commit.different_committer_and_author?
+        (authored by #{mail_to commit.author_email, commit.author_name})
+      &nbsp;&middot;&nbsp;
+      = pluralize commit.additions, 'addition'
+      &nbsp;&middot;&nbsp;
+      = pluralize commit.deletions, 'deletion'
+  .commit-actions.pull-right
+    .btn-group
+      = link_to url_for(space_id: @repository.space, repository_id: @repository, tree_id: commit.sha, controller: '/repositories/trees/contents', action: 'index'), class: 'btn btn-default', title: 'Browse files' do
+        %i.fa.fa-folder
+      = link_to url_for(space_id: @repository.space, repository_id: @repository, id: commit.sha, controller: '/repositories/commits', action: 'show'), class: 'btn btn-default', title: commit.sha do
+        %i.fa.fa-code
+  .clearfix
