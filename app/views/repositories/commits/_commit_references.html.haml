@@ -1,0 +1,13 @@
+.commit-references
+  .pull-left.branches
+    %i.fa.fa-code-fork
+    - commit.branches.each do |branch|
+      = link_to branch, url_for(space_id: @repository.space, repository_id: @repository, id: branch, controller: '/repositories/branches', action: 'show'), title: branch
+      &nbsp;
+  .pull-right.tags
+    - if commit.tags.present?
+      %i.fa.fa-tag
+      - commit.tags.each do |tag|
+        = link_to tag, url_for(space_id: @repository.space, repository_id: @repository, id: tag, controller: '/repositories/tags', action: 'show'), title: tag
+        &nbsp;
+  .clearfix

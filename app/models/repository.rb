@@ -77,8 +77,10 @@ class Repository < ActiveRecord::Base
   end
 
   def create_commits(from, to, server_user)
-    Git::Repository::Commit.all(params: { repository_id: id, from: from, to: to}).each do |git_repository_commit|
-      commits.create(sha: git_repository_commit.sha, user_id: server_user.id)
+    Commit.transaction do
+      Git::Repository::Commit.all(params: { repository_id: id, from: from, to: to}).each do |git_repository_commit|
+        commits.create(sha: git_repository_commit.sha, user_id: server_user.id)
+      end
     end
   end
 

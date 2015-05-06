@@ -7,25 +7,35 @@
       %span.label.label-default= @repository.users.count
   %li.divider
 
-#heading.row
-  .pull-left
-    .btn-group
-      = link_to root_path, class: 'btn btn-default' do
-        %i.fa.fa-home
-    .btn-group
-      = link_to 'Dashboard', [@repository.space, @repository], class: 'btn btn-default'
-      = render partial: 'shared/nav/repositories'
-    .btn-group
-      = render partial: 'repositories/nav/select'
-    - if @branch
-      = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, branch_id: @branch, controller: '/repositories/branches/commits', action: 'index'), class: 'btn btn-default'
-    - elsif @tag
-      = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, tag_id: @tag, controller: '/repositories/tags/commits', action: 'index'), class: 'btn btn-default'
-    - elsif @tree
-      = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, tree_id: @tree.sha, controller: '/repositories/trees/commits', action: 'index'), class: 'btn btn-default'
-    - else
-      = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, controller: '/repositories/commits', action: 'index'), class: 'btn btn-default'
-    = yield :path
-  .pull-right
-    = render partial: 'shared/nav/settings'
-  .clearfix
+.navbar.navbar-repofs
+  .container
+    .navbar-collapse.collapse.navbar-responsive-collapse
+      #heading.row
+        .pull-left
+          .btn-group
+            = link_to root_path, class: 'btn btn-default' do
+              %i.fa.fa-home
+          .btn-group
+            = link_to 'Dashboard', [@repository.space, @repository], class: 'btn btn-default'
+            = render partial: 'shared/nav/repositories'
+          .btn-group
+            = render partial: 'repositories/nav/select'
+          - if @branch
+            = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, branch_id: @branch, controller: '/repositories/branches/commits', action: 'index'), class: 'btn btn-default'
+          - elsif @tag
+            = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, tag_id: @tag, controller: '/repositories/tags/commits', action: 'index'), class: 'btn btn-default'
+          - elsif @tree
+            = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, tree_id: @tree.sha, controller: '/repositories/trees/commits', action: 'index'), class: 'btn btn-default'
+          - else
+            = link_to 'Commits', url_for(space_id: @repository.space, repository_id: @repository, controller: '/repositories/commits', action: 'index'), class: 'btn btn-default'
+          = yield :path
+        .pull-right
+          = render partial: 'shared/nav/settings'
+        .clearfix
+
+.navbar.navbar-repository
+  .container
+    .navbar-collapse.collapse.navbar-responsive-collapse
+      #description.row
+        %h3= @repository.name
+        %p= @repository.description

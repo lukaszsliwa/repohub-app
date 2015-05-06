@@ -46,11 +46,26 @@ pre {
   }
 }
 
-#heading {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  .btn-group {
-    //margin-right: 5px;
+.navbar-repofs, .navbar-repository {
+  border-radius: 0 !important;
+
+  .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+.navbar-repository {
+  border-top: 1px solid #d8d8d8 !important;
+  margin-bottom: 5px !important;
+}
+
+#heading, #description {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  h3 {
+    margin-top: 5px !important;
   }
 }
 
@@ -348,6 +363,15 @@ section.tree {
     a {
       color: #444;
       text-decoration: none;
+    }
+  }
+
+  .commit-references {
+    margin: 0 8px;
+    a {
+      font-weight: bold;
+      font-size: 13px;
+      color: #444;
     }
   }
 

@@ -1,13 +1,16 @@
-#heading.row
-  .pull-left
-    .btn-group
-      = link_to root_path, class: 'btn btn-default' do
-        %i.fa.fa-home
-    .btn-group
-      = yield :current
-      = render partial: 'shared/nav/repositories'
+.navbar.navbar-static-top
+  .container
+    .navbar-collapse.collapse.navbar-responsive-collapse
+      #heading.row
+        .pull-left
+          .btn-group
+            = link_to root_path, class: 'btn btn-default' do
+              %i.fa.fa-home
+          .btn-group
+            = yield :current
+            = render partial: 'shared/nav/repositories'
 
-    = yield :actions
-  .pull-right
-    = render partial: 'shared/nav/settings'
-  .clearfix
+          = yield :actions
+        .pull-right
+          = render partial: 'shared/nav/settings'
+        .clearfix

@@ -28,10 +28,7 @@
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
     = javascript_include_tag "application"
   %body(class="#{params[:controller].parameterize}")
-    .navbar.navbar-static-top
-      .container
-        .navbar-collapse.collapse.navbar-responsive-collapse
-          = yield :nav
+    = yield :nav
     .container
       .row
         =# bootstrap_flash

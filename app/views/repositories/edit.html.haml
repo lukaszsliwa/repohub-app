@@ -3,7 +3,7 @@
 
 .row
   .col-md-12
-    = form_for @repository, as: :repository, url: url_for(space_id: @repository.space, id: params[:id], controller: '/repositories', action: 'edit') do |f|
+    = form_for @repository, as: :repository, url: url_for(space_id: @repository.space, id: params[:id], controller: '/repositories', action: 'update') do |f|
       = f.hidden_field :id
       = render partial: 'repositories/form', locals: {f: f}
     %hr
