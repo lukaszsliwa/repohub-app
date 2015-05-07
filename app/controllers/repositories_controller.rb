@@ -51,7 +51,7 @@ class RepositoriesController < ApplicationController
   private
 
   def params_repository
-    params[:repository].permit(:id, :name, :handle, :description, :type, :space_id)
+    params[:repository].permit(:id, :name, :handle, :description, :space_id, :logo)
   end
 
   def find_repository

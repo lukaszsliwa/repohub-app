@@ -28,6 +28,8 @@ class Repository < ActiveRecord::Base
 
   scope :space, ->(space) { where("repositories.space_id = ?", space.try(:id)) }
 
+  mount_uploader :logo, LogoUploader
+
   def handle_with_space
     space.present? ? [space.handle, handle].join('/') : handle
   end

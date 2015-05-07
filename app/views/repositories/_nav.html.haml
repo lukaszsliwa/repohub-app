@@ -37,5 +37,9 @@
   .container
     .navbar-collapse.collapse.navbar-responsive-collapse
       #description.row
-        %h3= @repository.name
-        %p= @repository.description
+        .repository-logo.pull-left
+          = image_tag @repository.logo.thumb, class: 'img-circle', width: '64px'
+        .repository-name.pull-left
+          %h3= @repository.name
+          %p= @repository.description
+        .clearfix

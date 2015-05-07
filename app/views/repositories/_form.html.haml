@@ -3,18 +3,21 @@
     - full_messages.each do |error|
       %li= error
 .form-group
-  = f.label :name, 'Repository Name'
+  = f.label :name, 'Name'
   = f.text_field :name, class: 'form-control'
-.form-group
-  = f.label :space_id, 'Space'
-  = f.select :space_id, Space.all.map {|space| [space.name, space.id]}, class: 'form-control', include_blank: true
 - if f.object.new_record?
+  .form-group
+    = f.label :space_id, 'Space'
+    = f.select :space_id, Space.all.map {|space| [space.name, space.id]}, class: 'form-control', include_blank: true
   .form-group
     = f.label :handle, 'Handle'
     = f.text_field :handle, class: 'form-control'
 .form-group
-  = f.label :description, 'Repository Description'
+  = f.label :description, 'Description'
   = f.text_area :description, class: 'form-control'
+.form-group
+  = f.label :logo, 'Logo'
+  = f.file_field :logo
 .form-group
   = f.submit 'Submit', class: 'btn btn-success'
   &nbsp;

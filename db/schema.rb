@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505092356) do
+ActiveRecord::Schema.define(version: 20150507071819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150505092356) do
     t.datetime "updated_at",                null: false
     t.integer  "commits_count", default: 0
     t.integer  "space_id"
+    t.string   "logo"
   end
 
   add_index "repositories", ["space_id", "handle"], name: "index_repositories_on_space_id_and_handle", unique: true, using: :btree
