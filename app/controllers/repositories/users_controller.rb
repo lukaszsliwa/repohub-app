@@ -10,7 +10,7 @@ class Repositories::UsersController < Repositories::ApplicationController
   end
 
   def destroy
-    @user.repository_users.find_by_repository_id(@repository.id).destroy
+    @user.repository_users.find_by_repository_id(@repository.id).destroy unless @repository.created_by == @user
   end
 
   private

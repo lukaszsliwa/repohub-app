@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   concern :nested_repositories do
     resources :repositories do
+      resource :subscribe, only: [:update, :destroy], controller: 'repositories/subscribes'
+
       resources :users, only: [:index, :update, :destroy], controller: 'repositories/users'
 
       resources :branches, controller: 'repositories/branches' do

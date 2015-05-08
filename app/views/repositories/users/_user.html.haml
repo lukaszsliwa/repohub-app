@@ -8,12 +8,13 @@
   %td.email-td
     = user.email
   %td.actions-td
-    .btn-group
-      = link_to [@repository.space, @repository, user], method: :patch, remote: true, class: 'btn btn-success btn-on' do
-        - if @repository.users.include?(user)
-          %i.fa.fa-check
-        Allow
-      = link_to [@repository.space, @repository, user], method: :delete, remote: true, class: 'btn btn-danger btn-off' do
-        Deny
-        - unless @repository.users.include?(user)
-          %i.fa.fa-check
+    - unless @repository.created_by == user
+      .btn-group
+        = link_to [@repository.space, @repository, user], method: :patch, remote: true, class: 'btn btn-success btn-on' do
+          - if @repository.users.include?(user)
+            %i.fa.fa-check
+          Allow
+        = link_to [@repository.space, @repository, user], method: :delete, remote: true, class: 'btn btn-danger btn-off' do
+          Deny
+          - unless @repository.users.include?(user)
+            %i.fa.fa-check

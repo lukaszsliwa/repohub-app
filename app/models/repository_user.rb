@@ -23,12 +23,13 @@ class RepositoryUser < ActiveRecord::Base
   end
 
   def on_create_notification
-    Notification.create!(annotation: 'repository_user:create', space_id: repository.space_id, repository_id: repository_id, user_id: user_id, resource_name: 'RepositoryUser', resource_id: id)
+    user.repository_subscriptions.create repository_id: repository_id
+    Notification.create!(annotation: 'repository:user:create', space_id: repository.space_id, repository_id: repository_id, user_id: user_id, resource_name: 'RepositoryUser', resource_id: id)
   end
 
   def on_destroy_notification
     begin
-      Notification.create!(annotation: 'repository_user:destroy', space_id: repository.space_id, repository_id: repository_id, user_id: user_id, resource_name: 'RepositoryUser', resource_id: id)
+      Notification.create!(annotation: 'repository:user:destroy', space_id: repository.space_id, repository_id: repository_id, user_id: user_id, resource_name: 'RepositoryUser', resource_id: id)
     rescue ActiveRecord::RecordNotSaved
       nil
     end

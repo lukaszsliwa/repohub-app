@@ -7,6 +7,8 @@ class Notification < ActiveRecord::Base
 
   after_validation :cache_name
 
+  after_commit :notify_subscribers, on: :create
+
   def resource
     @resource ||= case resource_name
     when 'Branch' ; branch
@@ -78,5 +80,11 @@ class Notification < ActiveRecord::Base
 
   def repository_commit?
     annotation =~ /\Arepository\:commit\:/
+  end
+
+  def notify_subscribers
+    repository.subscribers.each do |subscriber|
+      subscriber.notify id
+    end
   end
 end

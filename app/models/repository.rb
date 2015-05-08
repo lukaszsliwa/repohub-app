@@ -19,6 +19,9 @@ class Repository < ActiveRecord::Base
   has_many :references, dependent: :destroy
   has_many :notifications, dependent: :nullify
 
+  has_many :user_repository_subscriptions, dependent: :destroy
+  has_many :subscribers, through: :user_repository_subscriptions, source: :user
+
   after_commit :execute_remote_callbacks_on_create,  on: :create
   after_commit :on_create_notification, on: :create
   after_commit :on_destroy_notification, on: :destroy

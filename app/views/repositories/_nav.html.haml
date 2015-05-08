@@ -42,4 +42,6 @@
         .repository-name.pull-left
           %h3= @repository.name
           %p= @repository.description
+        .repository-subscription.pull-right
+          = render partial: 'repositories/subscribes/subscribe'
         .clearfix
