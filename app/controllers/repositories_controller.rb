@@ -55,6 +55,7 @@ class RepositoriesController < ApplicationController
   end
 
   def find_repository
-    @repository = current_user.repositories.space(@space).find_by_handle! params[:id]
+    scope = @space.nil? ? current_user.repositories : current_user.repositories.space(@space)
+    @repository = scope.find_by_handle! params[:id]
   end
 end

@@ -647,18 +647,40 @@ div.users, div.keys, div.spaces {
   }
 }
 
-.notifications {
-  .notification {
-    margin-bottom: 10px !important;
-    .image {
-      margin-right: 20px;
-    }
-    .message {
-      font-size: 22px;
-    }
-    .created-at {
-      text-align: right;
-      font-size: 13px;
+.notification-group {
+
+  .notification-group-title {
+    margin: 10px 0;
+    color: #777;
+    font-size: 14px;
+  }
+
+  .notification-group-list {
+    border-bottom: 1px solid #eee;
+    .notification {
+      border: 1px solid #eee;
+      border-bottom: none;
+      padding: 10px;
+
+      .notification-image {
+
+      }
+
+      .notification-title {
+        margin-left: 10px;
+
+        .notification-message {
+          color: #4e575b;
+          font-weight: bold;
+          a {
+            color: #337ab7;
+          }
+        }
+        .notification-meta {
+          font-size: 12px;
+          color: #444;
+        }
+      }
     }
   }
 }

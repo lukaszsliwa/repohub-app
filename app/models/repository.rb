@@ -87,14 +87,10 @@ class Repository < ActiveRecord::Base
   end
 
   def on_create_notification
-    self.notifications.create(resource_name: 'repository:create', message: 'New repository was created.')
-    space.notifications.create(resource_name: 'repository:create', message: "New repository ^#{handle_with_space} was created.")
+    Notification.create!(annotation: 'repository:create', space_id: space_id, repository_id: id, user_id: created_by_id, resource_name: 'Repository', resource_id: id)
   end
 
   def on_destroy_notification
-    users.each do |user|
-      user.notifications.create(resource_name: 'repository:destroy', message: "Repository #{name} was deleted.")
-    end
-    space.notifications.create(resource_name: 'repository:destroy', message: "Repository #{name} was deleted.")
+    Notification.create!(annotation: 'repository:destroy', space_id: space_id, repository_id: id, user_id: created_by_id, resource_name: 'Repository', resource_id: id)
   end
 end

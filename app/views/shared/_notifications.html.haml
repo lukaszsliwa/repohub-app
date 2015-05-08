@@ -1,2 +1,7 @@
-.notifications
-  = render partial: 'shared/notifications/notification', collection: @notifications
+.notification-group
+  - @notifications.group_by { |notification| notification.created_at.to_date }.each do |date, notifications|
+    .notification-group-title
+      %i.fa.fa-calendar
+      = date
+    .notification-group-list
+      = render partial: 'shared/notifications/notification', collection: notifications

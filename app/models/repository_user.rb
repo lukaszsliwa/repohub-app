@@ -23,25 +23,14 @@ class RepositoryUser < ActiveRecord::Base
   end
 
   def on_create_notification
-    repository.notifications.create(resource_name: 'repository_user:create', message: "Added new user @#{user.username}.")
-    repository.space.notifications.create(resource_name: 'repository_user:create', message: "Repository ^#{repository.handle_with_space} has new user @#{user.username}.")
-    repository.users.each do |member|
-      member.notifications.create(resource_name: 'repository_user:create', message: "Repository ^#{repository.handle_with_space} has new user @#{user.username}.")
-    end
-    user.notifications.create(resource_name: 'repository_user:create', message: "You were added to ^#{repository.handle_with_space}.")
+    Notification.create!(annotation: 'repository_user:create', space_id: repository.space_id, repository_id: repository_id, user_id: user_id, resource_name: 'RepositoryUser', resource_id: id)
   end
 
   def on_destroy_notification
     begin
-      repository.notifications.create(resource_name: 'repository_user:destroy', message: "@#{user.username} was removed.")
+      Notification.create!(annotation: 'repository_user:destroy', space_id: repository.space_id, repository_id: repository_id, user_id: user_id, resource_name: 'RepositoryUser', resource_id: id)
     rescue ActiveRecord::RecordNotSaved
       nil
     end
-    repository.space.notifications.create(resource_name: 'repository_user:destroy', message: "@#{user.username} was removed from the repository ^#{repository.handle_with_space}.")
-    repository.users.each do |member|
-      next if member.id == self.user_id
-      member.notifications.create(resource_name: 'repository_user:destroy', message: "@#{user.username} was removed from the repository ^#{repository.handle_with_space}.")
-    end
-    user.notifications.create(resource_name: 'repository_user:destroy', message: "You were removed from ^#{repository.handle_with_space}.")
   end
 end

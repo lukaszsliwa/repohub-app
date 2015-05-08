@@ -1,9 +1,15 @@
-.panel.panel-default.notification(id="notification-#{notification.id}")
-  .panel-body
-    .image.pull-left
-      = notification_image_tag notification.resource_name
-    .message.pull-left
-      = notification.message
-    .created-at.pull-right
-      #{time_ago_in_words notification.created_at} ago
-    .clearfix
+.notification(id="notification-#{notification.id}" data-user-id="#{notification.user_id}" data-full-name="#{notification.user.full_name}" data-username="#{notification.user.username}" data-resource-name="#{notification.resource_name}" data-resource-id="#{notification.resource_id}")
+  .notification-image.pull-left
+    = notification_image notification, class: 'img-rounded', width: '38px'
+  .notification-title.pull-left
+    .notification-message
+      = notification_message notification
+    .notification-meta
+      Created on #{l notification.created_at, format: :long}
+      &nbsp;
+      &middot;
+      &nbsp;
+      %b= link_to notification.repository.handle_with_space, url_for(space_id: notification.repository.space, id: notification.repository, controller: '/repositories', action: 'show'), title: notification.repository.name
+  .notification-actions.pull-right
+    #{time_ago_in_words notification.created_at} ago
+  .clearfix

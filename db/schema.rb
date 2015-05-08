@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150507071819) do
+ActiveRecord::Schema.define(version: 20150508124823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,13 +47,18 @@ ActiveRecord::Schema.define(version: 20150507071819) do
     t.integer  "user_id"
     t.integer  "space_id"
     t.integer  "repository_id"
-    t.string   "message"
     t.string   "resource_name"
+    t.integer  "resource_id"
+    t.string   "sha"
+    t.string   "message"
+    t.string   "annotation"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "cached_name"
   end
 
   add_index "notifications", ["repository_id"], name: "index_notifications_on_repository_id", using: :btree
+  add_index "notifications", ["space_id", "repository_id"], name: "index_notifications_on_space_id_and_repository_id", using: :btree
   add_index "notifications", ["space_id"], name: "index_notifications_on_space_id", using: :btree
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
@@ -101,6 +106,16 @@ ActiveRecord::Schema.define(version: 20150507071819) do
   end
 
   add_index "spaces", ["handle"], name: "index_spaces_on_handle", unique: true, using: :btree
+
+  create_table "user_repository_subscriptions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "repository_id"
+    t.boolean  "email"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "user_repository_subscriptions", ["user_id", "repository_id"], name: "user_id_repository_id_subs", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",               default: "", null: false

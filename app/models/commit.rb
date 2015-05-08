@@ -27,12 +27,6 @@ class Commit < ActiveRecord::Base
   end
 
   def on_create_notification
-    repository.notifications.create resource_name: 'repository:commit:create', message: "@#{created_by.username} created new commit ##{short_sha}"
-    if repository.space.present?
-      repository.space.notifications.create resource_name: 'repository:commit:create', message: "^#{repository.handle_with_space} has new commit ##{short_sha}"
-    end
-    repository.users.each do |member|
-      member.notifications.create resource_name: 'repository:commit:create', message: "@#{created_by.username} created new commit ##{short_sha} in ^#{repository.handle_with_space}"
-    end
+    Notification.create!(annotation: 'repository:commit:create', space_id: repository.space_id, repository_id: repository_id, user_id: user_id, resource_name: 'Commit', resource_id: id)
   end
 end
