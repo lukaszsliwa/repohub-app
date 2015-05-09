@@ -1,0 +1,15 @@
+.inline-comment-form.collapse.out(id="inline-comment-form-#{file_id}-#{hunk_id}-#{line_id}")
+  = form_for comment, as: :comment, url: url_for(space_id: @repository.space, repository_id: @repository, commit_id: @commit, controller: '/repositories/commits/comments', action: 'create', file_id: file_id, hunk_id: hunk_id, line_id: line_id), remote: true do |f|
+    = f.hidden_field :path
+    = f.hidden_field :position
+    %ul.nav.nav-tabs
+      %li.active= link_to 'Write', "#inline-comment-form-#{file_id}-#{hunk_id}-#{line_id}", data: {toggle: 'tab'}, role: 'tab'
+    .tab-content
+      .tab-pane.fade.active.in(aria-labelledby="write-tab" role="tab")
+        .form-group
+          = f.text_area :content, class: 'form-control'
+        .form-group
+          .pull-right
+            = link_to 'Cancel', '#inline-comment-form', data: {toggle: 'collapse', target: "#inline-comment-form-#{file_id}-#{hunk_id}-#{line_id}"}, class: 'btn btn-default'
+            = f.submit 'Comment', class: 'btn btn-success'
+          .clearfix

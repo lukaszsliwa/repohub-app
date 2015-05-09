@@ -14,6 +14,7 @@ class Notification < ActiveRecord::Base
     when 'Branch' ; branch
     when 'Tag'    ; tag
     when 'Commit' ; commit
+    when 'Comment' ; comment
     else nil
     end
   end
@@ -32,6 +33,14 @@ class Notification < ActiveRecord::Base
 
   def commit
     @commit ||= repository.commits.find_by_id(resource_id)
+  end
+
+  def comment
+    @comment ||= repository.comments.find_by_id(resource_id)
+  end
+
+  def repository_comment_create?
+    annotation == 'repository:comment:create'
   end
 
   def repository_commit_create?
@@ -80,6 +89,10 @@ class Notification < ActiveRecord::Base
 
   def repository_commit?
     annotation =~ /\Arepository\:commit\:/
+  end
+
+  def repository_comment?
+    annotation =~ /\Arepository\:comment\:/
   end
 
   def notify_subscribers

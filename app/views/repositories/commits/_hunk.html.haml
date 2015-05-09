@@ -1,7 +1,8 @@
-%tbody(id="diff-#{hunk.id}")
+%tbody(id="diff-#{hunk.id}" class="hunk" data-hunk-id="#{hunk.id}")
   %tr
     %td.line.line-header
     %td.line.line-header
     %td.line.line-header
+    %td.line.line-header
     %td.line.line-header= hunk.header
-  = render partial: 'repositories/commits/line', collection: hunk.lines, locals: {file: file}
+  = render partial: 'repositories/commits/line', collection: hunk.lines, locals: {file: file, hunk: hunk}

@@ -1,0 +1,9 @@
+.comment(id="comment-#{comment.id}" data-id="#{comment.id}")
+  .comment-header
+    .comment-header-title
+      = image_tag comment.user.avatar.thumb, class: 'img-circle', width: '26px'
+      %span.username
+        = comment.user.username
+      commented on #{l comment.created_at, format: :long}
+  .comment-content
+    = comment.content

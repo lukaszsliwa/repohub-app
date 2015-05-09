@@ -1,0 +1,7 @@
+- file_id, hunk_id, line_id = params[:file_id], params[:hunk_id], params[:line_id]
+- if @comment.errors.full_messages.empty?
+  $('.file[data-path="#{@comment.path}"] tr#line-#{@comment.position}').addClass('line-selected-lock');
+  $('.file[data-path="#{@comment.path}"] #line-#{@comment.position}-comments td .comments').append('#{escape_javascript(render partial: 'repositories/commits/comments/comment', object: @comment)}');
+  $('.file[data-path="#{@comment.path}"] #line-#{@comment.position}-comments .inline-comment-form').replaceWith('#{escape_javascript(render partial: 'repositories/commits/inline_comment_form', locals: { comment: Comment.new(position: @comment.position, path: @comment.path), file_id: file_id, hunk_id: hunk_id, line_id: line_id })}');
+- else
+  $('.file[data-path="#{@comment.path}"] #line-#{@comment.position}-comments .inline-comment-form').replaceWith('#{escape_javascript(render partial: 'repositories/commits/inline_comment_form', locals: {comment: @comment, file_id: file_id, hunk_id: hunk_id, line_id: line_id})}');

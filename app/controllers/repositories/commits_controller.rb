@@ -5,5 +5,6 @@ class Repositories::CommitsController < Repositories::ApplicationController
 
   def show
     @tree = @commit = Git::Repository::Commit.find params[:id], params: { repository_id: @repository.id }
+    @comments = @repository.commits.find_by_sha!(params[:id]).comments
   end
 end

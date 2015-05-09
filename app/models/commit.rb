@@ -2,6 +2,8 @@ class Commit < ActiveRecord::Base
   belongs_to :user
   belongs_to :repository, counter_cache: :commits_count
 
+  has_many :comments, dependent: :destroy
+
   before_save :initialize_attributes
 
   after_commit :on_create_notification,  on: :create

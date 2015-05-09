@@ -1,4 +1,4 @@
-.file(id="file-#{file.id}")
+.file(id="file-#{file.id}" data-path="#{file.path}")
   .file-header
     .pull-left.file-header-info
       .pull-left.file-header-info-squares
@@ -17,6 +17,10 @@
         %span.file-header-info-lines
           = pluralize file.total_number_of_lines_after, 'line'
           now
+        %span.file-header-info-comments
+          - comments_count = @comments.select {|comment| comment.path == file.path }.size
+          = link_to '#comments', class: 'collapse-comments', data: {collapse: 'on'}, title: 'Show or hide the comments' do
+            = pluralize comments_count, 'comment'
     .pull-right.file-header-actions
       - unless file.status == 'deleted'
         .btn-group

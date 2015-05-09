@@ -32,7 +32,9 @@ Rails.application.routes.draw do
         resources :contents, controller: 'repositories/tags/contents', constraints: {id: /.+/}
       end
 
-      resources :commits, controller: 'repositories/commits'
+      resources :commits, controller: 'repositories/commits' do
+        resources :comments, controller: 'repositories/commits/comments'
+      end
 
       resources :trees, only: [] do
         resources :commits, controller: 'repositories/trees/commits'

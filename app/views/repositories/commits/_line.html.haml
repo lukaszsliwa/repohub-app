@@ -1,5 +1,17 @@
-%tr
+- comments = @comments.select {|comment| comment.path == file.path && comment.position == line_counter }
+%tr.codespace(data-id="#{line.id}" id="line-#{line_counter}" class="#{'line-selected-lock' unless comments.empty?}")
   %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'addition'
   %td(class="line line-#{line.status} line-number")= line.number unless line.status == 'deletion'
+  %td(class="line line-#{line.status} line-icon")
+    - if comments.size > 0
+      %i.fa.fa-comment
   %td(class="line line-#{line.status} line-pointer")= line.status == 'addition' ? '+' : (line.status == 'deletion' ? '-': '')
   %td(class="line line-#{line.status} line-code #{language_css_class_for file.path}")= line.content.blank? ? raw('&nbsp;') : line.content
+%tr(class="comments comments-#{line.id} #{comments.empty? ? 'hidden' : ''}" id="line-#{line_counter}-comments" data-comments-count="#{comments.size}")
+  %td(colspan='5')
+    .comments
+      = render partial: 'repositories/commits/comments/comment', collection: comments
+    .actions
+      = link_to 'Add a line comment', '#inline-comment-form', data: {toggle: 'collapse', target: "#inline-comment-form-#{file.id}-#{hunk.id}-#{line.id}"}, class: 'btn btn-default'
+
+    = render partial: 'repositories/commits/inline_comment_form', locals: { comment: Comment.new(content: '', path: file.path, position: line_counter), hunk_id: hunk.id, line_id: line.id, file_id: file.id, line_counter: line_counter }

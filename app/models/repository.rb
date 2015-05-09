@@ -18,6 +18,7 @@ class Repository < ActiveRecord::Base
   has_many :tags, dependent: :destroy
   has_many :references, dependent: :destroy
   has_many :notifications, dependent: :nullify
+  has_many :comments, dependent: :destroy
 
   has_many :user_repository_subscriptions, dependent: :destroy
   has_many :subscribers, through: :user_repository_subscriptions, source: :user

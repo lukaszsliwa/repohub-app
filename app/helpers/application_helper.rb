@@ -29,6 +29,7 @@ module ApplicationHelper
     when notification.repository_branch_create? ; image_tag('circles/merge.png', options)
     when notification.repository_branch_destroy? ; image_tag('circles/denied.png', options)
     when notification.repository_commit_create? ; image_tag('circles/upload.png', options)
+    when notification.repository_comment_create? ; image_tag('circles/chat.png', options)
     else nil
     end
   end
@@ -41,6 +42,10 @@ module ApplicationHelper
     keys[:branch]     = notification_message_branch_html(notification)   if notification.repository_branch?
     keys[:tag]        = notification_message_tag_html(notification)      if notification.repository_tag?
     keys[:commit]     = notification_message_commit_html(notification)   if notification.repository_commit?
+    if notification.repository_comment?
+      keys[:commit_comment] = notification_message_commit_comment_html(notification)
+      keys[:file] = notification_message_commit_comment_file_html(notification)
+    end
     message_pattern ? raw(message_pattern % keys) : ''
   end
 
@@ -80,6 +85,22 @@ module ApplicationHelper
     end
   end
 
+  def notification_message_commit_comment_html(notification)
+    if (comment = notification.comment).present?
+      link_to comment.commit.short_sha, url_for(space_id: notification.repository.space, repository_id: notification.repository, id: comment.commit.sha, anchor: "comment-#{comment.id}", controller: '/repositories/commits', action: 'show'), title: comment.sha
+    else
+      notification.cached_name
+    end
+  end
+
+  def notification_message_commit_comment_file_html(notification)
+    if (comment = notification.comment).present?
+      link_to 'file', url_for(space_id: notification.repository.space, repository_id: notification.repository, tree_id: comment.commit.sha, id: comment.path, controller: '/repositories/trees/blobs', action: 'show'), title: comment.path
+    else
+      'file'
+    end
+  end
+
   def notification_message_pattern(notification)
     case
     when notification.repository_create? ; "@%{user} has created a repository %{repository}"
@@ -91,6 +112,7 @@ module ApplicationHelper
     when notification.repository_branch_create? ; "@%{user} has created new branch %{branch}"
     when notification.repository_branch_destroy? ; "@%{user} has deleted branch %{branch}"
     when notification.repository_commit_create? ; "@%{user} has pushed new commit #%{commit}"
+    when notification.repository_comment_create? ; "@%{user} has commented a %{file} line in #%{commit_comment}"
     else nil
     end
   end
