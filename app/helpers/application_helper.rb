@@ -95,7 +95,11 @@ module ApplicationHelper
 
   def notification_message_commit_comment_file_html(notification)
     if (comment = notification.comment).present?
-      link_to 'file', url_for(space_id: notification.repository.space, repository_id: notification.repository, tree_id: comment.commit.sha, id: comment.path, controller: '/repositories/trees/blobs', action: 'show'), title: comment.path
+      if comment.path
+        link_to 'file', url_for(space_id: notification.repository.space, repository_id: notification.repository, tree_id: comment.commit.sha, id: comment.path, controller: '/repositories/trees/blobs', action: 'show'), title: comment.path
+      else
+        link_to 'commit', url_for(space_id: notification.repository.space, repository_id: notification.repository, id: comment.commit.sha, controller: '/repositories/commits', action: 'show', anchor: "comment-#{comment.id}"), title: comment.content.truncate(64)
+      end
     else
       'file'
     end
@@ -112,7 +116,7 @@ module ApplicationHelper
     when notification.repository_branch_create? ; "@%{user} has created new branch %{branch}"
     when notification.repository_branch_destroy? ; "@%{user} has deleted branch %{branch}"
     when notification.repository_commit_create? ; "@%{user} has pushed new commit #%{commit}"
-    when notification.repository_comment_create? ; "@%{user} has commented a %{file} line in #%{commit_comment}"
+    when notification.repository_comment_create? ; "@%{user} has commented a %{file} in #%{commit_comment}"
     else nil
     end
   end

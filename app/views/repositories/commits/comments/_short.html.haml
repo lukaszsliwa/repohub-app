@@ -3,7 +3,9 @@
     = image_tag short.user.avatar.thumb, class: 'img-circle', width: '18px'
   .short-comment-title.pull-left
     %span.username= short.user.username
-    commented on #{l short.created_at, format: :short} file #{link_to File.basename(short.path), url_for(space_id: @repository.space, repository_id: @repository, controller: '/repositories/commits', action: 'show', anchor: "comment-#{short.id}")}
+    commented on #{l short.created_at, format: :short}
+    - if short.path
+      file #{link_to File.basename(short.path), url_for(space_id: @repository.space, repository_id: @repository, controller: '/repositories/commits', action: 'show', anchor: "comment-#{short.id}")}
   .short-comment-content
     = short.content.truncate 64
   .clearfix

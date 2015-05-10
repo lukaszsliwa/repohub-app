@@ -7,7 +7,7 @@
     .tab-content
       .tab-pane.fade.active.in(aria-labelledby="write-tab" role="tab")
         .form-group
-          = f.text_area :content, class: 'form-control'
+          = f.text_area :content, class: 'form-control', placeholder: 'Leave a comment'
         .form-group
           .pull-right
             = link_to 'Cancel', '#inline-comment-form', data: {toggle: 'collapse', target: "#inline-comment-form-#{file_id}-#{hunk_id}-#{line_id}"}, class: 'btn btn-default'

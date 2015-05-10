@@ -13,4 +13,10 @@
 = render partial: 'repositories/commits/file', collection: @commit.files
 
 .short-comments
-  = render partial: 'repositories/commits/comments/short', collection: @comments
+  - @comments.each do |comment|
+    - if comment.path
+      = render partial: 'repositories/commits/comments/short', object: comment
+    - else
+      = render partial: 'repositories/commits/comments/comment', object: comment
+
+= render partial: 'repositories/commits/comment_form', locals: { comment: Comment.new }

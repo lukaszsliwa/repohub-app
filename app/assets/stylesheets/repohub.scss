@@ -622,7 +622,7 @@ section.tree {
   }
 }
 
-.inline-comment-form {
+.inline-comment-form, .comment-form {
   max-width: 800px;
   margin-top: 5px;
   margin-left: 5px;
@@ -656,7 +656,21 @@ section.tree {
   }
 }
 
-.comments {
+.comment-form {
+  max-width: 850px !important;
+  margin-top: 20px;
+  margin-left: 5px !important;
+
+  .comment-form-avatar {
+    margin-right: 15px;
+  }
+
+  .comment-form-content {
+    width: 737px !important;
+  }
+}
+
+.comments, .short-comments {
   .comment {
     border: 1px solid #ddd;
     border-top-left-radius: 3px;
@@ -692,7 +706,11 @@ section.tree {
 }
 
 .short-comments {
+  margin-top: 20px;
+
   .short-comment {
+    margin: 5px;
+
     .short-comment-avatar {
       margin-right: 4px;
     }
@@ -704,6 +722,9 @@ section.tree {
     }
     .short-comment-title {
       color: #999;
+    }
+    .short-comment-content {
+      width: 800px !important;
     }
   }
 }
