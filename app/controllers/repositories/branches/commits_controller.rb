@@ -1,6 +1,6 @@
 class Repositories::Branches::CommitsController < Repositories::Branches::ApplicationController
   def index
-    @commits = Git::Repository::Commit.all params: { repository_id: @repository.id, sha: @branch.sha }
+    @commits ||= @repository.commits_in_tree @branch.sha
 
     render template: 'repositories/commits/index'
   end

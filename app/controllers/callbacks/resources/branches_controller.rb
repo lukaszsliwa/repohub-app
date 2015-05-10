@@ -1,6 +1,6 @@
 class Callbacks::Resources::BranchesController < Callbacks::Resources::ApplicationController
   def create
-    @repository.branches.find_or_create_by(name: params[:resource_id], created_by: server_user)
+    @repository.branches.create_with(created_by: server_user).find_or_create_by(name: params[:resource_id])
     render nothing: true
   end
 

@@ -12,6 +12,10 @@ class Commit < ActiveRecord::Base
 
   default_scope { order 'id DESC' }
 
+  def different_committer_and_author?
+    committer_name != author_name || committer_email != author_email
+  end
+
   def to_param
     sha
   end
@@ -27,8 +31,12 @@ class Commit < ActiveRecord::Base
   def initialize_attributes
     git_commit = Git::Repository::Commit.find sha, params: {repository_id: repository_id}
     self.message = git_commit.message
-    self.author = git_commit.author_name
-    self.email = git_commit.author_email
+    self.author_name = git_commit.author_name
+    self.author_email = git_commit.author_email
+    self.committer_name = git_commit.committer_name
+    self.committer_email = git_commit.committer_email
+    self.additions = git_commit.additions
+    self.deletions = git_commit.deletions
     self.issued_at = git_commit.created_at
   end
 

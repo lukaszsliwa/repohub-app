@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150510105355) do
+ActiveRecord::Schema.define(version: 20150510115709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,16 +35,18 @@ ActiveRecord::Schema.define(version: 20150510105355) do
     t.integer  "repository_id"
     t.string   "message"
     t.string   "sha"
-    t.string   "author"
-    t.string   "email"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "branch_id"
     t.datetime "issued_at"
-    t.integer  "additions",      default: 0
-    t.integer  "deletions",      default: 0
-    t.integer  "total_changes",  default: 0
-    t.integer  "comments_count", default: 0
+    t.integer  "additions",       default: 0
+    t.integer  "deletions",       default: 0
+    t.integer  "total_changes",   default: 0
+    t.integer  "comments_count",  default: 0
+    t.string   "committer_name"
+    t.string   "committer_email"
+    t.string   "author_email"
+    t.string   "author_name"
   end
 
   add_index "commits", ["branch_id"], name: "index_commits_on_branch_id", using: :btree
