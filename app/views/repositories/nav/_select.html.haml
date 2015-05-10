@@ -14,7 +14,7 @@
       = truncate commit_sha, length: 8, omission: ''
     - else
       %i.fa.fa-code-fork
-      Revisions
+      References
     %span.caret
   %ul#select-revision-menu.dropdown-menu{"aria-labelledby" => "select-revision", :role => "menu"}
     - if (branches = @repository.branches).size > 0

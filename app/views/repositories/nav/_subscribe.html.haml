@@ -1,6 +1,6 @@
 - if current_user.subscribes?(@repository.id)
   = link_to url_for(space_id: @repository.space, repository_id: @repository, controller: '/repositories/subscribes', action: 'destroy', format: :js), method: :delete, remote: true, class: 'btn btn-default btn-repository-subscribe', title: 'Turn notification off' do
-    %i.fa.fa-bell(style='color: #213f4d')
+    %i.fa.fa-bell
 - else
   = link_to url_for(space_id: @repository.space, repository_id: @repository, controller: '/repositories/subscribes', action: 'update', format: :js), method: :patch, remote: true, class: 'btn btn-default btn-repository-subscribe', title: 'Turn notification on' do
     %i.fa.fa-bell-o

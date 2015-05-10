@@ -8,8 +8,6 @@ class User < ActiveRecord::Base
 
   before_validation :validate_server_user, on: :create
   before_validation :generate_password, on: :create
-  after_create  :server_command_add_user
-  after_destroy :server_command_delete_user
 
   has_many :keys, dependent: :destroy
   has_many :repository_users, dependent: :destroy

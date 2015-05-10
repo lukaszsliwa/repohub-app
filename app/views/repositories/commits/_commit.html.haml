@@ -1,12 +1,12 @@
 .commit(id="commit-#{commit.sha}")
   .commit-avatar.pull-left
-    = image_tag 'avatar.png', class: 'img-rounded', width: '38px'
+    = image_tag commit.user.avatar.thumb, class: 'img-rounded', width: '38px'
   .commit-title.pull-left
     .commit-message
       = link_to commit.message, url_for(space_id: @repository.space, repository_id: @repository, id: commit.sha, controller: '/repositories/commits', action: 'show'), title: commit.message
     .commit-meta
-      Committed by #{mail_to commit.committer_email, commit.committer_name} #{time_ago_in_words commit.created_at} ago
-      - if commit.different_committer_and_author?
+      Committed by #{mail_to commit.git.committer_email, commit.git.committer_name} #{time_ago_in_words commit.created_at} ago
+      - if commit.git.different_committer_and_author?
         (authored by #{mail_to commit.author_email, commit.author_name})
       &nbsp;&middot;&nbsp;
       = pluralize commit.additions, 'addition'

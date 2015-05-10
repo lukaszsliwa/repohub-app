@@ -1,9 +1,5 @@
 .btn-group
   %button#repository.btn.btn-default.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :type => "button"}
-    - if @repository
-      = @repository.persisted? && @repository.try(:name) || 'Repositories'
-    - else
-      Repositories
     %span.caret
   %ul.dropdown-menu{"aria-labelledby" => "repository", :role => "menu"}
     - current_user.repositories.all.group_by { |repository| repository.space }.each do |space, repositories|

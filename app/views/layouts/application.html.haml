@@ -31,7 +31,7 @@
     = yield :nav
     .container
       .row
-        =# bootstrap_flash
+        = render partial: 'layouts/flash'
         = yield
       / /.well
       / /span

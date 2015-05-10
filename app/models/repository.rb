@@ -34,6 +34,17 @@ class Repository < ActiveRecord::Base
 
   mount_uploader :logo, LogoUploader
 
+  def commits_in_tree(sha = nil)
+    params = { repository_id: id }
+    params[:sha] = sha if sha
+    git_repository_commits = Git::Repository::Commit.all(params: params)
+    shas = git_repository_commits.map &:sha
+    commits.where(sha: shas).map do |commit|
+      commit.git = git_repository_commits.first {|git_commit| git_commit.sha == commit.sha }
+      commit
+    end
+  end
+
   def handle_with_space
     space.present? ? [space.handle, handle].join('/') : handle
   end

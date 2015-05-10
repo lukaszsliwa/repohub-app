@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
-  belongs_to :commit
+  belongs_to :commit, counter_cache: :comments_count
   belongs_to :repository
 
   validates :content, presence: true

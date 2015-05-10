@@ -16,9 +16,11 @@
             = link_to root_path, class: 'btn btn-default' do
               %i.fa.fa-home
           .btn-group
-            = link_to 'Dashboard', [@repository.space, @repository], class: 'btn btn-default'
+            - if @repository
+              = link_to [@repository.space, @repository], class: 'btn btn-default' do
+                = @repository.persisted? && @repository.try(:name) || 'Dashboard'
             = render partial: 'shared/nav/repositories'
-          = render partial: 'repositories/subscribes/subscribe'
+          = render partial: 'repositories/nav/subscribe'
           = render partial: 'repositories/nav/commits'
         .pull-right
           = render partial: 'shared/nav/settings'

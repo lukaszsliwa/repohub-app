@@ -1,4 +1,4 @@
-.navbar.navbar-static-top
+.navbar.navbar-repofs
   .container
     .navbar-collapse.collapse.navbar-responsive-collapse
       #heading.row
@@ -6,8 +6,6 @@
           .btn-group
             = link_to root_path, class: 'btn btn-default' do
               %i.fa.fa-home
-          .btn-group
-            = yield :current
             = render partial: 'shared/nav/repositories'
 
           = yield :actions

@@ -32,6 +32,13 @@ pre {
   font-weight: bold;
 }
 
+span.username {
+  color: #4e575b;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
 #select-revision {
   span.revision-type {
     font-size: 13px;
@@ -55,9 +62,8 @@ pre {
   }
 }
 
-.navbar-repository {
-  border-top: 1px solid #d8d8d8 !important;
-  margin-bottom: 5px !important;
+.navbar-repofs {
+  border-bottom: 1px solid #d8d8d8 !important;
 }
 
 .repository-logo img {
@@ -709,14 +715,14 @@ div.tooltip {
   pointer-events: none;
 }
 
-div.users, div.keys, div.spaces {
+div.users, div.keys, div.spaces, div.accounts {
   border: 1px solid #ddd;
   border-radius: 3px;
   margin-bottom: 15px;
   margin-top: 20px;
   position: relative;
 
-  .users-header, .keys-header, .spaces-header {
+  .users-header, .keys-header, .spaces-header, .accounts-header {
     background: none repeat scroll 0 0 #f7f7f7;
     border-bottom: 1px solid #d8d8d8;
     color: #213f4d;
@@ -726,7 +732,9 @@ div.users, div.keys, div.spaces {
     text-shadow: 0 1px rgba(255, 255, 255, 0.5);
   }
 
-  .users-wrapper, .keys-wrapper, .spaces-wrapper {
+  .users-wrapper, .keys-wrapper, .spaces-wrapper, .accounts-wrapper {
+    padding: 15px;
+
     .users-table, .keys-table, .spaces-table {
       td {
         &.actions-td {

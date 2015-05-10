@@ -1,0 +1,30 @@
+= content_for :nav do
+  = render partial: 'shared/nav'
+
+.accounts
+  .accounts-header
+    Account
+  .accounts-wrapper
+    = form_for @account, as: :account, url: account_path do |f|
+      .form-group
+        = f.label :full_name
+        = f.text_field :full_name, class: 'form-control'
+      .form-group
+        = f.label :email
+        = f.text_field :email, class: 'form-control'
+      .form-group
+        = f.label :avatar
+        = f.file_field :avatar
+        = f.hidden_field :avatar_cache
+      - if f.object.avatar.present?
+        .form-group
+          = image_tag f.object.avatar.thumb, class: 'img-rounded'
+        .form-group
+          = f.check_box :remove_avatar
+          = f.label :remove_avatar, 'Remove avatar'
+      .pull-right
+        = link_to 'Cancel', :back, class: 'btn btn-default'
+        = f.submit 'Save', class: 'btn btn-success'
+      .clearfix
+
+

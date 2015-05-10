@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resource :account, only: [:show, :update]
   resources :keys
   resources :users, only: [:index, :create, :destroy]
 

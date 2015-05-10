@@ -1,4 +1,15 @@
 = content_for :nav do
   = render partial: 'shared/nav'
 
+.navbar.navbar-user
+  .container
+    .navbar-collapse.collapse.navbar-responsive-collapse
+      #description.row
+        .repository-logo.pull-left
+          = image_tag current_user.avatar.thumb, class: 'img-circle', width: '64px'
+        .repository-name.pull-left
+          %h3= current_user.full_name
+          %p
+            = link_to user_path(current_user.username), title: current_user.full_name do
+              @#{current_user.username}
 = render partial: 'shared/notifications'
