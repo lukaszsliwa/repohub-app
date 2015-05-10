@@ -5,4 +5,4 @@
     %td.line.line-header
     %td.line.line-header
     %td.line.line-header= hunk.header
-  = render partial: 'repositories/commits/line', collection: hunk.lines, locals: {file: file, hunk: hunk}
+  = render partial: 'repositories/commits/line', collection: hunk.lines, locals: {file: file, hunk: hunk, hunk_counter: hunk_counter}

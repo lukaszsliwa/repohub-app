@@ -691,6 +691,23 @@ section.tree {
   }
 }
 
+.short-comments {
+  .short-comment {
+    .short-comment-avatar {
+      margin-right: 4px;
+    }
+    .short-comment-title, .short-comment-content {
+      padding-top: 2px;
+      font-size: 14px;
+      font-weight: normal;
+      padding-right: 6px;
+    }
+    .short-comment-title {
+      color: #999;
+    }
+  }
+}
+
 span.commit-sha {
   color: #4d4d4c;
 }

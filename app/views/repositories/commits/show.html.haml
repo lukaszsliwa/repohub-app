@@ -11,3 +11,6 @@
   = render partial: 'repositories/commits/commit_meta', locals: {commit: @commit}
   = render partial: 'repositories/commits/commit_files', locals: {commit: @commit}
 = render partial: 'repositories/commits/file', collection: @commit.files
+
+.short-comments
+  = render partial: 'repositories/commits/comments/short', collection: @comments
