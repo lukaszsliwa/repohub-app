@@ -12,6 +12,12 @@
       = pluralize commit.additions, 'addition'
       &nbsp;&middot;&nbsp;
       = pluralize commit.deletions, 'deletion'
+      - if (comments_counts = commit.comments_count) > 0
+        &nbsp;&middot;&nbsp;
+        %i.fa.fa-comments
+        &nbsp;
+        = link_to url_for(space_id: @repository.space, repository_id: @repository, id: commit.sha, controller: '/repositories/commits', action: 'show') do
+          = pluralize comments_counts, 'comment'
   .commit-actions.pull-right
     .btn-group
       = link_to url_for(space_id: @repository.space, repository_id: @repository, tree_id: commit.sha, controller: '/repositories/trees/contents', action: 'index'), class: 'btn btn-default', title: 'Browse files' do

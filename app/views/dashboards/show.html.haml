@@ -13,3 +13,4 @@
             = link_to user_path(current_user.username), title: current_user.full_name do
               @#{current_user.username}
 = render partial: 'shared/notifications'
+= paginate @notifications

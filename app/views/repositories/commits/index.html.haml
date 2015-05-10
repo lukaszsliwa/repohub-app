@@ -1,10 +1,11 @@
 = content_for :nav do
   = render partial: 'repositories/nav'
 
-- @commits.group_by { |commit| commit.created_at.to_date }.each do |date, commits|
+- @commits.group_by { |commit| commit.issued_at.to_date }.each do |date, commits|
   .commit-group
     .commit-group-title
       %i.fa.fa-calendar
-      #{date} &middot; #{time_ago_in_words commits.first.created_at} ago
+      #{date} &middot; #{time_ago_in_words commits.first.issued_at} ago
     .commit-group-list
       = render partial: 'repositories/commits/commit', collection: commits
+= link_to 'Next', page: ((params[:page] || 1).to_i + 1)

@@ -34,15 +34,13 @@ class Repository < ActiveRecord::Base
 
   mount_uploader :logo, LogoUploader
 
-  def commits_in_tree(sha = nil)
-    params = { repository_id: id }
+  def commits_in_tree(sha = nil, page = nil, limit = nil)
+    page ||= 1
+    limit ||= 32
+    params = { repository_id: id, offset: (page.to_i-1) * limit.to_i, limit: limit.to_i }
     params[:sha] = sha if sha
     git_repository_commits = Git::Repository::Commit.all(params: params)
-    shas = git_repository_commits.map &:sha
-    commits.where(sha: shas).map do |commit|
-      commit.git = git_repository_commits.first {|git_commit| git_commit.sha == commit.sha }
-      commit
-    end
+    commits.where(sha: git_repository_commits.map(&:sha))
   end
 
   def handle_with_space
@@ -94,8 +92,9 @@ class Repository < ActiveRecord::Base
   end
 
   def create_commits(from, to, server_user)
+    params = { repository_id: id, from: from, to: to}.delete_if {|key, value| value.nil? }
     Commit.transaction do
-      Git::Repository::Commit.all(params: { repository_id: id, from: from, to: to}).each do |git_repository_commit|
+      Git::Repository::Commit.all(params: params).reverse.each do |git_repository_commit|
         commits.create(sha: git_repository_commit.sha, user_id: server_user.id, additions: git_repository_commit.additions, deletions: git_repository_commit.deletions)
       end
     end

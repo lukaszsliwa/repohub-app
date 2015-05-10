@@ -8,9 +8,9 @@
       .pull-left
         %span.file-header-info-path
           - if file.status == 'deleted'
-            %del= file.path
+            %del= file.path.truncate(48)
           - else
-            = link_to file.path, url_for(space_id: @repository.space, repository_id: @repository, tree_id: @commit.sha, id: file.path, controller: '/repositories/trees/blobs', action: 'show'), title: file.path
+            = link_to file.path.truncate(48), url_for(space_id: @repository.space, repository_id: @repository, tree_id: @commit.sha, id: file.path, controller: '/repositories/trees/blobs', action: 'show'), title: file.path
         %span.file-header-info-lines
           = pluralize file.total_number_of_lines_before, 'line'
           before

@@ -10,7 +10,13 @@ class Commit < ActiveRecord::Base
 
   after_commit :on_create_notification,  on: :create
 
-  default_scope { order 'id DESC' }
+  default_scope { order 'issued_at DESC' }
+
+  delegate :branches, :tags, :parents, :files, to: :git
+
+  def git
+    @git ||= Git::Repository::Commit.find sha, params: { repository_id: repository_id }
+  end
 
   def different_committer_and_author?
     committer_name != author_name || committer_email != author_email
