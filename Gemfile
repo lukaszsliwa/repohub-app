@@ -25,6 +25,8 @@ gem 'kaminari'
 
 gem 'activeresource', require: 'active_resource'
 
+gem 'exec-client', git: 'git@git.apptamers.com:repohub/exec-client.git'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

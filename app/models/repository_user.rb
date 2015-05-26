@@ -1,5 +1,3 @@
-require_dependency 'exec/repository/user'
-
 class RepositoryUser < ActiveRecord::Base
   belongs_to :repository
   belongs_to :user
@@ -15,11 +13,11 @@ class RepositoryUser < ActiveRecord::Base
   end
 
   def exec_repository_user_create
-    Exec::Repository::User.find(user.username, default_params).post(:link, space: repository.space.try(:handle), handle: repository.handle)
+    Exec::Client::User.find(user.username, default_params).post(:link, space: repository.space.try(:handle), handle: repository.handle)
   end
 
   def exec_repository_user_destroy
-    Exec::Repository::User.find(user.username, default_params).delete(:link, space: repository.space.try(:handle), handle: repository.handle)
+    Exec::Client::User.find(user.username, default_params).delete(:link, space: repository.space.try(:handle), handle: repository.handle)
   end
 
   def on_create_notification

@@ -1,5 +1,3 @@
-require_dependency 'exec/repository/user'
-
 class Repository < ActiveRecord::Base
   attr_readonly :handle
 
@@ -64,11 +62,11 @@ class Repository < ActiveRecord::Base
   end
 
   def exec_repository_create
-    Exec::Repository.new(db_id: id).save
+    Exec::Client::Repository.new(db_id: id).save
   end
 
   def exec_repository_owner
-    Exec::Repository::User.find('git', params: {repository_id: id}).post :owner
+    Exec::Client::User.find('git', params: {repository_id: id}).post :owner
   end
 
   def execute_remote_callbacks_on_destroy
@@ -76,7 +74,7 @@ class Repository < ActiveRecord::Base
   end
 
   def exec_repository_destroy
-    Exec::Repository.delete id
+    Exec::Client::Repository.delete id
   end
 
   def git

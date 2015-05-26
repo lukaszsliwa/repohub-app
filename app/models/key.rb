@@ -6,6 +6,6 @@ class Key < ActiveRecord::Base
   validates :name, :value, presence: true
 
   def generate_authorized_keys
-    Exec::User::Key.create(user_id: user.username, keys: user.keys.map { |key| key.attributes })
+    Exec::Client::Key.create(user_id: user.username, keys: user.keys.map { |key| key.attributes })
   end
 end
