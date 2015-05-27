@@ -46,34 +46,10 @@ class Repository < ActiveRecord::Base
   end
 
   def execute_remote_callbacks_on_create
-    git_repository_create
-    exec_repository_create
-    exec_repository_owner
-  end
-
-  def git_repository_create
-    git_repository = Git::Repository.new(name: id)
-    git_repository.prefix_options[:space_id] = space_id
-    git_result = git_repository.save
-    git_repository.errors.full_messages.each do |message|
-      errors.add :base, message
-    end
-    git_result
-  end
-
-  def exec_repository_create
     Exec::Client::Repository.new(db_id: id).save
   end
 
-  def exec_repository_owner
-    Exec::Client::User.find('git', params: {repository_id: id}).post :owner
-  end
-
   def execute_remote_callbacks_on_destroy
-    exec_repository_destroy
-  end
-
-  def exec_repository_destroy
     Exec::Client::Repository.delete id
   end
 
